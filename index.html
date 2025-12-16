@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookcast</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'media',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: 'var(--accent)',
+                        bg: {
+                            DEFAULT: 'var(--bg-primary)',
+                            secondary: 'var(--bg-secondary)',
+                            tertiary: 'var(--bg-tertiary)',
+                        },
+                        text: {
+                            DEFAULT: 'var(--text-primary)',
+                            secondary: 'var(--text-secondary)',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['-apple-system', 'BlinkMacSystemFont', 'San Francisco', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'sans-serif'],
+                    },
+                    spacing: {
+                        '12px': '12px',
+                    },
+                    borderRadius: {
+                        'xl': '12px',
+                        '2xl': '16px',
+                        '3xl': '24px',
+                    },
+                    boxShadow: {
+                        'apple': '0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03)',
+                        'apple-hover': '0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        :root {
+            /* Light Mode Tokens */
+            --bg-primary: #F5F5F7;
+            --bg-secondary: #FFFFFF;
+            --bg-tertiary: #E5E5EA;
+            --text-primary: #1D1D1F;
+            --text-secondary: #86868B;
+            --accent: #0071E3;
+            --divider: #D2D2D7;
+            --focus-ring: rgba(0, 113, 227, 0.4);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                /* Dark Mode Tokens */
+                --bg-primary: #000000;
+                --bg-secondary: #1C1C1E;
+                --bg-tertiary: #2C2C2E;
+                --text-primary: #F5F5F7;
+                --text-secondary: #86868B;
+                --accent: #2997FF;
+                --divider: #38383A;
+                --focus-ring: rgba(41, 151, 255, 0.4);
+            }
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: -apple-system, BlinkMacSystemFont, "San Francisco", "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Focus States */
+        *:focus-visible {
+            outline: none;
+            box-shadow: 0 0 0 4px var(--focus-ring);
+            border-radius: 4px;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--text-secondary);
+            border-radius: 4px;
+            opacity: 0.5;
+        }
+        
+        .backdrop-blur-md {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        .line-clamp-3 {
+            display: -webkit-box;
+            display: -moz-box;
+            display: box;
+            line-clamp: 3;
+            -webkit-line-clamp: 3;
+            -moz-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            -moz-box-orient: vertical;
+            box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .line-clamp-none {
+            display: block;
+            overflow: visible;
+        }
+        
+        .description-container {
+            position: relative;
+            transition: all 0.3s ease;
+            min-height: 4.5rem; /* Ensure minimum height for 3 lines */
+        }
+        
+        .description-text {
+            transition: all 0.3s ease;
+        }
+        
+        .expand-btn {
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent)/80 100%);
+            color: white;
+            border: none;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 500;
+            margin-top: 4px;
+        }
+        
+        .expand-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 113, 227, 0.3);
+        }
+        
+        .expand-btn:active {
+            transform: translateY(0);
+        }
+        
+        /* Hover tooltip for full description */
+        .book-card {
+            position: relative;
+        }
+        
+        .book-card:hover .description-tooltip {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(-5px);
+        }
+        
+        .description-tooltip {
+            position: absolute;
+            bottom: 100%;
+            left: 0;
+            right: 0;
+            background: var(--bg-secondary);
+            border: 1px solid var(--divider);
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 8px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(0);
+            transition: all 0.3s ease;
+            z-index: 50;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .description-tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 6px solid transparent;
+            border-top-color: var(--bg-secondary);
+        }
+
+        /* View Toggle Styles */
+        .view-toggle-btn.active {
+            background-color: var(--accent);
+            color: white;
+        }
+
+        .view-toggle-btn:not(.active):hover {
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+
+        /* List View Styles */
+        .list-row {
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .list-row:hover {
+            background-color: var(--bg-tertiary);
+            transform: translateX(2px);
+        }
+
+        .list-cover {
+            width: 42px;
+            height: 63px;
+            object-fit: cover;
+            border-radius: 4px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+            transition: transform 0.2s ease;
+        }
+
+        .list-row:hover .list-cover {
+            transform: scale(1.05);
+        }
+
+        .list-rank {
+            min-width: 40px;
+            height: 22px;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent)/80 100%);
+            color: white;
+            border-radius: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 11px;
+        }
+
+        .list-action-btn {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            border: 1px solid var(--divider);
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+        }
+
+        .list-action-btn:hover {
+            background: var(--accent);
+            color: white;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0, 113, 227, 0.3);
+        }
+
+        /* Compact spacing for list items */
+        #bookList td.px-6 {
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+        #bookList td.py-4 {
+            padding-top: 6px;
+            padding-bottom: 6px;
+        }
+
+        /* Reduce table row spacing */
+        #bookList tbody tr {
+            border-bottom: 1px solid var(--divider);
+        }
+
+        #bookList tbody tr:last-child {
+            border-bottom: none;
+        }
+
+        /* Reduce spacing in book info */
+        .book-info-compact h3 {
+            margin-bottom: 1px !important;
+            font-size: 13px !important;
+            line-height: 1.2 !important;
+        }
+
+        .book-info-compact h4 {
+            margin-bottom: 2px !important;
+            font-size: 11px !important;
+            line-height: 1.2 !important;
+        }
+
+        .book-info-compact p {
+            margin-bottom: 3px !important;
+            font-size: 10px !important;
+            line-height: 1.3 !important;
+        }
+
+        .book-meta-compact {
+            margin-top: 2px !important;
+            font-size: 9px !important;
+        }
+
+        .book-meta-compact span {
+            padding: 1px 3px !important;
+            font-size: 9px !important;
+        }
+
+        /* Reduce author avatar size */
+        #bookList .w-6 {
+            width: 20px !important;
+            height: 20px !important;
+        }
+
+        /* Smaller author text */
+        #bookList td[data-label="作者"] .text-sm {
+            font-size: 11px !important;
+        }
+
+        /* Responsive List Styles */
+        @media (max-width: 640px) {
+            .list-cover {
+                width: 32px;
+                height: 48px;
+            }
+            
+            .list-action-btn {
+                padding: 3px 6px;
+                font-size: 10px;
+            }
+
+            .list-rank {
+                min-width: 32px;
+                height: 18px;
+                font-size: 10px;
+            }
+        }
+
+        /* Mobile List Card Layout */
+        @media (max-width: 640px) {
+            #bookList .table-container {
+                display: block;
+            }
+            
+            #bookList table {
+                display: block;
+            }
+            
+            #bookList thead {
+                display: none;
+            }
+            
+            #bookList tbody {
+                display: block;
+            }
+            
+            #bookList tr {
+                display: flex;
+                align-items: flex-start;
+                gap: 8px;
+                margin-bottom: 8px;
+                background: var(--bg-secondary);
+                border: 1px solid var(--divider);
+                border-radius: 8px;
+                padding: 8px;
+                transition: all 0.2s ease;
+                cursor: pointer;
+            }
+            
+            #bookList tr:hover {
+                transform: translateY(-1px);
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            }
+            
+            #bookList td {
+                padding: 0;
+                border: none;
+                margin-bottom: 0;
+                text-align: left !important;
+            }
+            
+            #bookList td[data-label="排名"] {
+                flex-shrink: 0;
+                display: flex;
+                align-items: flex-start;
+                padding-top: 1px;
+            }
+            
+            #bookList td[data-label="封面"] {
+                flex-shrink: 0;
+            }
+            
+            #bookList td[data-label="书名"] {
+                flex: 1;
+                min-width: 0;
+            }
+            
+            #bookList td[data-label="作者"],
+            #bookList td[data-label="年份"],
+            #bookList td[data-label="国家"],
+            #bookList td[data-label="操作"] {
+                display: none;
+            }
+            
+            #bookList td[data-label="书名"] .flex-col {
+                display: flex;
+                flex-direction: column;
+            }
+            
+            #bookList td[data-label="书名"] h3 {
+                font-size: 13px;
+                line-height: 1.25;
+                margin-bottom: 1px;
+            }
+            
+            #bookList td[data-label="书名"] h4 {
+                font-size: 11px;
+                margin-bottom: 2px;
+            }
+            
+            #bookList td[data-label="书名"] p {
+                font-size: 10px;
+                line-height: 1.3;
+                margin: 0;
+            }
+            
+            #bookList td[data-label="书名"] .flex.items-center.gap-2.mt-2 {
+                margin-top: 2px !important;
+            }
+            
+            #bookList td[data-label="书名"] .flex.items-center.gap-2.mt-2 span {
+                padding: 1px 4px;
+                font-size: 9px;
+            }
+        }
+
+        /* Desktop and Tablet optimizations */
+        @media (min-width: 641px) {
+            .list-cover {
+                width: 38px;
+                height: 57px;
+            }
+            
+            #bookList td.px-6 {
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+            
+            #bookList td.py-4 {
+                padding-top: 6px;
+                padding-bottom: 6px;
+            }
+
+            .list-rank {
+                min-width: 36px;
+                height: 20px;
+                font-size: 10px;
+            }
+        }
+
+        /* Large screen optimizations */
+        @media (min-width: 1920px) {
+            .list-cover {
+                width: 46px;
+                height: 69px;
+            }
+            
+            #bookList td.px-6 {
+                padding-left: 14px;
+                padding-right: 14px;
+            }
+            
+            #bookList td.py-4 {
+                padding-top: 12px;
+                padding-bottom: 12px;
+            }
+
+            .list-rank {
+                min-width: 44px;
+                height: 24px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col transition-colors duration-300">
+
+    <!-- Header -->
+    <header class="sticky top-0 z-20 bg-[var(--bg-secondary)]/80 backdrop-blur-md border-b border-[var(--divider)] transition-all duration-300">
+        <div class="max-w-[1920px] mx-auto px-6 lg:px-12 py-3">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="flex items-center gap-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[var(--accent)]" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+                    </svg>
+                    <h1 class="text-xl font-semibold tracking-tight text-[var(--text-primary)]">Bookcast</h1>
+                    <span class="text-sm text-[var(--text-secondary)] border-l border-[var(--divider)] pl-3 ml-1" id="resultCount">100 本书</span>
+                </div>
+                
+                <!-- Search & Filters -->
+                <div class="flex flex-col sm:flex-row gap-3 w-full md:w-auto items-center">
+                    <div class="relative w-full sm:w-64 group">
+                        <input type="text" id="searchInput" placeholder="搜索书名、作者..." 
+                            class="w-full pl-9 pr-3 py-1.5 rounded-lg bg-[var(--bg-tertiary)] border-none text-[var(--text-primary)] text-sm placeholder-[var(--text-secondary)] focus:ring-2 focus:ring-[var(--accent)] transition-all duration-300">
+                        <svg class="h-4 w-4 text-[var(--text-secondary)] absolute left-3 top-2.5 transition-colors group-focus-within:text-[var(--accent)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </div>
+
+                    <div class="flex gap-2 w-full sm:w-auto">
+                        <!-- View Toggle Buttons -->
+                        <div class="flex bg-[var(--bg-tertiary)] rounded-lg p-1 mr-2">
+                            <button id="gridViewBtn" class="view-toggle-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 bg-[var(--accent)] text-white">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M3 3h8v8H3V3zm0 10h8v8H3v-8zm10-10h8v8h-8V3zm0 10h8v8h-8v-8z"/>
+                                </svg>
+                            </button>
+                            <button id="listViewBtn" class="view-toggle-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 text-[var(--text-secondary)] hover:text-[var(--text-primary)]">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                                </svg>
+                            </button>
+                        </div>
+                        
+                        <select id="authorFilter" class="bg-[var(--bg-tertiary)] text-[var(--text-primary)] text-sm border-none rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-[var(--accent)] cursor-pointer transition-all duration-300 w-full sm:w-auto">
+                            <option value="">所有作者</option>
+                        </select>
+                        
+                        <select id="yearFilter" class="bg-[var(--bg-tertiary)] text-[var(--text-primary)] text-sm border-none rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-[var(--accent)] cursor-pointer transition-all duration-300 w-full sm:w-auto">
+                            <option value="">所有年份</option>
+                            <option value="2010s">2010 - 2019</option>
+                            <option value="2000s">2000 - 2009</option>
+                            <option value="1990s">1990 - 1999</option>
+                            <option value="1980s">1980 - 1989</option>
+                            <option value="older">1980 以前</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow w-full max-w-[1920px] mx-auto px-6 lg:px-12 py-12">
+        <!-- Grid View -->
+        <div id="bookGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-8 auto-rows-min">
+            <!-- Book cards will be inserted here -->
+        </div>
+        
+        <!-- List View (Hidden by default) -->
+        <div id="bookList" class="hidden">
+            <div class="bg-[var(--bg-secondary)] rounded-2xl border border-[var(--divider)] overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="bg-[var(--bg-tertiary)] border-b border-[var(--divider)]">
+                            <tr>
+                                <th class="px-6 py-4 text-left text-xs font-semibold text-[var(--text-secondary)] uppercase tracking-wider">排名</th>
+                                <th class="px-6 py-4 text-left text-xs font-semibold text-[var(--text-secondary)] uppercase tracking-wider">封面</th>
+                                <th class="px-6 py-4 text-left text-xs font-semibold text-[var(--text-secondary)] uppercase tracking-wider">书名</th>
+                                <th class="px-6 py-4 text-left text-xs font-semibold text-[var(--text-secondary)] uppercase tracking-wider hidden sm:table-cell">作者</th>
+                                <th class="px-6 py-4 text-left text-xs font-semibold text-[var(--text-secondary)] uppercase tracking-wider hidden md:table-cell">年份</th>
+                                <th class="px-6 py-4 text-left text-xs font-semibold text-[var(--text-secondary)] uppercase tracking-wider hidden lg:table-cell">国家</th>
+                                <th class="px-6 py-4 text-right text-xs font-semibold text-[var(--text-secondary)] uppercase tracking-wider">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bookListBody" class="divide-y divide-[var(--divider)]">
+                            <!-- List items will be inserted here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <div id="noResults" class="hidden text-center py-32">
+            <svg class="h-16 w-16 text-[var(--text-secondary)] mx-auto mb-6 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <p class="text-xl text-[var(--text-secondary)] font-medium">未找到相关书籍</p>
+            <button id="resetFilters" class="mt-6 text-[var(--accent)] hover:underline font-semibold transition-all">重置所有筛选</button>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-[var(--bg-secondary)] border-t border-[var(--divider)] mt-auto transition-colors duration-300">
+        <div class="max-w-[1920px] mx-auto px-6 lg:px-12 py-8">
+            <p class="text-center text-[var(--text-secondary)] text-sm">
+                &copy; 2025 Bookcast. Designed by FutureCast
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="books.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
