@@ -1,0 +1,1032 @@
+{
+  "exportDate": "2025-12-17T13:32:15.504Z",
+  "totalBooks": 100,
+  "readCount": 0,
+  "books": [
+    {
+      "rank": 1,
+      "title": {
+        "en": "Sapiens",
+        "cn": "人类简史"
+      },
+      "author": "Yuval Noah Harari",
+      "isRead": false,
+      "notes": [
+        {
+          "id": 1765977559730,
+          "text": "远见与实用性：如何重构你的世界\n\n实用策略： 理解“虚构”不是为了否定它，而是为了利用它。作为管理者或创业者，你的核心工作其实是“构建虚构”——这就是所谓的企业愿景和品牌价值。谁能讲出最动听、最让人信服的故事，谁就能调动最多的资源。\n\n远见： 书的结尾预言了“智人的终结”。通过生物工程、仿生工程和AI，我们正在通过智能设计（Intelligent Design）取代自然选择。未来可能出现长生不老的“神人”阶级，人类社会将面临前所未有的物种级分化。",
+          "timestamp": "2025-12-17T13:19:19.730Z",
+          "date": "2025/12/17 21:19:19"
+        },
+        {
+          "id": 1765977522134,
+          "text": "赫拉利提供了一个极具解释力的上帝视角，但我们需要警惕以下两点：\n\n1.快乐的虚无主义： 赫拉利在书末探讨“快乐”时，倾向于佛教和生物化学的解释——快乐只是血清素和多巴胺的波动，或者是“主观预期与客观现实的匹配”。这种观点可能导致一种道德相对主义，甚至虚无主义：如果一切意义都是虚构的，快乐只是生化反应，那么人类奋斗的终极价值何在？\n\n2.对农业革命的过度鞭挞： 他认为农业社会比采集社会更悲惨，这带有卢梭式的“高贵的野蛮人”情结。他忽略了农业社会虽然增加了个体劳役，但也催生了文字、艺术和复杂制度，这些是人类文明积累的必要载体。",
+          "timestamp": "2025-12-17T13:18:42.134Z",
+          "date": "2025/12/17 21:18:42"
+        },
+        {
+          "id": 1765977428190,
+          "text": "本书最振聋发聩的概念是“互为主体的现实”。\n世界上存在三种现实：\n客观现实： 无论你信不信都存在的（如重力、河流）。\n主观现实： 只存在于你个人脑中的（如你的牙痛）。\n互为主体的现实： 依靠众人的共同信念而存在的（如金钱、法律、国家、公司、人权）。\n赫拉利指出，现代文明的基石全部建立在第三种现实之上。标致汽车公司（Peugeot）不仅仅是工厂和工人，它是一个法律拟制体；美元不仅仅是绿纸，它是美联储与全球持有者的契约。人类统治地球，是因为我们是唯一能生活在双重现实（物理世界+虚构故事）中的动物。",
+          "timestamp": "2025-12-17T13:17:08.190Z",
+          "date": "2025/12/17 21:17:08"
+        },
+        {
+          "id": 1765976802089,
+          "text": "赫拉利并不是在写历史，而是在写“历史哲学”。全书贯穿了一个核心问题：为何一种在东非并不起眼的灵长类动物（智人），最终能登上生物链顶端，甚至试图扮演上帝？\n\n全书通过三大革命来回答这个问题：\n1.认知革命 (The Cognitive Revolution, 距今约7万年前)： 這是智人脱颖而出的关键。智人进化出了独特的语言能力，不仅能描述现实（“有狮子”），还能描述虚构（“狮子是我们的图腾”）。这种“讲故事”的能力让智人突破了150人的社交上限，实现了大规模陌生人协作。\n\n2.农业革命 (The Agricultural Revolution, 距今约1.2万年前)： 赫拉利称其为“史上最大的骗局”。虽然养活了更多人口，但个体生活质量下降，人类被小麦驯化，陷入了永久的劳作和阶级压迫中。\n\n3.科学革命 (The Scientific Revolution, 距今约500年前)： 人类承认自己的无知，开始通过观察和数学投资未来。这一革命与资本主义、帝国主义联姻，带来了爆发式的增长。",
+          "timestamp": "2025-12-17T13:06:42.089Z",
+          "date": "2025/12/17 21:06:42"
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "title": {
+        "en": "Man's Search for Meaning",
+        "cn": "活出意义来"
+      },
+      "author": "Viktor E. Frankl",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 3,
+      "title": {
+        "en": "Principles",
+        "cn": "原则"
+      },
+      "author": "Ray Dalio",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 4,
+      "title": {
+        "en": "Zero to One",
+        "cn": "从0到1"
+      },
+      "author": "Peter Thiel",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 5,
+      "title": {
+        "en": "Thinking, Fast and Slow",
+        "cn": "思考，快与慢"
+      },
+      "author": "Daniel Kahneman",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 6,
+      "title": {
+        "en": "Influence",
+        "cn": "影响力"
+      },
+      "author": "Robert B. Cialdini",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 7,
+      "title": {
+        "en": "The 4-Hour Workweek",
+        "cn": "每周工作4小时"
+      },
+      "author": "Tim Ferriss",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 8,
+      "title": {
+        "en": "The Hard Thing About Hard Things",
+        "cn": "创业维艰"
+      },
+      "author": "Ben Horowitz",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 9,
+      "title": {
+        "en": "Shoe Dog",
+        "cn": "鞋狗"
+      },
+      "author": "Phil Knight",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 10,
+      "title": {
+        "en": "Atlas Shrugged",
+        "cn": "阿特拉斯耸耸肩"
+      },
+      "author": "Ayn Rand",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 11,
+      "title": {
+        "en": "The Innovator's Dilemma",
+        "cn": "创新者的窘境"
+      },
+      "author": "Clayton M. Christensen",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 12,
+      "title": {
+        "en": "Atomic Habits",
+        "cn": "原子习惯"
+      },
+      "author": "James Clear",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 13,
+      "title": {
+        "en": "The Alchemist",
+        "cn": "牧羊少年奇幻之旅"
+      },
+      "author": "Paulo Coelho",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 14,
+      "title": {
+        "en": "Meditations",
+        "cn": "沉思录"
+      },
+      "author": "Marcus Aurelius",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 15,
+      "title": {
+        "en": "The War of Art",
+        "cn": "艺术战争"
+      },
+      "author": "Steven Pressfield",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 16,
+      "title": {
+        "en": "High Output Management",
+        "cn": "格鲁夫给经理人的第一课"
+      },
+      "author": "Andrew Grove",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 17,
+      "title": {
+        "en": "Antifragile",
+        "cn": "反脆弱"
+      },
+      "author": "Nassim Nicholas Taleb",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 18,
+      "title": {
+        "en": "Steve Jobs",
+        "cn": "史蒂夫·乔布斯传"
+      },
+      "author": "Walter Isaacson",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 19,
+      "title": {
+        "en": "How To Win Friends and Influence People",
+        "cn": "人性的弱点"
+      },
+      "author": "Dale Carnegie",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 20,
+      "title": {
+        "en": "Dune",
+        "cn": "沙丘"
+      },
+      "author": "Frank Herbert",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 21,
+      "title": {
+        "en": "Good to Great",
+        "cn": "从优秀到卓越"
+      },
+      "author": "Jim Collins",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 22,
+      "title": {
+        "en": "Mindset",
+        "cn": "终身成长"
+      },
+      "author": "Carol S. Dweck",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 23,
+      "title": {
+        "en": "Harry Potter",
+        "cn": "哈利·波特"
+      },
+      "author": "J.K. Rowling",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 24,
+      "title": {
+        "en": "The Black Swan",
+        "cn": "黑天鹅"
+      },
+      "author": "Nassim Nicholas Taleb",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 25,
+      "title": {
+        "en": "Surely You're Joking, Mr. Feynman!",
+        "cn": "别闹了，费曼先生"
+      },
+      "author": "Richard P. Feynman",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 26,
+      "title": {
+        "en": "1984",
+        "cn": "1984"
+      },
+      "author": "George Orwell",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 27,
+      "title": {
+        "en": "Outliers",
+        "cn": "异类"
+      },
+      "author": "Malcolm Gladwell",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 28,
+      "title": {
+        "en": "The Lean Startup",
+        "cn": "精益创业"
+      },
+      "author": "Eric Ries",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 29,
+      "title": {
+        "en": "Poor Charlie's Almanack",
+        "cn": "穷查理宝典"
+      },
+      "author": "Charlie Munger",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 30,
+      "title": {
+        "en": "Snow Crash",
+        "cn": "雪崩"
+      },
+      "author": "Neal Stephenson",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 31,
+      "title": {
+        "en": "Range",
+        "cn": "跨能致勝 (通才)"
+      },
+      "author": "David Epstein",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 32,
+      "title": {
+        "en": "The Four Agreements",
+        "cn": "通往心灵自由的四个约定"
+      },
+      "author": "Don Miguel Ruiz",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 33,
+      "title": {
+        "en": "Elon Musk",
+        "cn": "硅谷钢铁侠"
+      },
+      "author": "Ashlee Vance",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 34,
+      "title": {
+        "en": "Siddhartha",
+        "cn": "悉达多"
+      },
+      "author": "Hermann Hesse",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 35,
+      "title": {
+        "en": "Skin in the Game",
+        "cn": "非对称风险"
+      },
+      "author": "Nassim Nicholas Taleb",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 36,
+      "title": {
+        "en": "Tools of Titans",
+        "cn": "巨人的工具"
+      },
+      "author": "Tim Ferriss",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 37,
+      "title": {
+        "en": "The Selfish Gene",
+        "cn": "自私的基因"
+      },
+      "author": "Richard Dawkins",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 38,
+      "title": {
+        "en": "The Intelligent Investor",
+        "cn": "聪明的投资者"
+      },
+      "author": "Benjamin Graham",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 39,
+      "title": {
+        "en": "Essentialism",
+        "cn": "精要主义"
+      },
+      "author": "Greg McKeown",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 40,
+      "title": {
+        "en": "The Lord of the Rings",
+        "cn": "指环王"
+      },
+      "author": "J.R.R. Tolkien",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 41,
+      "title": {
+        "en": "The Ride of a Lifetime",
+        "cn": "一生的旅程"
+      },
+      "author": "Robert Iger",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 42,
+      "title": {
+        "en": "The Lessons of History",
+        "cn": "历史的教训"
+      },
+      "author": "Will & Ariel Durant",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 43,
+      "title": {
+        "en": "Loonshots",
+        "cn": "相变"
+      },
+      "author": "Safi Bahcall",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 44,
+      "title": {
+        "en": "The Fountainhead",
+        "cn": "源泉"
+      },
+      "author": "Ayn Rand",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 45,
+      "title": {
+        "en": "The Three-Body Problem",
+        "cn": "三体"
+      },
+      "author": "Cixin Liu",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 46,
+      "title": {
+        "en": "How to Change Your Mind",
+        "cn": "改變你的心智"
+      },
+      "author": "Michael Pollan",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 47,
+      "title": {
+        "en": "Tao Te Ching",
+        "cn": "道德经"
+      },
+      "author": "Lao Tzu",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 48,
+      "title": {
+        "en": "12 Rules for Life",
+        "cn": "人生十二法则"
+      },
+      "author": "Jordan Peterson",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 49,
+      "title": {
+        "en": "Crime and Punishment",
+        "cn": "罪与罚"
+      },
+      "author": "Fyodor Dostoyevsky",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 50,
+      "title": {
+        "en": "When Breath Becomes Air",
+        "cn": "当呼吸化为空气"
+      },
+      "author": "Paul Kalanithi",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 51,
+      "title": {
+        "en": "The Great Gatsby",
+        "cn": "了不起的盖茨比"
+      },
+      "author": "F. Scott Fitzgerald",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 52,
+      "title": {
+        "en": "Guns, Germs, and Steel",
+        "cn": "枪炮、病菌与钢铁"
+      },
+      "author": "Jared Diamond",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 53,
+      "title": {
+        "en": "The Power of Habit",
+        "cn": "习惯的力量"
+      },
+      "author": "Charles Duhigg",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 54,
+      "title": {
+        "en": "The Catcher in the Rye",
+        "cn": "麦田里的守望者"
+      },
+      "author": "J.D. Salinger",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 55,
+      "title": {
+        "en": "The Design of Everyday Things",
+        "cn": "设计心理学"
+      },
+      "author": "Don Norman",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 56,
+      "title": {
+        "en": "Creativity, Inc.",
+        "cn": "创新公司"
+      },
+      "author": "Ed Catmull",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 57,
+      "title": {
+        "en": "The 7 Habits of Highly Effective People",
+        "cn": "高效能人士的七个习惯"
+      },
+      "author": "Stephen R. Covey",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 58,
+      "title": {
+        "en": "Deep Work",
+        "cn": "深度工作"
+      },
+      "author": "Cal Newport",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 59,
+      "title": {
+        "en": "The Art of War",
+        "cn": "孙子兵法"
+      },
+      "author": "Sun Tzu",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 60,
+      "title": {
+        "en": "Fooled by Randomness",
+        "cn": "随机漫步的傻瓜"
+      },
+      "author": "Nassim Nicholas Taleb",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 61,
+      "title": {
+        "en": "The Checklist Manifesto",
+        "cn": "清单革命"
+      },
+      "author": "Atul Gawande",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 62,
+      "title": {
+        "en": "The Courage to Be Disliked",
+        "cn": "被讨厌的勇气"
+      },
+      "author": "Ichiro Kishimi",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 63,
+      "title": {
+        "en": "Brave New World",
+        "cn": "美丽新世界"
+      },
+      "author": "Aldous Huxley",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 64,
+      "title": {
+        "en": "Homo Deus",
+        "cn": "未来简史"
+      },
+      "author": "Yuval Noah Harari",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 65,
+      "title": {
+        "en": "Zen and the Art of Motorcycle Maintenance",
+        "cn": "禅与摩托车维修艺术"
+      },
+      "author": "Robert M. Pirsig",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 66,
+      "title": {
+        "en": "The Score Takes Care of Itself",
+        "cn": "硬派领导哲学"
+      },
+      "author": "Bill Walsh",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 67,
+      "title": {
+        "en": "Crossing the Chasm",
+        "cn": "跨越鸿沟"
+      },
+      "author": "Geoffrey A. Moore",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 68,
+      "title": {
+        "en": "Extreme Ownership",
+        "cn": "极端所有权"
+      },
+      "author": "Jocko Willink",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 69,
+      "title": {
+        "en": "High Growth Handbook",
+        "cn": "高成长手册"
+      },
+      "author": "Elad Gil",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 70,
+      "title": {
+        "en": "Project Hail Mary",
+        "cn": "挽救计划"
+      },
+      "author": "Andy Weir",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 71,
+      "title": {
+        "en": "Made to Stick",
+        "cn": "粘住"
+      },
+      "author": "Chip & Dan Heath",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 72,
+      "title": {
+        "en": "The Effective Executive",
+        "cn": "卓有成效的管理者"
+      },
+      "author": "Peter F. Drucker",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 73,
+      "title": {
+        "en": "The Undoing Project",
+        "cn": "橡皮擦计划"
+      },
+      "author": "Michael Lewis",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 74,
+      "title": {
+        "en": "Why We Sleep",
+        "cn": "为什么要睡觉"
+      },
+      "author": "Matthew Walker",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 75,
+      "title": {
+        "en": "Anna Karenina",
+        "cn": "安娜·卡列尼娜"
+      },
+      "author": "Leo Tolstoy",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 76,
+      "title": {
+        "en": "Benjamin Franklin",
+        "cn": "富兰克林传"
+      },
+      "author": "Walter Isaacson",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 77,
+      "title": {
+        "en": "Animal Farm",
+        "cn": "动物庄园"
+      },
+      "author": "George Orwell",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 78,
+      "title": {
+        "en": "The Almanack of Naval Ravikant",
+        "cn": "纳瓦尔宝典"
+      },
+      "author": "Eric Jorgenson",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 79,
+      "title": {
+        "en": "The Psychology of Money",
+        "cn": "金钱心理学"
+      },
+      "author": "Morgan Housel",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 80,
+      "title": {
+        "en": "Measure What Matters",
+        "cn": "衡量什么重要"
+      },
+      "author": "John Doerr",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 81,
+      "title": {
+        "en": "Think and Grow Rich",
+        "cn": "思考致富"
+      },
+      "author": "Napoleon Hill",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 82,
+      "title": {
+        "en": "Only the Paranoid Survive",
+        "cn": "只有偏执狂才能生存"
+      },
+      "author": "Andrew Grove",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 83,
+      "title": {
+        "en": "Can't Hurt Me",
+        "cn": "我，刀枪不入"
+      },
+      "author": "David Goggins",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 84,
+      "title": {
+        "en": "Foundation",
+        "cn": "基地"
+      },
+      "author": "Isaac Asimov",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 85,
+      "title": {
+        "en": "Blitzscaling",
+        "cn": "闪电式扩张"
+      },
+      "author": "Reid Hoffman",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 86,
+      "title": {
+        "en": "Seeking Wisdom",
+        "cn": "探索智慧"
+      },
+      "author": "Peter Bevelin",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 87,
+      "title": {
+        "en": "Digital Minimalism",
+        "cn": "数字极简主义"
+      },
+      "author": "Cal Newport",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 88,
+      "title": {
+        "en": "How Not to Die",
+        "cn": "救命"
+      },
+      "author": "Dr. Michael Greger",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 89,
+      "title": {
+        "en": "The Art of Possibility",
+        "cn": "可能性艺术"
+      },
+      "author": "Rosamund Stone Zander",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 90,
+      "title": {
+        "en": "The Righteous Mind",
+        "cn": "正义之心"
+      },
+      "author": "Jonathan Haidt",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 91,
+      "title": {
+        "en": "The Book of Five Rings",
+        "cn": "五轮书"
+      },
+      "author": "Miyamoto Musashi",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 92,
+      "title": {
+        "en": "The Code Breaker",
+        "cn": "破解者"
+      },
+      "author": "Walter Isaacson",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 93,
+      "title": {
+        "en": "The Emperor of All Maladies",
+        "cn": "万病之王"
+      },
+      "author": "Siddhartha Mukherjee",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 94,
+      "title": {
+        "en": "The Gene",
+        "cn": "基因"
+      },
+      "author": "Siddhartha Mukherjee",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 95,
+      "title": {
+        "en": "The Innovators",
+        "cn": "创新者"
+      },
+      "author": "Walter Isaacson",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 96,
+      "title": {
+        "en": "The Everything Store",
+        "cn": "一网打尽"
+      },
+      "author": "Brad Stone",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 97,
+      "title": {
+        "en": "The Wright Brothers",
+        "cn": "莱特兄弟"
+      },
+      "author": "David McCullough",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 98,
+      "title": {
+        "en": "The Making of the Atomic Bomb",
+        "cn": "原子弹秘史"
+      },
+      "author": "Richard Rhodes",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 99,
+      "title": {
+        "en": "The Structure of Scientific Revolutions",
+        "cn": "科学革命的结构"
+      },
+      "author": "Thomas S. Kuhn",
+      "isRead": false,
+      "notes": []
+    },
+    {
+      "rank": 100,
+      "title": {
+        "en": "Thinking in Systems",
+        "cn": "系统之美"
+      },
+      "author": "Donella Meadows",
+      "isRead": false,
+      "notes": []
+    }
+  ]
+}

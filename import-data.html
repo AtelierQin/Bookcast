@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Import Data | FutureCast Library</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=Noto+Sans+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-body: #F5F5F2;
+            --bg-card: #FFFFFF;
+            --text-primary: #111111;
+            --text-secondary: #555555;
+            --text-tertiary: #888888;
+            --accent-color: #8C2F39;
+            --border-color: #E0E0E0;
+            --shadow-card: 0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.1);
+            --font-serif: 'EB Garamond', serif;
+            --font-sans: 'Inter', sans-serif;
+            --font-chinese: 'Noto Sans SC', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; outline: none; }
+        
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            line-height: 1.6;
+            font-size: 15px;
+            padding-bottom: 4rem;
+        }
+
+        header {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        .nav-back {
+            display: inline-flex;
+            align-items: center;
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 2rem;
+            transition: color 0.2s;
+        }
+
+        .nav-back:hover { color: var(--accent-color); }
+        .nav-back svg { margin-right: 6px; width: 16px; height: 16px; }
+
+        h1 {
+            font-family: var(--font-serif);
+            font-size: 2.5rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            font-family: var(--font-chinese);
+            margin-bottom: 3rem;
+        }
+
+        .import-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .import-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: var(--shadow-card);
+            margin-bottom: 2rem;
+        }
+
+        .upload-area {
+            border: 2px dashed var(--border-color);
+            border-radius: 8px;
+            padding: 3rem 2rem;
+            text-align: center;
+            transition: all 0.2s;
+            cursor: pointer;
+            margin-bottom: 2rem;
+        }
+
+        .upload-area:hover, .upload-area.dragover {
+            border-color: var(--accent-color);
+            background: rgba(140, 47, 57, 0.02);
+        }
+
+        .upload-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        .upload-text {
+            font-family: var(--font-chinese);
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .upload-hint {
+            font-size: 0.8rem;
+            color: var(--text-tertiary);
+            font-family: var(--font-chinese);
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .btn {
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: var(--font-sans);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #7A2832;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background-color: #f5f5f5;
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: #e5e5e5;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .import-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .warning-box {
+            background: #FFF3CD;
+            border: 1px solid #FFEAA7;
+            border-radius: 6px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            font-family: var(--font-chinese);
+            font-size: 0.9rem;
+            color: #856404;
+        }
+
+        .success-box {
+            background: #D4EDDA;
+            border: 1px solid #C3E6CB;
+            border-radius: 6px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            font-family: var(--font-chinese);
+            font-size: 0.9rem;
+            color: #155724;
+        }
+
+        .error-box {
+            background: #F8D7DA;
+            border: 1px solid #F5C6CB;
+            border-radius: 6px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            font-family: var(--font-chinese);
+            font-size: 0.9rem;
+            color: #721C24;
+        }
+
+        .file-info {
+            background: #f9f9f9;
+            border-radius: 6px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            font-family: var(--font-chinese);
+            font-size: 0.9rem;
+        }
+
+        .file-info strong {
+            color: var(--text-primary);
+        }
+
+        @media (max-width: 600px) {
+            .import-actions { flex-direction: column; }
+            .btn { justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="export-data.html" class="nav-back">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+            Back to Export
+        </a>
+        
+        <h1>Import Data</h1>
+        <div class="subtitle">Restore your reading progress and notes</div>
+    </header>
+
+    <main class="import-container">
+        <div class="import-card">
+            <div class="warning-box">
+                ⚠️ <strong>Important Notice</strong>: Importing data will overwrite all current reading progress and notes. We recommend exporting your current data as a backup first.
+            </div>
+
+            <div class="upload-area" onclick="document.getElementById('fileInput').click()">
+                <div class="upload-icon">📁</div>
+                <div class="upload-text">Click to select file or drag and drop here</div>
+                <div class="upload-hint">Supports JSON format export files</div>
+            </div>
+
+            <input type="file" id="fileInput" class="file-input" accept=".json" />
+
+            <div id="fileInfo" class="file-info" style="display: none;"></div>
+            <div id="messageBox"></div>
+
+            <div class="import-actions">
+                <button class="btn btn-primary" id="importBtn" onclick="importData()" disabled>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="17 8 12 3 7 8"></polyline>
+                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                    </svg>
+                    Import Data
+                </button>
+                
+                <a href="export-data.html" class="btn btn-secondary">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    Export Backup First
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        let selectedFile = null;
+        let fileData = null;
+
+        function init() {
+            setupEventListeners();
+        }
+
+        function setupEventListeners() {
+            const fileInput = document.getElementById('fileInput');
+            const uploadArea = document.querySelector('.upload-area');
+
+            // 文件选择
+            fileInput.addEventListener('change', handleFileSelect);
+
+            // 拖拽上传
+            uploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadArea.classList.add('dragover');
+            });
+
+            uploadArea.addEventListener('dragleave', () => {
+                uploadArea.classList.remove('dragover');
+            });
+
+            uploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadArea.classList.remove('dragover');
+                
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    handleFile(files[0]);
+                }
+            });
+        }
+
+        function handleFileSelect(e) {
+            const file = e.target.files[0];
+            if (file) {
+                handleFile(file);
+            }
+        }
+
+        function handleFile(file) {
+            selectedFile = file;
+            
+            // Check file type
+            if (!file.name.toLowerCase().endsWith('.json')) {
+                showMessage('error', 'Please select a JSON format file');
+                return;
+            }
+
+            // Display file information
+            const fileInfo = document.getElementById('fileInfo');
+            fileInfo.innerHTML = `
+                <strong>File Name</strong>: ${file.name}<br>
+                <strong>File Size</strong>: ${(file.size / 1024).toFixed(2)} KB<br>
+                <strong>Modified</strong>: ${new Date(file.lastModified).toLocaleString('en-US')}
+            `;
+            fileInfo.style.display = 'block';
+
+            // 读取文件内容
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    fileData = JSON.parse(e.target.result);
+                    validateFileData(fileData);
+                } catch (error) {
+                    showMessage('error', 'File format error. Please ensure it is a valid JSON file');
+                    fileData = null;
+                    document.getElementById('importBtn').disabled = true;
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function validateFileData(data) {
+            // Validate data structure
+            if (!data || typeof data !== 'object') {
+                showMessage('error', 'Incorrect file data format');
+                document.getElementById('importBtn').disabled = true;
+                return;
+            }
+
+            if (!data.books || !Array.isArray(data.books)) {
+                showMessage('error', 'Missing book data in file');
+                document.getElementById('importBtn').disabled = true;
+                return;
+            }
+
+            // Display preview information
+            const readCount = data.books.filter(book => book.isRead).length;
+            const totalNotes = data.books.reduce((sum, book) => sum + (book.notes ? book.notes.length : 0), 0);
+            
+            showMessage('success', `
+                File validation successful!<br>
+                <strong>Export Date</strong>: ${new Date(data.exportDate).toLocaleString('en-US')}<br>
+                <strong>Total Books</strong>: ${data.totalBooks || data.books.length}<br>
+                <strong>Books Read</strong>: ${readCount}<br>
+                <strong>Total Notes</strong>: ${totalNotes}
+            `);
+
+            document.getElementById('importBtn').disabled = false;
+        }
+
+        function showMessage(type, message) {
+            const messageBox = document.getElementById('messageBox');
+            const className = type === 'error' ? 'error-box' : 
+                             type === 'success' ? 'success-box' : 'warning-box';
+            
+            messageBox.innerHTML = `<div class="${className}">${message}</div>`;
+        }
+
+        function importData() {
+            if (!fileData) {
+                showMessage('error', 'Please select a valid data file first');
+                return;
+            }
+
+            if (!confirm('Are you sure you want to import data? This will overwrite all current reading progress and notes.')) {
+                return;
+            }
+
+            try {
+                // Import reading status
+                const readState = {};
+                fileData.books.forEach(book => {
+                    if (book.isRead) {
+                        readState[book.rank] = true;
+                    }
+                });
+                localStorage.setItem('bookReadState', JSON.stringify(readState));
+
+                // Import notes
+                let importedNotes = 0;
+                fileData.books.forEach(book => {
+                    if (book.notes && book.notes.length > 0) {
+                        const notes = book.notes.map(note => ({
+                            id: note.id || Date.now() + Math.random(),
+                            text: note.text,
+                            timestamp: note.timestamp
+                        }));
+                        localStorage.setItem(`book_notes_${book.rank}`, JSON.stringify(notes));
+                        importedNotes += notes.length;
+                    }
+                });
+
+                const readCount = Object.values(readState).filter(Boolean).length;
+                showMessage('success', `
+                    Data import successful!<br>
+                    <strong>Books Read</strong>: ${readCount}<br>
+                    <strong>Notes Imported</strong>: ${importedNotes}<br><br>
+                    <a href="Bookcast.html" style="color: var(--accent-color); text-decoration: none;">Return to Library →</a>
+                `);
+
+                // Reset form
+                document.getElementById('fileInput').value = '';
+                document.getElementById('fileInfo').style.display = 'none';
+                document.getElementById('importBtn').disabled = true;
+                selectedFile = null;
+                fileData = null;
+
+            } catch (error) {
+                console.error('Import error:', error);
+                showMessage('error', 'An error occurred during import. Please check the file format');
+            }
+        }
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
