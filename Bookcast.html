@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FutureCast Library | Curated Collection</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-body: #F5F5F2;
+            --bg-card: #FFFFFF;
+            --text-primary: #111111;
+            --text-secondary: #555555;
+            --text-tertiary: #888888;
+            --accent-color: #8C2F39;
+            --border-color: #E0E0E0;
+            --shadow-card: 0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.1);
+            --shadow-hover: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -2px rgba(0,0,0,0.04);
+            --font-serif: 'EB Garamond', serif;
+            --font-sans: 'Inter', sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; outline: none; }
+        
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            line-height: 1.5;
+            font-size: 14px;
+        }
+
+        button { font-family: inherit; border: none; background: none; cursor: pointer; }
+
+        /* --- Header --- */
+        header {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2.5rem 2rem 1.5rem;
+            text-align: center;
+        }
+
+        h1 {
+            font-family: var(--font-serif);
+            font-size: 2.5rem;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            font-family: var(--font-serif);
+            font-style: italic;
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-top: 0.25rem;
+        }
+
+        /* --- Progress --- */
+        .progress-container {
+            max-width: 300px;
+            margin: 1rem auto 0;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .progress-text {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            white-space: nowrap;
+        }
+
+        .progress-bar-bg {
+            flex: 1;
+            height: 4px;
+            background: #E5E5E5;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: var(--text-primary);
+            width: 0;
+            transition: width 0.5s ease;
+        }
+
+        /* --- Controls --- */
+        .controls-wrapper {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(245, 245, 242, 0.95);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0.75rem 0;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+        }
+
+        .controls-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .search-box {
+            position: relative;
+            flex: 1;
+            max-width: 400px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.5rem 0.75rem 0.5rem 2.25rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 0.85rem;
+            background: var(--bg-card);
+            font-family: var(--font-sans);
+        }
+
+        .search-input:focus {
+            border-color: var(--text-primary);
+            box-shadow: 0 0 0 1px var(--text-primary);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.85rem;
+            color: var(--text-tertiary);
+            pointer-events: none;
+        }
+
+        .filters {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        select {
+            padding: 0.5rem 2rem 0.5rem 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 0.8rem;
+            background-color: var(--bg-card);
+            cursor: pointer;
+            font-family: var(--font-sans);
+            color: var(--text-primary);
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%23333' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.5rem center;
+        }
+
+        .view-toggle {
+            display: flex;
+            background: #E5E5E5;
+            padding: 2px;
+            border-radius: 6px;
+            margin-left: 0.5rem;
+        }
+
+        .view-btn {
+            padding: 4px 10px;
+            font-size: 0.75rem;
+            border-radius: 4px;
+            color: var(--text-secondary);
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .view-btn.active {
+            background: #fff;
+            color: #000;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+
+        /* --- Main & Utility --- */
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem 4rem;
+            min-height: 60vh;
+        }
+
+        .hidden { display: none !important; }
+
+        /* --- Grid View --- */
+        .grid-view {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1rem;
+        }
+
+        .book-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.25rem 1rem;
+            position: relative;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            min-height: 180px;
+            box-shadow: var(--shadow-card);
+            overflow: hidden;
+            cursor: pointer; /* Indicates Clickable */
+        }
+
+        .book-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+            border-color: #ccc;
+        }
+
+        .card-rank {
+            position: absolute;
+            top: -0.5rem;
+            right: 0.25rem;
+            font-family: var(--font-serif);
+            font-size: 3.5rem;
+            color: #000;
+            opacity: 0.04;
+            font-weight: 700;
+            line-height: 1;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .card-content {
+            z-index: 1;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .title-en {
+            font-family: var(--font-serif);
+            font-size: 1.25rem;
+            font-weight: 600;
+            line-height: 1.2;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .title-cn {
+            font-family: var(--font-sans);
+            font-size: 0.8rem;
+            color: var(--text-tertiary);
+            margin-bottom: 0.75rem;
+            line-height: 1.3;
+        }
+
+        .author {
+            font-family: var(--font-sans);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+            font-weight: 600;
+            margin-top: auto;
+            padding-top: 0.75rem;
+            border-top: 1px solid #F0F0F0;
+        }
+
+        .card-actions {
+            margin-top: 0.75rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 2;
+        }
+
+        .status-label {
+            font-size: 0.7rem;
+            color: var(--text-tertiary);
+            font-weight: 500;
+        }
+
+        /* --- List View (Table) --- */
+        .table-view {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            font-size: 0.9rem;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            text-align: left;
+            padding: 0.75rem 1.5rem;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: var(--text-tertiary);
+            font-weight: 600;
+            border-bottom: 1px solid var(--border-color);
+            background: #FAFAFA;
+            cursor: pointer;
+        }
+        
+        th:hover { color: var(--text-primary); }
+
+        td {
+            padding: 0.6rem 1.5rem;
+            border-bottom: 1px solid #F0F0F0;
+            vertical-align: middle;
+        }
+
+        tr { cursor: pointer; }
+        tr:last-child td { border-bottom: none; }
+        tr:hover { background-color: #FAFAF8; }
+
+        .table-rank {
+            font-family: var(--font-serif);
+            font-weight: 600;
+            color: var(--text-tertiary);
+            width: 60px;
+        }
+
+        .table-title {
+            font-family: var(--font-serif);
+            font-size: 1.05rem;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+        
+        .table-meta {
+            font-size: 0.8rem;
+            color: var(--text-tertiary);
+        }
+
+        /* Shared Check Button */
+        .check-btn {
+            width: 24px;
+            height: 24px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            background: transparent;
+            transition: all 0.2s;
+            position: relative;
+            z-index: 10; /* Ensure button sits above card link */
+        }
+
+        .check-btn:hover {
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+            background: rgba(140, 47, 57, 0.05);
+        }
+
+        .check-btn svg {
+            width: 14px;
+            height: 14px;
+            stroke-width: 2.5;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        /* Read State Styling */
+        .is-read { background-color: #FAFAF8; }
+        .grid-view .book-card.is-read { background-color: #FAFAF8; }
+
+        .is-read .title-en, 
+        .is-read .table-title {
+            text-decoration: line-through;
+            text-decoration-color: var(--accent-color);
+            opacity: 0.6;
+        }
+
+        .is-read .check-btn {
+            background: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+        
+        .is-read .check-btn:hover {
+            opacity: 0.9;
+        }
+
+        .is-read .check-btn svg {
+            opacity: 1;
+            stroke: #fff;
+        }
+        
+        .is-read .status-label { color: var(--accent-color); }
+
+        /* --- Pagination --- */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 0.25rem;
+            margin-top: 2rem;
+            padding-bottom: 1rem;
+        }
+
+        .page-btn {
+            min-width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            border: 1px solid transparent;
+        }
+
+        .page-btn:hover:not(:disabled) {
+            background: #fff;
+            border-color: var(--border-color);
+            color: #000;
+        }
+
+        .page-btn.active {
+            background: var(--text-primary);
+            color: #fff;
+        }
+
+        .page-btn:disabled { opacity: 0.3; }
+
+        /* --- Responsive --- */
+        @media (max-width: 768px) {
+            .controls-inner { flex-direction: column; padding: 0 1rem; align-items: stretch; }
+            .search-box { max-width: none; }
+            .filters { justify-content: space-between; }
+            
+            /* Grid Mobile */
+            .grid-view { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 0.75rem; }
+            .book-card { min-height: 160px; padding: 1rem 0.75rem; }
+            .title-en { font-size: 1.1rem; }
+            .card-rank { font-size: 2.5rem; }
+            
+            /* List View Mobile Fixes */
+            thead { display: none; } 
+            
+            .table-view tr { 
+                display: block; 
+                padding: 1rem; 
+                border-bottom: 1px solid var(--border-color); 
+                position: relative;
+            }
+            
+            .table-view td { 
+                display: block; 
+                padding: 0.15rem 0; 
+                border: none; 
+            }
+
+            .table-rank { 
+                font-size: 0.9rem; 
+                color: var(--accent-color);
+                opacity: 0.8;
+                margin-bottom: 0.25rem;
+            }
+
+            .table-check-cell { 
+                position: absolute; 
+                right: 1rem; 
+                top: 50%; 
+                transform: translateY(-50%);
+                padding: 0 !important;
+                width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>FutureCast Library</h1>
+        <div class="subtitle">100 Books to shape your worldview.</div>
+        
+        <div class="progress-container">
+            <div class="progress-text" id="progress-text">0 / 100</div>
+            <div class="progress-bar-bg">
+                <div class="progress-bar-fill" id="progress-fill"></div>
+            </div>
+        </div>
+    </header>
+
+    <div class="controls-wrapper">
+        <div class="controls-inner">
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" class="search-input" id="searchInput" placeholder="Search by title or author...">
+            </div>
+            
+            <div class="filters">
+                <select id="filterSelect">
+                    <option value="all">All Books</option>
+                    <option value="read">Read</option>
+                    <option value="unread">Unread</option>
+                </select>
+
+                <div class="view-toggle">
+                    <button class="view-btn active" data-view="grid">Grid</button>
+                    <button class="view-btn" data-view="list">List</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <main>
+        <div id="gridView" class="grid-view"></div>
+        <div id="listView" class="table-view hidden">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th data-sort="rank" style="width: 80px;">Rank</th>
+                        <th data-sort="title">Book Details</th>
+                        <th data-sort="author">Author</th>
+                        <th style="text-align: right; width: 60px;">Status</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody"></tbody>
+            </table>
+        </div>
+        
+        <div id="pagination" class="pagination"></div>
+
+        <div id="emptyState" class="hidden" style="text-align:center; padding: 3rem; color: #999;">
+            No books found.
+        </div>
+    </main>
+
+    <script>
+        const books = [
+            { rank: 1, en: "Sapiens", cn: "人类简史", author: "Yuval Noah Harari" },
+            { rank: 2, en: "Man's Search for Meaning", cn: "活出意义来", author: "Viktor E. Frankl" },
+            { rank: 3, en: "Principles", cn: "原则", author: "Ray Dalio" },
+            { rank: 4, en: "Zero to One", cn: "从0到1", author: "Peter Thiel" },
+            { rank: 5, en: "Thinking, Fast and Slow", cn: "思考，快与慢", author: "Daniel Kahneman" },
+            { rank: 6, en: "Influence", cn: "影响力", author: "Robert B. Cialdini" },
+            { rank: 7, en: "The 4-Hour Workweek", cn: "每周工作4小时", author: "Tim Ferriss" },
+            { rank: 8, en: "The Hard Thing About Hard Things", cn: "创业维艰", author: "Ben Horowitz" },
+            { rank: 9, en: "Shoe Dog", cn: "鞋狗", author: "Phil Knight" },
+            { rank: 10, en: "Atlas Shrugged", cn: "阿特拉斯耸耸肩", author: "Ayn Rand" },
+            { rank: 11, en: "The Innovator's Dilemma", cn: "创新者的窘境", author: "Clayton M. Christensen" },
+            { rank: 12, en: "Atomic Habits", cn: "原子习惯", author: "James Clear" },
+            { rank: 13, en: "The Alchemist", cn: "牧羊少年奇幻之旅", author: "Paulo Coelho" },
+            { rank: 14, en: "Meditations", cn: "沉思录", author: "Marcus Aurelius" },
+            { rank: 15, en: "The War of Art", cn: "艺术战争", author: "Steven Pressfield" },
+            { rank: 16, en: "High Output Management", cn: "格鲁夫给经理人的第一课", author: "Andrew Grove" },
+            { rank: 17, en: "Antifragile", cn: "反脆弱", author: "Nassim Nicholas Taleb" },
+            { rank: 18, en: "Steve Jobs", cn: "史蒂夫·乔布斯传", author: "Walter Isaacson" },
+            { rank: 19, en: "How To Win Friends and Influence People", cn: "人性的弱点", author: "Dale Carnegie" },
+            { rank: 20, en: "Dune", cn: "沙丘", author: "Frank Herbert" },
+            { rank: 21, en: "Good to Great", cn: "从优秀到卓越", author: "Jim Collins" },
+            { rank: 22, en: "Mindset", cn: "终身成长", author: "Carol S. Dweck" },
+            { rank: 23, en: "Harry Potter", cn: "哈利·波特", author: "J.K. Rowling" },
+            { rank: 24, en: "The Black Swan", cn: "黑天鹅", author: "Nassim Nicholas Taleb" },
+            { rank: 25, en: "Surely You're Joking, Mr. Feynman!", cn: "别闹了，费曼先生", author: "Richard P. Feynman" },
+            { rank: 26, en: "1984", cn: "1984", author: "George Orwell" },
+            { rank: 27, en: "Outliers", cn: "异类", author: "Malcolm Gladwell" },
+            { rank: 28, en: "The Lean Startup", cn: "精益创业", author: "Eric Ries" },
+            { rank: 29, en: "Poor Charlie's Almanack", cn: "穷查理宝典", author: "Charlie Munger" },
+            { rank: 30, en: "Snow Crash", cn: "雪崩", author: "Neal Stephenson" },
+            { rank: 31, en: "Range", cn: "跨能致勝 (通才)", author: "David Epstein" },
+            { rank: 32, en: "The Four Agreements", cn: "通往心灵自由的四个约定", author: "Don Miguel Ruiz" },
+            { rank: 33, en: "Elon Musk", cn: "硅谷钢铁侠", author: "Ashlee Vance" },
+            { rank: 34, en: "Siddhartha", cn: "悉达多", author: "Hermann Hesse" },
+            { rank: 35, en: "Skin in the Game", cn: "非对称风险", author: "Nassim Nicholas Taleb" },
+            { rank: 36, en: "Tools of Titans", cn: "巨人的工具", author: "Tim Ferriss" },
+            { rank: 37, en: "The Selfish Gene", cn: "自私的基因", author: "Richard Dawkins" },
+            { rank: 38, en: "The Intelligent Investor", cn: "聪明的投资者", author: "Benjamin Graham" },
+            { rank: 39, en: "Essentialism", cn: "精要主义", author: "Greg McKeown" },
+            { rank: 40, en: "The Lord of the Rings", cn: "指环王", author: "J.R.R. Tolkien" },
+            { rank: 41, en: "The Ride of a Lifetime", cn: "一生的旅程", author: "Robert Iger" },
+            { rank: 42, en: "The Lessons of History", cn: "历史的教训", author: "Will & Ariel Durant" },
+            { rank: 43, en: "Loonshots", cn: "相变", author: "Safi Bahcall" },
+            { rank: 44, en: "The Fountainhead", cn: "源泉", author: "Ayn Rand" },
+            { rank: 45, en: "The Three-Body Problem", cn: "三体", author: "Cixin Liu" },
+            { rank: 46, en: "How to Change Your Mind", cn: "改變你的心智", author: "Michael Pollan" },
+            { rank: 47, en: "Tao Te Ching", cn: "道德经", author: "Lao Tzu" },
+            { rank: 48, en: "12 Rules for Life", cn: "人生十二法则", author: "Jordan Peterson" },
+            { rank: 49, en: "Crime and Punishment", cn: "罪与罚", author: "Fyodor Dostoyevsky" },
+            { rank: 50, en: "When Breath Becomes Air", cn: "当呼吸化为空气", author: "Paul Kalanithi" },
+            { rank: 51, en: "The Great Gatsby", cn: "了不起的盖茨比", author: "F. Scott Fitzgerald" },
+            { rank: 52, en: "Guns, Germs, and Steel", cn: "枪炮、病菌与钢铁", author: "Jared Diamond" },
+            { rank: 53, en: "The Power of Habit", cn: "习惯的力量", author: "Charles Duhigg" },
+            { rank: 54, en: "The Catcher in the Rye", cn: "麦田里的守望者", author: "J.D. Salinger" },
+            { rank: 55, en: "The Design of Everyday Things", cn: "设计心理学", author: "Don Norman" },
+            { rank: 56, en: "Creativity, Inc.", cn: "创新公司", author: "Ed Catmull" },
+            { rank: 57, en: "The 7 Habits of Highly Effective People", cn: "高效能人士的七个习惯", author: "Stephen R. Covey" },
+            { rank: 58, en: "Deep Work", cn: "深度工作", author: "Cal Newport" },
+            { rank: 59, en: "The Art of War", cn: "孙子兵法", author: "Sun Tzu" },
+            { rank: 60, en: "Fooled by Randomness", cn: "随机漫步的傻瓜", author: "Nassim Nicholas Taleb" },
+            { rank: 61, en: "The Checklist Manifesto", cn: "清单革命", author: "Atul Gawande" },
+            { rank: 62, en: "The Courage to Be Disliked", cn: "被讨厌的勇气", author: "Ichiro Kishimi" },
+            { rank: 63, en: "Brave New World", cn: "美丽新世界", author: "Aldous Huxley" },
+            { rank: 64, en: "Homo Deus", cn: "未来简史", author: "Yuval Noah Harari" },
+            { rank: 65, en: "Zen and the Art of Motorcycle Maintenance", cn: "禅与摩托车维修艺术", author: "Robert M. Pirsig" },
+            { rank: 66, en: "The Score Takes Care of Itself", cn: "硬派领导哲学", author: "Bill Walsh" },
+            { rank: 67, en: "Crossing the Chasm", cn: "跨越鸿沟", author: "Geoffrey A. Moore" },
+            { rank: 68, en: "Extreme Ownership", cn: "极端所有权", author: "Jocko Willink" },
+            { rank: 69, en: "High Growth Handbook", cn: "高成长手册", author: "Elad Gil" },
+            { rank: 70, en: "Project Hail Mary", cn: "挽救计划", author: "Andy Weir" },
+            { rank: 71, en: "Made to Stick", cn: "粘住", author: "Chip & Dan Heath" },
+            { rank: 72, en: "The Effective Executive", cn: "卓有成效的管理者", author: "Peter F. Drucker" },
+            { rank: 73, en: "The Undoing Project", cn: "橡皮擦计划", author: "Michael Lewis" },
+            { rank: 74, en: "Why We Sleep", cn: "为什么要睡觉", author: "Matthew Walker" },
+            { rank: 75, en: "Anna Karenina", cn: "安娜·卡列尼娜", author: "Leo Tolstoy" },
+            { rank: 76, en: "Benjamin Franklin", cn: "富兰克林传", author: "Walter Isaacson" },
+            { rank: 77, en: "Animal Farm", cn: "动物庄园", author: "George Orwell" },
+            { rank: 78, en: "The Almanack of Naval Ravikant", cn: "纳瓦尔宝典", author: "Eric Jorgenson" },
+            { rank: 79, en: "The Psychology of Money", cn: "金钱心理学", author: "Morgan Housel" },
+            { rank: 80, en: "Measure What Matters", cn: "衡量什么重要", author: "John Doerr" },
+            { rank: 81, en: "Think and Grow Rich", cn: "思考致富", author: "Napoleon Hill" },
+            { rank: 82, en: "Only the Paranoid Survive", cn: "只有偏执狂才能生存", author: "Andrew Grove" },
+            { rank: 83, en: "Can't Hurt Me", cn: "我，刀枪不入", author: "David Goggins" },
+            { rank: 84, en: "Foundation", cn: "基地", author: "Isaac Asimov" },
+            { rank: 85, en: "Blitzscaling", cn: "闪电式扩张", author: "Reid Hoffman" },
+            { rank: 86, en: "Seeking Wisdom", cn: "探索智慧", author: "Peter Bevelin" },
+            { rank: 87, en: "Digital Minimalism", cn: "数字极简主义", author: "Cal Newport" },
+            { rank: 88, en: "How Not to Die", cn: "救命", author: "Dr. Michael Greger" },
+            { rank: 89, en: "The Art of Possibility", cn: "可能性艺术", author: "Rosamund Stone Zander" },
+            { rank: 90, en: "The Righteous Mind", cn: "正义之心", author: "Jonathan Haidt" },
+            { rank: 91, en: "The Book of Five Rings", cn: "五轮书", author: "Miyamoto Musashi" },
+            { rank: 92, en: "The Code Breaker", cn: "破解者", author: "Walter Isaacson" },
+            { rank: 93, en: "The Emperor of All Maladies", cn: "万病之王", author: "Siddhartha Mukherjee" },
+            { rank: 94, en: "The Gene", cn: "基因", author: "Siddhartha Mukherjee" },
+            { rank: 95, en: "The Innovators", cn: "创新者", author: "Walter Isaacson" },
+            { rank: 96, en: "The Everything Store", cn: "一网打尽", author: "Brad Stone" },
+            { rank: 97, en: "The Wright Brothers", cn: "莱特兄弟", author: "David McCullough" },
+            { rank: 98, en: "The Making of the Atomic Bomb", cn: "原子弹秘史", author: "Richard Rhodes" },
+            { rank: 99, en: "The Structure of Scientific Revolutions", cn: "科学革命的结构", author: "Thomas S. Kuhn" },
+            { rank: 100, en: "Thinking in Systems", cn: "系统之美", author: "Donella Meadows" }
+        ];
+
+        let currentView = 'grid';
+        let currentPage = 1;
+        let pageSize = Infinity;
+        let searchTerm = '';
+        let filterType = 'all';
+        let sortField = 'rank';
+        let sortDirection = 'asc';
+        let readState = JSON.parse(localStorage.getItem('bookReadState')) || {};
+
+        const elements = {
+            gridView: document.getElementById('gridView'),
+            listView: document.getElementById('listView'),
+            tableBody: document.getElementById('tableBody'),
+            pagination: document.getElementById('pagination'),
+            searchInput: document.getElementById('searchInput'),
+            filterSelect: document.getElementById('filterSelect'),
+            progressText: document.getElementById('progress-text'),
+            progressFill: document.getElementById('progress-fill'),
+            emptyState: document.getElementById('emptyState'),
+            viewButtons: document.querySelectorAll('.view-btn'),
+            sortHeaders: document.querySelectorAll('[data-sort]')
+        };
+
+        function init() {
+            setupEventListeners();
+            updateProgress();
+            renderCurrentView();
+        }
+
+        function setupEventListeners() {
+            elements.viewButtons.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const targetBtn = e.target.closest('.view-btn');
+                    if(targetBtn) {
+                        const view = targetBtn.dataset.view;
+                        switchView(view);
+                    }
+                });
+            });
+
+            elements.searchInput.addEventListener('input', debounce((e) => {
+                searchTerm = e.target.value.toLowerCase();
+                currentPage = 1;
+                renderCurrentView();
+            }, 300));
+
+            elements.filterSelect.addEventListener('change', (e) => {
+                filterType = e.target.value;
+                currentPage = 1;
+                renderCurrentView();
+            });
+
+            elements.sortHeaders.forEach(header => {
+                header.addEventListener('click', () => {
+                    const field = header.dataset.sort;
+                    if (sortField === field) {
+                        sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+                    } else {
+                        sortField = field;
+                        sortDirection = 'asc';
+                    }
+                    renderCurrentView();
+                });
+            });
+        }
+
+        function switchView(view) {
+            currentView = view;
+            elements.viewButtons.forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.view === view);
+            });
+            renderCurrentView();
+        }
+
+        function getFilteredAndSortedBooks() {
+            let filtered = [...books];
+            
+            if (searchTerm) {
+                filtered = filtered.filter(b => 
+                    b.en.toLowerCase().includes(searchTerm) || 
+                    b.cn.toLowerCase().includes(searchTerm) || 
+                    b.author.toLowerCase().includes(searchTerm)
+                );
+            }
+            
+            if (filterType === 'read') filtered = filtered.filter(b => readState[b.rank]);
+            if (filterType === 'unread') filtered = filtered.filter(b => !readState[b.rank]);
+
+            filtered.sort((a, b) => {
+                let valA = sortField === 'rank' ? a.rank : (sortField === 'title' ? a.en : a.author).toLowerCase();
+                let valB = sortField === 'rank' ? b.rank : (sortField === 'title' ? b.en : b.author).toLowerCase();
+                return sortDirection === 'asc' ? (valA < valB ? -1 : 1) : (valA > valB ? -1 : 1);
+            });
+            
+            return filtered;
+        }
+
+        function renderCurrentView() {
+            const allBooks = getFilteredAndSortedBooks();
+            const start = pageSize === Infinity ? 0 : (currentPage - 1) * pageSize;
+            const pagedBooks = pageSize === Infinity ? allBooks : allBooks.slice(start, start + pageSize);
+            
+            if (allBooks.length === 0) {
+                elements.emptyState.classList.remove('hidden');
+                elements.gridView.classList.add('hidden');
+                elements.listView.classList.add('hidden');
+                elements.pagination.innerHTML = '';
+                return;
+            }
+            
+            elements.emptyState.classList.add('hidden');
+            
+            if (currentView === 'grid') {
+                elements.gridView.classList.remove('hidden');
+                elements.listView.classList.add('hidden');
+                
+                elements.gridView.innerHTML = pagedBooks.map(b => `
+                    <div class="book-card ${readState[b.rank] ? 'is-read' : ''}" onclick="window.location.href='BookNotes.html?id=${b.rank}'">
+                        <div class="card-rank">${b.rank}</div>
+                        <div class="card-content">
+                            <div class="title-en">${b.en}</div>
+                            <div class="title-cn">${b.cn}</div>
+                            <div class="author">${b.author}</div>
+                        </div>
+                        <div class="card-actions">
+                            <span class="status-label">${readState[b.rank] ? 'Completed' : 'To Read'}</span>
+                            <button class="check-btn" onclick="event.stopPropagation(); toggleBookStatus(${b.rank})" title="Toggle Read Status">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+            } else {
+                elements.gridView.classList.add('hidden');
+                elements.listView.classList.remove('hidden');
+                
+                elements.tableBody.innerHTML = pagedBooks.map(b => `
+                    <tr class="${readState[b.rank] ? 'is-read' : ''}" onclick="window.location.href='BookNotes.html?id=${b.rank}'">
+                        <td class="table-rank">#${b.rank}</td>
+                        <td>
+                            <div class="table-title">${b.en}</div>
+                            <div class="table-meta">${b.cn}</div>
+                        </td>
+                        <td style="color:var(--text-secondary); font-size:0.85rem">${b.author}</td>
+                        <td class="table-check-cell" style="text-align:right">
+                            <button class="check-btn" style="margin-left:auto" onclick="event.stopPropagation(); toggleBookStatus(${b.rank})" title="Toggle Read Status">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            </button>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+            
+            renderPagination(allBooks.length);
+        }
+
+        function renderPagination(total) {
+            if (pageSize === Infinity) {
+                elements.pagination.innerHTML = '';
+                return;
+            }
+            
+            const pages = Math.ceil(total / pageSize);
+            let html = '';
+            
+            html += `<button class="page-btn" ${currentPage === 1 ? 'disabled' : ''} onclick="changePage(${currentPage - 1})">‹</button>`;
+            
+            let min = Math.max(1, currentPage - 2);
+            let max = Math.min(pages, min + 4);
+            if (max - min < 4) min = Math.max(1, max - 4);
+
+            for (let i = min; i <= max; i++) {
+                html += `<button class="page-btn ${i === currentPage ? 'active' : ''}" onclick="changePage(${i})">${i}</button>`;
+            }
+            
+            html += `<button class="page-btn" ${currentPage === pages ? 'disabled' : ''} onclick="changePage(${currentPage + 1})">›</button>`;
+            elements.pagination.innerHTML = html;
+        }
+
+        function toggleBookStatus(rank) {
+            readState[rank] = !readState[rank];
+            localStorage.setItem('bookReadState', JSON.stringify(readState));
+            updateProgress();
+            renderCurrentView();
+        }
+
+        function updateProgress() {
+            const count = Object.values(readState).filter(Boolean).length;
+            elements.progressText.innerText = `${count} / ${books.length}`;
+            elements.progressFill.style.width = `${(count / books.length) * 100}%`;
+        }
+
+        function changePage(p) {
+            currentPage = p;
+            renderCurrentView();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function debounce(func, wait) {
+            let timeout;
+            return (...args) => {
+                clearTimeout(timeout);
+                timeout = setTimeout(() => func(...args), wait);
+            };
+        }
+
+        document.addEventListener('DOMContentLoaded', init);
+        window.changePage = changePage;
+        window.toggleBookStatus = toggleBookStatus;
+    </script>
+</body>
+</html>

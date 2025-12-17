@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Notes | FutureCast Library</title>
+    <!-- 字体: EB Garamond (经典) + Inter (现代) + Noto Sans SC (中文) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=Noto+Sans+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-body: #F5F5F2;
+            --bg-card: #FFFFFF;
+            --text-primary: #111111;
+            --text-secondary: #555555;
+            --text-tertiary: #888888;
+            --accent-color: #8C2F39;
+            --border-color: #E0E0E0;
+            --shadow-card: 0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.1);
+            --font-serif: 'EB Garamond', serif;
+            --font-sans: 'Inter', sans-serif;
+            --font-chinese: 'Noto Sans SC', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; outline: none; }
+        
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            line-height: 1.6;
+            font-size: 15px;
+            padding-bottom: 4rem;
+        }
+
+        /* --- Header / Navigation --- */
+        header {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        .nav-back {
+            display: inline-flex;
+            align-items: center;
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 2rem;
+            transition: color 0.2s;
+        }
+
+        .nav-back:hover { color: var(--accent-color); }
+        .nav-back svg { margin-right: 6px; width: 16px; height: 16px; }
+
+        /* --- Book Header Info --- */
+        .book-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .book-rank {
+            font-family: var(--font-serif);
+            font-size: 1.2rem;
+            color: var(--accent-color);
+            font-style: italic;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        h1.book-title {
+            font-family: var(--font-serif);
+            font-size: 2.8rem;
+            font-weight: 500;
+            line-height: 1.1;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        /* 中文书名使用无衬线字体 */
+        .book-meta {
+            font-family: var(--font-chinese);
+        }
+
+        .book-meta {
+            color: var(--text-secondary);
+            font-family: var(--font-chinese);
+            font-size: 0.9rem;
+            letter-spacing: 0.02em;
+            margin-bottom: 1.5rem;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid var(--border-color);
+            background: #fff;
+            color: var(--text-secondary);
+            font-family: var(--font-sans);
+        }
+
+        .status-badge:hover {
+            background: #f0f0f0;
+        }
+
+        .status-badge.is-active {
+            background-color: var(--accent-color);
+            color: white;
+            border-color: var(--accent-color);
+        }
+
+        .status-badge svg {
+            width: 14px;
+            height: 14px;
+            margin-right: 6px;
+            stroke-width: 2.5;
+        }
+
+        /* --- Editor Section --- */
+        .editor-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .input-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-card);
+            transition: box-shadow 0.2s;
+        }
+
+        .input-card:focus-within {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border-color: #ccc;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 240px;
+            border: none;
+            resize: vertical;
+            font-family: var(--font-chinese);
+            font-size: 1rem;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: transparent;
+        }
+
+        textarea::placeholder { color: #CCC; font-style: italic; }
+
+        .editor-footer {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #F5F5F5;
+        }
+
+        .btn-save {
+            background-color: var(--text-primary);
+            color: #fff;
+            border: none;
+            padding: 0.6rem 1.5rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: var(--font-sans);
+        }
+
+        .btn-save:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-1px);
+        }
+
+        /* --- Notes Stream --- */
+        .notes-stream {
+            max-width: 800px;
+            margin: 3rem auto 0;
+            padding: 0 1.5rem;
+        }
+
+        .section-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-tertiary);
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .note-card {
+            background: var(--bg-card);
+            border-left: 3px solid var(--accent-color);
+            padding: 1.5rem 2rem;
+            margin-bottom: 1.5rem;
+            border-radius: 0 8px 8px 0;
+            box-shadow: var(--shadow-card);
+            position: relative;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .note-content {
+            font-family: var(--font-chinese);
+            font-size: 1rem;
+            color: var(--text-primary);
+            white-space: pre-wrap;
+            margin-bottom: 1rem;
+        }
+
+        .note-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            color: var(--text-tertiary);
+            font-family: var(--font-sans);
+        }
+
+        .btn-delete {
+            background: none;
+            border: none;
+            color: #ccc;
+            cursor: pointer;
+            font-size: 0.8rem;
+            padding: 4px 8px;
+            border-radius: 4px;
+            transition: color 0.2s;
+        }
+
+        .btn-delete:hover { color: var(--accent-color); background: #FFF5F5; }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-tertiary);
+            font-style: italic;
+            font-family: var(--font-serif);
+            opacity: 0.7;
+        }
+
+        @media (max-width: 600px) {
+            h1.book-title { font-size: 2rem; }
+            .note-card { padding: 1.25rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="Bookcast.html" class="nav-back">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+            Back to Library
+        </a>
+        
+        <div class="book-header" id="bookHeader">
+            <!-- Content injected via JS -->
+        </div>
+    </header>
+
+    <main>
+        <!-- Editor -->
+        <div class="editor-container">
+            <div class="input-card">
+                <textarea id="noteInput" placeholder="Write your thoughts, quotes, or key takeaways here..."></textarea>
+                <div class="editor-footer">
+                    <button class="btn-save" onclick="addNote()">Save Note</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notes List -->
+        <div class="notes-stream">
+            <div class="section-label">Previous Notes</div>
+            <div id="notesList">
+                <!-- Notes injected here -->
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const booksData = [
+            { rank: 1, en: "Sapiens", cn: "人类简史", author: "Yuval Noah Harari" },
+            { rank: 2, en: "Man's Search for Meaning", cn: "活出意义来", author: "Viktor E. Frankl" },
+            { rank: 3, en: "Principles", cn: "原则", author: "Ray Dalio" },
+            { rank: 4, en: "Zero to One", cn: "从0到1", author: "Peter Thiel" },
+            { rank: 5, en: "Thinking, Fast and Slow", cn: "思考，快与慢", author: "Daniel Kahneman" },
+            { rank: 6, en: "Influence", cn: "影响力", author: "Robert B. Cialdini" },
+            { rank: 7, en: "The 4-Hour Workweek", cn: "每周工作4小时", author: "Tim Ferriss" },
+            { rank: 8, en: "The Hard Thing About Hard Things", cn: "创业维艰", author: "Ben Horowitz" },
+            { rank: 9, en: "Shoe Dog", cn: "鞋狗", author: "Phil Knight" },
+            { rank: 10, en: "Atlas Shrugged", cn: "阿特拉斯耸耸肩", author: "Ayn Rand" },
+            { rank: 11, en: "The Innovator's Dilemma", cn: "创新者的窘境", author: "Clayton M. Christensen" },
+            { rank: 12, en: "Atomic Habits", cn: "原子习惯", author: "James Clear" },
+            { rank: 13, en: "The Alchemist", cn: "牧羊少年奇幻之旅", author: "Paulo Coelho" },
+            { rank: 14, en: "Meditations", cn: "沉思录", author: "Marcus Aurelius" },
+            { rank: 15, en: "The War of Art", cn: "艺术战争", author: "Steven Pressfield" },
+            { rank: 16, en: "High Output Management", cn: "格鲁夫给经理人的第一课", author: "Andrew Grove" },
+            { rank: 17, en: "Antifragile", cn: "反脆弱", author: "Nassim Nicholas Taleb" },
+            { rank: 18, en: "Steve Jobs", cn: "史蒂夫·乔布斯传", author: "Walter Isaacson" },
+            { rank: 19, en: "How To Win Friends and Influence People", cn: "人性的弱点", author: "Dale Carnegie" },
+            { rank: 20, en: "Dune", cn: "沙丘", author: "Frank Herbert" },
+            { rank: 21, en: "Good to Great", cn: "从优秀到卓越", author: "Jim Collins" },
+            { rank: 22, en: "Mindset", cn: "终身成长", author: "Carol S. Dweck" },
+            { rank: 23, en: "Harry Potter", cn: "哈利·波特", author: "J.K. Rowling" },
+            { rank: 24, en: "The Black Swan", cn: "黑天鹅", author: "Nassim Nicholas Taleb" },
+            { rank: 25, en: "Surely You're Joking, Mr. Feynman!", cn: "别闹了，费曼先生", author: "Richard P. Feynman" },
+            { rank: 26, en: "1984", cn: "1984", author: "George Orwell" },
+            { rank: 27, en: "Outliers", cn: "异类", author: "Malcolm Gladwell" },
+            { rank: 28, en: "The Lean Startup", cn: "精益创业", author: "Eric Ries" },
+            { rank: 29, en: "Poor Charlie's Almanack", cn: "穷查理宝典", author: "Charlie Munger" },
+            { rank: 30, en: "Snow Crash", cn: "雪崩", author: "Neal Stephenson" },
+            { rank: 31, en: "Range", cn: "跨能致勝 (通才)", author: "David Epstein" },
+            { rank: 32, en: "The Four Agreements", cn: "通往心灵自由的四个约定", author: "Don Miguel Ruiz" },
+            { rank: 33, en: "Elon Musk", cn: "硅谷钢铁侠", author: "Ashlee Vance" },
+            { rank: 34, en: "Siddhartha", cn: "悉达多", author: "Hermann Hesse" },
+            { rank: 35, en: "Skin in the Game", cn: "非对称风险", author: "Nassim Nicholas Taleb" },
+            { rank: 36, en: "Tools of Titans", cn: "巨人的工具", author: "Tim Ferriss" },
+            { rank: 37, en: "The Selfish Gene", cn: "自私的基因", author: "Richard Dawkins" },
+            { rank: 38, en: "The Intelligent Investor", cn: "聪明的投资者", author: "Benjamin Graham" },
+            { rank: 39, en: "Essentialism", cn: "精要主义", author: "Greg McKeown" },
+            { rank: 40, en: "The Lord of the Rings", cn: "指环王", author: "J.R.R. Tolkien" },
+            { rank: 41, en: "The Ride of a Lifetime", cn: "一生的旅程", author: "Robert Iger" },
+            { rank: 42, en: "The Lessons of History", cn: "历史的教训", author: "Will & Ariel Durant" },
+            { rank: 43, en: "Loonshots", cn: "相变", author: "Safi Bahcall" },
+            { rank: 44, en: "The Fountainhead", cn: "源泉", author: "Ayn Rand" },
+            { rank: 45, en: "The Three-Body Problem", cn: "三体", author: "Cixin Liu" },
+            { rank: 46, en: "How to Change Your Mind", cn: "改變你的心智", author: "Michael Pollan" },
+            { rank: 47, en: "Tao Te Ching", cn: "道德经", author: "Lao Tzu" },
+            { rank: 48, en: "12 Rules for Life", cn: "人生十二法则", author: "Jordan Peterson" },
+            { rank: 49, en: "Crime and Punishment", cn: "罪与罚", author: "Fyodor Dostoyevsky" },
+            { rank: 50, en: "When Breath Becomes Air", cn: "当呼吸化为空气", author: "Paul Kalanithi" },
+            { rank: 51, en: "The Great Gatsby", cn: "了不起的盖茨比", author: "F. Scott Fitzgerald" },
+            { rank: 52, en: "Guns, Germs, and Steel", cn: "枪炮、病菌与钢铁", author: "Jared Diamond" },
+            { rank: 53, en: "The Power of Habit", cn: "习惯的力量", author: "Charles Duhigg" },
+            { rank: 54, en: "The Catcher in the Rye", cn: "麦田里的守望者", author: "J.D. Salinger" },
+            { rank: 55, en: "The Design of Everyday Things", cn: "设计心理学", author: "Don Norman" },
+            { rank: 56, en: "Creativity, Inc.", cn: "创新公司", author: "Ed Catmull" },
+            { rank: 57, en: "The 7 Habits of Highly Effective People", cn: "高效能人士的七个习惯", author: "Stephen R. Covey" },
+            { rank: 58, en: "Deep Work", cn: "深度工作", author: "Cal Newport" },
+            { rank: 59, en: "The Art of War", cn: "孙子兵法", author: "Sun Tzu" },
+            { rank: 60, en: "Fooled by Randomness", cn: "随机漫步的傻瓜", author: "Nassim Nicholas Taleb" },
+            { rank: 61, en: "The Checklist Manifesto", cn: "清单革命", author: "Atul Gawande" },
+            { rank: 62, en: "The Courage to Be Disliked", cn: "被讨厌的勇气", author: "Ichiro Kishimi" },
+            { rank: 63, en: "Brave New World", cn: "美丽新世界", author: "Aldous Huxley" },
+            { rank: 64, en: "Homo Deus", cn: "未来简史", author: "Yuval Noah Harari" },
+            { rank: 65, en: "Zen and the Art of Motorcycle Maintenance", cn: "禅与摩托车维修艺术", author: "Robert M. Pirsig" },
+            { rank: 66, en: "The Score Takes Care of Itself", cn: "硬派领导哲学", author: "Bill Walsh" },
+            { rank: 67, en: "Crossing the Chasm", cn: "跨越鸿沟", author: "Geoffrey A. Moore" },
+            { rank: 68, en: "Extreme Ownership", cn: "极端所有权", author: "Jocko Willink" },
+            { rank: 69, en: "High Growth Handbook", cn: "高成长手册", author: "Elad Gil" },
+            { rank: 70, en: "Project Hail Mary", cn: "挽救计划", author: "Andy Weir" },
+            { rank: 71, en: "Made to Stick", cn: "粘住", author: "Chip & Dan Heath" },
+            { rank: 72, en: "The Effective Executive", cn: "卓有成效的管理者", author: "Peter F. Drucker" },
+            { rank: 73, en: "The Undoing Project", cn: "橡皮擦计划", author: "Michael Lewis" },
+            { rank: 74, en: "Why We Sleep", cn: "为什么要睡觉", author: "Matthew Walker" },
+            { rank: 75, en: "Anna Karenina", cn: "安娜·卡列尼娜", author: "Leo Tolstoy" },
+            { rank: 76, en: "Benjamin Franklin", cn: "富兰克林传", author: "Walter Isaacson" },
+            { rank: 77, en: "Animal Farm", cn: "动物庄园", author: "George Orwell" },
+            { rank: 78, en: "The Almanack of Naval Ravikant", cn: "纳瓦尔宝典", author: "Eric Jorgenson" },
+            { rank: 79, en: "The Psychology of Money", cn: "金钱心理学", author: "Morgan Housel" },
+            { rank: 80, en: "Measure What Matters", cn: "衡量什么重要", author: "John Doerr" },
+            { rank: 81, en: "Think and Grow Rich", cn: "思考致富", author: "Napoleon Hill" },
+            { rank: 82, en: "Only the Paranoid Survive", cn: "只有偏执狂才能生存", author: "Andrew Grove" },
+            { rank: 83, en: "Can't Hurt Me", cn: "我，刀枪不入", author: "David Goggins" },
+            { rank: 84, en: "Foundation", cn: "基地", author: "Isaac Asimov" },
+            { rank: 85, en: "Blitzscaling", cn: "闪电式扩张", author: "Reid Hoffman" },
+            { rank: 86, en: "Seeking Wisdom", cn: "探索智慧", author: "Peter Bevelin" },
+            { rank: 87, en: "Digital Minimalism", cn: "数字极简主义", author: "Cal Newport" },
+            { rank: 88, en: "How Not to Die", cn: "救命", author: "Dr. Michael Greger" },
+            { rank: 89, en: "The Art of Possibility", cn: "可能性艺术", author: "Rosamund Stone Zander" },
+            { rank: 90, en: "The Righteous Mind", cn: "正义之心", author: "Jonathan Haidt" },
+            { rank: 91, en: "The Book of Five Rings", cn: "五轮书", author: "Miyamoto Musashi" },
+            { rank: 92, en: "The Code Breaker", cn: "破解者", author: "Walter Isaacson" },
+            { rank: 93, en: "The Emperor of All Maladies", cn: "万病之王", author: "Siddhartha Mukherjee" },
+            { rank: 94, en: "The Gene", cn: "基因", author: "Siddhartha Mukherjee" },
+            { rank: 95, en: "The Innovators", cn: "创新者", author: "Walter Isaacson" },
+            { rank: 96, en: "The Everything Store", cn: "一网打尽", author: "Brad Stone" },
+            { rank: 97, en: "The Wright Brothers", cn: "莱特兄弟", author: "David McCullough" },
+            { rank: 98, en: "The Making of the Atomic Bomb", cn: "原子弹秘史", author: "Richard Rhodes" },
+            { rank: 99, en: "The Structure of Scientific Revolutions", cn: "科学革命的结构", author: "Thomas S. Kuhn" },
+            { rank: 100, en: "Thinking in Systems", cn: "系统之美", author: "Donella Meadows" }
+        ];
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const bookId = parseInt(urlParams.get('id'));
+        const currentBook = booksData.find(b => b.rank === bookId);
+        
+        // Load global read state
+        let readState = JSON.parse(localStorage.getItem('bookReadState')) || {};
+        
+        const elements = {
+            header: document.getElementById('bookHeader'),
+            input: document.getElementById('noteInput'),
+            list: document.getElementById('notesList')
+        };
+
+        // Storage Key: book_notes_1, book_notes_2, etc.
+        const storageKey = `book_notes_${bookId}`;
+
+        function init() {
+            if (!currentBook) {
+                document.body.innerHTML = "<div style='text-align:center; margin-top:50px'>Book not found.</div>";
+                return;
+            }
+
+            const isRead = !!readState[currentBook.rank];
+
+            // Render Header with Toggle
+            elements.header.innerHTML = `
+                <span class="book-rank">No. ${currentBook.rank}</span>
+                <h1 class="book-title">${currentBook.en}</h1>
+                <div class="book-meta">${currentBook.cn} • ${currentBook.author}</div>
+                
+                <button class="status-badge ${isRead ? 'is-active' : ''}" onclick="toggleCurrentStatus()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span id="statusText">${isRead ? 'Completed' : 'Mark as Read'}</span>
+                </button>
+            `;
+
+            renderNotes();
+        }
+
+        function toggleCurrentStatus() {
+            const isRead = !!readState[currentBook.rank];
+            const newState = !isRead;
+            
+            // Update state
+            readState[currentBook.rank] = newState;
+            localStorage.setItem('bookReadState', JSON.stringify(readState));
+            
+            // Update UI
+            const btn = document.querySelector('.status-badge');
+            const text = document.getElementById('statusText');
+            
+            if (newState) {
+                btn.classList.add('is-active');
+                text.innerText = 'Completed';
+            } else {
+                btn.classList.remove('is-active');
+                text.innerText = 'Mark as Read';
+            }
+        }
+
+        function getNotes() {
+            return JSON.parse(localStorage.getItem(storageKey)) || [];
+        }
+
+        function saveNotes(notes) {
+            localStorage.setItem(storageKey, JSON.stringify(notes));
+        }
+
+        function addNote() {
+            const text = elements.input.value.trim();
+            if (!text) return;
+
+            const notes = getNotes();
+            const newNote = {
+                id: Date.now(),
+                text: text,
+                timestamp: new Date().toISOString()
+            };
+
+            notes.unshift(newNote);
+            saveNotes(notes);
+            
+            elements.input.value = '';
+            renderNotes();
+        }
+
+        function deleteNote(id) {
+            if(!confirm("Delete this note?")) return;
+            
+            const notes = getNotes().filter(n => n.id !== id);
+            saveNotes(notes);
+            renderNotes();
+        }
+
+        function formatDate(isoString) {
+            const date = new Date(isoString);
+            return date.toLocaleDateString(undefined, {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        function renderNotes() {
+            const notes = getNotes();
+            
+            if (notes.length === 0) {
+                elements.list.innerHTML = `<div class="empty-state">No notes yet. Start writing above.</div>`;
+                return;
+            }
+
+            elements.list.innerHTML = notes.map(note => `
+                <div class="note-card">
+                    <div class="note-content">${escapeHtml(note.text)}</div>
+                    <div class="note-footer">
+                        <span class="note-date">${formatDate(note.timestamp)}</span>
+                        <button class="btn-delete" onclick="deleteNote(${note.id})">Delete</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function escapeHtml(text) {
+            return text
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        init();
+    </script>
+</body>
+</html>
