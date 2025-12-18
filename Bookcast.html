@@ -425,6 +425,30 @@
         
         .is-read .status-label { color: var(--accent-color); }
 
+        /* --- Note Badge (Red Dot) --- */
+        .note-badge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 10px;
+            height: 10px;
+            background-color: #FF4444;
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(255, 68, 68, 0.4);
+            z-index: 5;
+        }
+
+        .table-note-badge {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background-color: #FF4444;
+            border-radius: 50%;
+            margin-left: 0.5rem;
+            box-shadow: 0 1px 2px rgba(255, 68, 68, 0.3);
+            vertical-align: middle;
+        }
+
         /* --- Pagination --- */
         .pagination {
             display: flex;
@@ -794,6 +818,7 @@
                 
                 elements.gridView.innerHTML = pagedBooks.map(b => `
                     <div class="book-card ${readState[b.rank] ? 'is-read' : ''}" onclick="window.location.href='BookNotes.html?id=${b.rank}'">
+                        ${hasNotes(b.rank) ? '<div class="note-badge" title="Has notes"></div>' : ''}
                         <div class="card-rank">${b.rank}</div>
                         <div class="card-content">
                             <div class="title-en">${b.en}</div>
@@ -816,7 +841,7 @@
                     <tr class="${readState[b.rank] ? 'is-read' : ''}" onclick="window.location.href='BookNotes.html?id=${b.rank}'">
                         <td class="table-rank">#${b.rank}</td>
                         <td>
-                            <div class="table-title">${b.en}</div>
+                            <div class="table-title">${b.en}${hasNotes(b.rank) ? '<span class="table-note-badge" title="Has notes"></span>' : ''}</div>
                             <div class="table-meta">${b.cn}</div>
                         </td>
                         <td style="color:var(--text-secondary); font-size:0.85rem">${b.author}</td>
@@ -880,6 +905,16 @@
                 clearTimeout(timeout);
                 timeout = setTimeout(() => func(...args), wait);
             };
+        }
+
+        function hasNotes(rank) {
+            try {
+                const storageKey = `book_notes_${rank}`;
+                const notes = JSON.parse(localStorage.getItem(storageKey)) || [];
+                return notes.length > 0;
+            } catch (e) {
+                return false;
+            }
         }
 
         document.addEventListener('DOMContentLoaded', init);
