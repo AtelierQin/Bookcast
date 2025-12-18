@@ -225,6 +225,13 @@
 
         .editor-content::placeholder { color: #CCC; font-style: italic; }
 
+        .md-h1 { font-size: 1.8rem; font-weight: 700; margin: 0.5rem 0; }
+        .md-h2 { font-size: 1.5rem; font-weight: 700; margin: 0.4rem 0; }
+        .md-h3 { font-size: 1.2rem; font-weight: 700; margin: 0.3rem 0; }
+        .md-code { background: #f0f0f0; padding: 2px 6px; border-radius: 3px; font-family: 'Courier New', monospace; font-size: 0.9em; }
+        .md-blockquote { border-left: 3px solid var(--accent-color); padding-left: 1rem; margin-left: 0; color: var(--text-secondary); font-style: italic; }
+        .md-list { margin-left: 1.5rem; }
+
         .editor-footer {
             display: flex;
             justify-content: flex-end;
@@ -540,6 +547,7 @@
                 </button>
             `;
 
+            setupPasteHandler();
             renderNotes();
         }
 
@@ -588,6 +596,58 @@
             } else if (command === 'clear') {
                 document.execCommand('removeFormat', false, null);
             }
+        }
+
+        function markdownToHtml(markdown) {
+            let html = markdown;
+
+            // Headers: # ## ###
+            html = html.replace(/^### (.*?)$/gm, '<div class="md-h3">$1</div>');
+            html = html.replace(/^## (.*?)$/gm, '<div class="md-h2">$1</div>');
+            html = html.replace(/^# (.*?)$/gm, '<div class="md-h1">$1</div>');
+
+            // Bold: **text** or __text__
+            html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            html = html.replace(/__(.*?)__/g, '<strong>$1</strong>');
+
+            // Italic: *text* or _text_
+            html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
+            html = html.replace(/_(.*?)_/g, '<em>$1</em>');
+
+            // Inline code: `code`
+            html = html.replace(/`(.*?)`/g, '<span class="md-code">$1</span>');
+
+            // Blockquote: > text
+            html = html.replace(/^> (.*?)$/gm, '<div class="md-blockquote">$1</div>');
+
+            // Lists: - item or * item
+            html = html.replace(/^[\-\*] (.*?)$/gm, '<div class="md-list">• $1</div>');
+
+            // Line breaks
+            html = html.replace(/\n/g, '<br>');
+
+            return html;
+        }
+
+        function setupPasteHandler() {
+            const editor = document.getElementById('noteInput');
+            
+            editor.addEventListener('paste', function(e) {
+                e.preventDefault();
+                
+                const text = e.clipboardData.getData('text/plain');
+                
+                // Check if it looks like markdown
+                const isMd = /^[#*_`>-]|[\*_`].*[\*_`]|\*\*.*\*\*|__.*__/.test(text);
+                
+                if (isMd) {
+                    const html = markdownToHtml(text);
+                    document.execCommand('insertHTML', false, html);
+                } else {
+                    // Plain text paste
+                    document.execCommand('insertText', false, text);
+                }
+            });
         }
 
         function addNote() {
