@@ -512,7 +512,14 @@
         ];
 
         const urlParams = new URLSearchParams(window.location.search);
-        const bookId = parseInt(urlParams.get('id'));
+        let bookId = parseInt(urlParams.get('id'));
+        
+        // Fallback: if bookId is invalid, try to get it from referrer or default to 1
+        if (isNaN(bookId) || bookId < 1 || bookId > 100) {
+            console.warn('Invalid bookId:', bookId, 'Defaulting to 1');
+            bookId = 1;
+        }
+        
         const currentBook = booksData.find(b => b.rank === bookId);
         
         // Load global read state
@@ -526,11 +533,21 @@
 
         // Storage Key: book_notes_1, book_notes_2, etc.
         const storageKey = `book_notes_${bookId}`;
+        console.log('Initialized with bookId:', bookId, 'storageKey:', storageKey);
 
-        function init() {
+        async function init() {
             if (!currentBook) {
                 document.body.innerHTML = "<div style='text-align:center; margin-top:50px'>Book not found.</div>";
                 return;
+            }
+
+            try {
+                await initDB();
+                console.log('Database initialized successfully');
+                // Migrate old data from localStorage if it exists
+                await migrateFromLocalStorage();
+            } catch (error) {
+                console.warn('Failed to initialize IndexedDB, will use localStorage:', error);
             }
 
             const isRead = !!readState[currentBook.rank];
@@ -548,7 +565,7 @@
             `;
 
             setupPasteHandler();
-            renderNotes();
+            await renderNotes();
         }
 
         function toggleCurrentStatus() {
@@ -572,12 +589,91 @@
             }
         }
 
+        // IndexedDB for better storage capacity
+        let db;
+        const DB_NAME = 'BookcastDB';
+        const STORE_NAME = 'notes';
+
+        function initDB() {
+            return new Promise((resolve, reject) => {
+                const request = indexedDB.open(DB_NAME, 1);
+                
+                request.onerror = () => reject(request.error);
+                request.onsuccess = () => {
+                    db = request.result;
+                    resolve(db);
+                };
+                
+                request.onupgradeneeded = (event) => {
+                    const database = event.target.result;
+                    if (!database.objectStoreNames.contains(STORE_NAME)) {
+                        database.createObjectStore(STORE_NAME, { keyPath: 'bookId' });
+                    }
+                };
+            });
+        }
+
+        async function migrateFromLocalStorage() {
+            // Check if there are old notes in localStorage
+            const oldNotes = localStorage.getItem(storageKey);
+            if (!oldNotes) return;
+            
+            try {
+                const notes = JSON.parse(oldNotes);
+                if (notes.length > 0) {
+                    console.log('Migrating', notes.length, 'notes from localStorage to IndexedDB');
+                    await saveNotes(notes);
+                    // Keep old data for now, don't delete it
+                    console.log('Migration completed');
+                }
+            } catch (error) {
+                console.error('Error migrating from localStorage:', error);
+            }
+        }
+
         function getNotes() {
-            return JSON.parse(localStorage.getItem(storageKey)) || [];
+            if (!db) {
+                console.warn('DB not initialized, falling back to localStorage');
+                return JSON.parse(localStorage.getItem(storageKey)) || [];
+            }
+            
+            return new Promise((resolve) => {
+                const transaction = db.transaction([STORE_NAME], 'readonly');
+                const store = transaction.objectStore(STORE_NAME);
+                const request = store.get(bookId);
+                
+                request.onsuccess = () => {
+                    const result = request.result;
+                    resolve(result ? result.notes : []);
+                };
+                
+                request.onerror = () => {
+                    console.error('Error reading from DB');
+                    resolve([]);
+                };
+            });
         }
 
         function saveNotes(notes) {
-            localStorage.setItem(storageKey, JSON.stringify(notes));
+            if (!db) {
+                console.warn('DB not initialized, falling back to localStorage');
+                try {
+                    localStorage.setItem(storageKey, JSON.stringify(notes));
+                } catch (e) {
+                    console.error('localStorage quota exceeded:', e);
+                    throw e;
+                }
+                return Promise.resolve();
+            }
+            
+            return new Promise((resolve, reject) => {
+                const transaction = db.transaction([STORE_NAME], 'readwrite');
+                const store = transaction.objectStore(STORE_NAME);
+                const request = store.put({ bookId: bookId, notes: notes });
+                
+                request.onsuccess = () => resolve();
+                request.onerror = () => reject(request.error);
+            });
         }
 
         function formatText(command) {
@@ -601,27 +697,27 @@
         function markdownToHtml(markdown) {
             let html = markdown;
 
-            // Headers: # ## ###
+            // Headers: # ## ### (must be at line start)
             html = html.replace(/^### (.*?)$/gm, '<div class="md-h3">$1</div>');
             html = html.replace(/^## (.*?)$/gm, '<div class="md-h2">$1</div>');
             html = html.replace(/^# (.*?)$/gm, '<div class="md-h1">$1</div>');
 
-            // Bold: **text** or __text__
+            // Bold: **text** or __text__ (process before italic)
             html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
             html = html.replace(/__(.*?)__/g, '<strong>$1</strong>');
 
-            // Italic: *text* or _text_
-            html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
-            html = html.replace(/_(.*?)_/g, '<em>$1</em>');
+            // Italic: *text* or _text_ (but not if already in bold)
+            html = html.replace(/(?<!\*)\*([^\*]+)\*(?!\*)/g, '<em>$1</em>');
+            html = html.replace(/(?<!_)_([^_]+)_(?!_)/g, '<em>$1</em>');
 
             // Inline code: `code`
-            html = html.replace(/`(.*?)`/g, '<span class="md-code">$1</span>');
+            html = html.replace(/`([^`]+)`/g, '<span class="md-code">$1</span>');
 
-            // Blockquote: > text
+            // Blockquote: > text (must be at line start)
             html = html.replace(/^> (.*?)$/gm, '<div class="md-blockquote">$1</div>');
 
-            // Lists: - item or * item
-            html = html.replace(/^[\-\*] (.*?)$/gm, '<div class="md-list">• $1</div>');
+            // Lists: - item or * item (must be at line start)
+            html = html.replace(/^- (.*?)$/gm, '<div class="md-list">• $1</div>');
 
             // Line breaks
             html = html.replace(/\n/g, '<br>');
@@ -650,32 +746,52 @@
             });
         }
 
-        function addNote() {
+        async function addNote() {
             const editor = document.getElementById('noteInput');
             const html = editor.innerHTML.trim();
+            const text = editor.textContent.trim();
             
-            if (!html || html === '<br>') return;
-
-            const notes = getNotes();
-            const newNote = {
-                id: Date.now(),
-                html: html,
-                timestamp: new Date().toISOString()
-            };
-
-            notes.unshift(newNote);
-            saveNotes(notes);
+            console.log('addNote called - text length:', text.length, 'html length:', html.length);
             
-            editor.innerHTML = '';
-            renderNotes();
+            // Check if there's actual text content
+            if (!text) {
+                alert('Please write something before saving.');
+                return;
+            }
+
+            try {
+                const notes = await getNotes();
+                const newNote = {
+                    id: Date.now(),
+                    html: html,
+                    timestamp: new Date().toISOString()
+                };
+
+                notes.unshift(newNote);
+                await saveNotes(notes);
+                
+                console.log('Note saved successfully. Total notes:', notes.length);
+                
+                editor.innerHTML = '';
+                await renderNotes();
+            } catch (error) {
+                console.error('Error saving note:', error);
+                alert('Failed to save note. Check console for details.');
+            }
         }
 
-        function deleteNote(id) {
+        async function deleteNote(id) {
             if(!confirm("Delete this note?")) return;
             
-            const notes = getNotes().filter(n => n.id !== id);
-            saveNotes(notes);
-            renderNotes();
+            try {
+                const notes = await getNotes();
+                const filtered = notes.filter(n => n.id !== id);
+                await saveNotes(filtered);
+                await renderNotes();
+            } catch (error) {
+                console.error('Error deleting note:', error);
+                alert('Failed to delete note.');
+            }
         }
 
         function formatDate(isoString) {
@@ -689,23 +805,28 @@
             });
         }
 
-        function renderNotes() {
-            const notes = getNotes();
-            
-            if (notes.length === 0) {
-                elements.list.innerHTML = `<div class="empty-state">No notes yet. Start writing above.</div>`;
-                return;
-            }
+        async function renderNotes() {
+            try {
+                const notes = await getNotes();
+                
+                if (notes.length === 0) {
+                    elements.list.innerHTML = `<div class="empty-state">No notes yet. Start writing above.</div>`;
+                    return;
+                }
 
-            elements.list.innerHTML = notes.map(note => `
-                <div class="note-card">
-                    <div class="note-content">${note.html || escapeHtml(note.text)}</div>
-                    <div class="note-footer">
-                        <span class="note-date">${formatDate(note.timestamp)}</span>
-                        <button class="btn-delete" onclick="deleteNote(${note.id})">Delete</button>
+                elements.list.innerHTML = notes.map(note => `
+                    <div class="note-card">
+                        <div class="note-content">${note.html || escapeHtml(note.text)}</div>
+                        <div class="note-footer">
+                            <span class="note-date">${formatDate(note.timestamp)}</span>
+                            <button class="btn-delete" onclick="deleteNote(${note.id})">Delete</button>
+                        </div>
                     </div>
-                </div>
-            `).join('');
+                `).join('');
+            } catch (error) {
+                console.error('Error rendering notes:', error);
+                elements.list.innerHTML = `<div class="empty-state">Error loading notes.</div>`;
+            }
         }
 
         function escapeHtml(text) {

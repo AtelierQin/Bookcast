@@ -396,9 +396,60 @@
         ];
 
         let selectedFormat = 'json';
+        let db;
+        const DB_NAME = 'BookcastDB';
+        const STORE_NAME = 'notes';
 
-        function init() {
-            updateStats();
+        function initDB() {
+            return new Promise((resolve, reject) => {
+                const request = indexedDB.open(DB_NAME, 1);
+                
+                request.onerror = () => reject(request.error);
+                request.onsuccess = () => {
+                    db = request.result;
+                    resolve(db);
+                };
+                
+                request.onupgradeneeded = (event) => {
+                    const database = event.target.result;
+                    if (!database.objectStoreNames.contains(STORE_NAME)) {
+                        database.createObjectStore(STORE_NAME, { keyPath: 'bookId' });
+                    }
+                };
+            });
+        }
+
+        function getNotesFromDB(bookId) {
+            return new Promise((resolve) => {
+                if (!db) {
+                    resolve([]);
+                    return;
+                }
+                
+                const transaction = db.transaction([STORE_NAME], 'readonly');
+                const store = transaction.objectStore(STORE_NAME);
+                const request = store.get(bookId);
+                
+                request.onsuccess = () => {
+                    const result = request.result;
+                    resolve(result ? result.notes : []);
+                };
+                
+                request.onerror = () => {
+                    resolve([]);
+                };
+            });
+        }
+
+        async function init() {
+            try {
+                await initDB();
+                console.log('Database initialized');
+            } catch (error) {
+                console.warn('Failed to initialize IndexedDB:', error);
+            }
+            
+            await updateStats();
             setupEventListeners();
         }
 
@@ -413,7 +464,7 @@
             });
         }
 
-        function updateStats() {
+        async function updateStats() {
             const readState = JSON.parse(localStorage.getItem('bookReadState')) || {};
             const readCount = Object.values(readState).filter(Boolean).length;
             
@@ -421,13 +472,18 @@
             let totalNotes = 0;
             let booksWithNotes = 0;
             
-            booksData.forEach(book => {
-                const notes = JSON.parse(localStorage.getItem(`book_notes_${book.rank}`)) || [];
+            for (const book of booksData) {
+                // Try IndexedDB first, then fall back to localStorage
+                let notes = await getNotesFromDB(book.rank);
+                if (notes.length === 0) {
+                    notes = JSON.parse(localStorage.getItem(`book_notes_${book.rank}`)) || [];
+                }
+                
                 if (notes.length > 0) {
                     booksWithNotes++;
                     totalNotes += notes.length;
                 }
-            });
+            }
 
             const statsGrid = document.getElementById('statsGrid');
             statsGrid.innerHTML = `
@@ -450,7 +506,7 @@
             `;
         }
 
-        function collectAllData() {
+        async function collectAllData() {
             const readState = JSON.parse(localStorage.getItem('bookReadState')) || {};
             const exportData = {
                 exportDate: new Date().toISOString(),
@@ -459,8 +515,13 @@
                 books: []
             };
 
-            booksData.forEach(book => {
-                const notes = JSON.parse(localStorage.getItem(`book_notes_${book.rank}`)) || [];
+            for (const book of booksData) {
+                // Try IndexedDB first, then fall back to localStorage
+                let notes = await getNotesFromDB(book.rank);
+                if (notes.length === 0) {
+                    notes = JSON.parse(localStorage.getItem(`book_notes_${book.rank}`)) || [];
+                }
+                
                 const bookData = {
                     rank: book.rank,
                     title: {
@@ -471,13 +532,14 @@
                     isRead: !!readState[book.rank],
                     notes: notes.map(note => ({
                         id: note.id,
-                        text: note.text,
+                        text: note.text || note.html || '',
+                        html: note.html,
                         timestamp: note.timestamp,
                         date: new Date(note.timestamp).toLocaleString('zh-CN')
                     }))
                 };
                 exportData.books.push(bookData);
-            });
+            }
 
             return exportData;
         }
@@ -540,8 +602,8 @@
             return csv;
         }
 
-        function previewData() {
-            const data = collectAllData();
+        async function previewData() {
+            const data = await collectAllData();
             let formattedData = '';
             
             switch (selectedFormat) {
@@ -561,8 +623,8 @@
             document.getElementById('previewSection').scrollIntoView({ behavior: 'smooth' });
         }
 
-        function exportData() {
-            const data = collectAllData();
+        async function exportData() {
+            const data = await collectAllData();
             let content = '';
             let filename = '';
             let mimeType = '';
