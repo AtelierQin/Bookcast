@@ -250,7 +250,7 @@
         .card-rank {
             position: absolute;
             top: -0.5rem;
-            right: 0.25rem;
+            left: 0.5rem;
             font-family: var(--font-serif);
             font-size: 3.5rem;
             color: #000;
@@ -449,6 +449,77 @@
             vertical-align: middle;
         }
 
+        /* --- Note Count Badge --- */
+        .note-count-subtle {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(4px);
+            color: var(--text-secondary);
+            font-size: 0.65rem;
+            font-weight: 500;
+            padding: 3px 6px;
+            border-radius: 12px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+            z-index: 5;
+            font-family: var(--font-sans);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            letter-spacing: 0.01em;
+            transition: all 0.2s ease;
+            opacity: 0;
+            transform: translateY(4px);
+            animation: fadeInUp 0.3s ease 0.1s forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 0.8;
+                transform: translateY(0);
+            }
+        }
+
+        .note-count-subtle:hover {
+            opacity: 1;
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+        }
+
+        .table-note-count-subtle {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(2px);
+            color: var(--text-secondary);
+            font-size: 0.6rem;
+            font-weight: 500;
+            padding: 2px 6px;
+            border-radius: 10px;
+            margin-left: 0.75rem;
+            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08);
+            vertical-align: middle;
+            font-family: var(--font-sans);
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            letter-spacing: 0.01em;
+            transition: all 0.2s ease;
+            opacity: 0.8;
+        }
+
+        .table-note-count-subtle:hover {
+            opacity: 1;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .note-count-dot {
+            width: 4px;
+            height: 4px;
+            background: var(--accent-color);
+            border-radius: 50%;
+            margin-right: 4px;
+            opacity: 0.7;
+        }
+
         /* --- Pagination --- */
         .pagination {
             display: flex;
@@ -493,7 +564,32 @@
             .grid-view { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 0.75rem; }
             .book-card { min-height: 160px; padding: 1rem 0.75rem; }
             .title-en { font-size: 1.1rem; }
-            .card-rank { font-size: 2.5rem; }
+            .card-rank { 
+                font-size: 2.5rem; 
+                left: 0.25rem;
+            }
+            
+            /* Note Count Badge Mobile */
+            .note-count-subtle {
+                font-size: 0.6rem;
+                padding: 2px 4px;
+                bottom: 8px;
+                right: 8px;
+                border-radius: 10px;
+            }
+            
+            .table-note-count-subtle {
+                font-size: 0.55rem;
+                padding: 1px 4px;
+                margin-left: 0.5rem;
+                border-radius: 8px;
+            }
+            
+            .note-count-dot {
+                width: 3px;
+                height: 3px;
+                margin-right: 3px;
+            }
             
             /* List View Mobile Fixes */
             thead { display: none; } 
@@ -755,6 +851,8 @@
             setupEventListeners();
             updateProgress();
             renderCurrentView();
+            // Preload note counts for better performance
+            preloadNoteCounts();
         }
 
         function setupEventListeners() {
@@ -844,9 +942,12 @@
                 elements.gridView.classList.remove('hidden');
                 elements.listView.classList.add('hidden');
                 
-                elements.gridView.innerHTML = pagedBooks.map(b => `
+                elements.gridView.innerHTML = pagedBooks.map(b => {
+                    const noteCount = getNoteCount(b.rank);
+                    return `
                     <div class="book-card ${readState[b.rank] ? 'is-read' : ''}" onclick="window.location.href='BookNotes.html?id=${b.rank}'">
                         ${hasNotes(b.rank) ? '<div class="note-badge" title="Has notes"></div>' : ''}
+                        ${noteCount > 0 ? `<div class="note-count-subtle" title="${noteCount} note${noteCount > 1 ? 's' : ''}"><span class="note-count-dot"></span>${noteCount}</div>` : ''}
                         <div class="card-rank">${b.rank}</div>
                         <div class="card-content">
                             <div class="title-en">${b.en}</div>
@@ -860,17 +961,19 @@
                             </button>
                         </div>
                     </div>
-                `).join('');
+                `}).join('');
             } else {
                 elements.gridView.classList.add('hidden');
                 elements.listView.classList.remove('hidden');
                 
-                elements.tableBody.innerHTML = pagedBooks.map(b => `
+                elements.tableBody.innerHTML = pagedBooks.map(b => {
+                    const noteCount = getNoteCount(b.rank);
+                    return `
                     <tr class="${readState[b.rank] ? 'is-read' : ''}" onclick="window.location.href='BookNotes.html?id=${b.rank}'">
                         <td class="table-rank">#${b.rank}</td>
                         <td>
                             <div class="table-title">${b.en}${hasNotes(b.rank) ? '<span class="table-note-badge" title="Has notes"></span>' : ''}</div>
-                            <div class="table-meta">${b.cn}</div>
+                            <div class="table-meta">${b.cn}${noteCount > 0 ? `<span class="table-note-count-subtle" title="${noteCount} note${noteCount > 1 ? 's' : ''}"><span class="note-count-dot"></span>${noteCount}</span>` : ''}</div>
                         </td>
                         <td style="color:var(--text-secondary); font-size:0.85rem">${b.author}</td>
                         <td class="table-check-cell" style="text-align:right">
@@ -879,7 +982,7 @@
                             </button>
                         </td>
                     </tr>
-                `).join('');
+                `}).join('');
             }
             
             renderPagination(allBooks.length);
@@ -936,26 +1039,50 @@
         }
 
         function hasNotes(rank) {
+            return getNoteCount(rank) > 0;
+        }
+
+        function getNoteCount(rank) {
             if (!db) {
                 // Fallback to localStorage if DB not initialized
                 try {
                     const storageKey = `book_notes_${rank}`;
                     const notes = JSON.parse(localStorage.getItem(storageKey)) || [];
-                    return notes.length > 0;
+                    return notes.length;
                 } catch (e) {
-                    return false;
+                    return 0;
                 }
             }
             
-            // Check IndexedDB synchronously (returns cached result)
-            // This is a limitation - we'll use a cache instead
-            return notesCache.has(rank) && notesCache.get(rank) > 0;
+            // Return cached result from IndexedDB
+            return notesCache.get(rank) || 0;
         }
 
         // Cache for note counts to avoid repeated DB queries
         const notesCache = new Map();
 
         async function loadNotesCache() {
+            if (!db) return;
+            
+            return new Promise((resolve) => {
+                const transaction = db.transaction([STORE_NAME], 'readonly');
+                const store = transaction.objectStore(STORE_NAME);
+                const request = store.getAll();
+                
+                request.onsuccess = () => {
+                    const results = request.result;
+                    results.forEach(item => {
+                        notesCache.set(item.bookId, item.notes ? item.notes.length : 0);
+                    });
+                    resolve();
+                };
+                
+                request.onerror = () => resolve();
+            });
+        }
+
+        async function preloadNoteCounts() {
+            // Preload note counts for all books to ensure smooth rendering
             if (!db) return;
             
             return new Promise((resolve) => {
