@@ -708,6 +708,9 @@
         let sortField = 'rank';
         let sortDirection = 'asc';
         let readState = JSON.parse(localStorage.getItem('bookReadState')) || {};
+        let db = null;
+        const DB_NAME = 'BookcastDB';
+        const STORE_NAME = 'notes';
 
         const elements = {
             gridView: document.getElementById('gridView'),
@@ -723,7 +726,32 @@
             sortHeaders: document.querySelectorAll('[data-sort]')
         };
 
-        function init() {
+        function initDB() {
+            return new Promise((resolve) => {
+                const request = indexedDB.open(DB_NAME, 1);
+                
+                request.onerror = () => {
+                    console.warn('Failed to open IndexedDB');
+                    resolve(null);
+                };
+                
+                request.onsuccess = () => {
+                    db = request.result;
+                    resolve(db);
+                };
+                
+                request.onupgradeneeded = (event) => {
+                    const database = event.target.result;
+                    if (!database.objectStoreNames.contains(STORE_NAME)) {
+                        database.createObjectStore(STORE_NAME, { keyPath: 'bookId' });
+                    }
+                };
+            });
+        }
+
+        async function init() {
+            await initDB();
+            await loadNotesCache();
             setupEventListeners();
             updateProgress();
             renderCurrentView();
@@ -908,13 +936,43 @@
         }
 
         function hasNotes(rank) {
-            try {
-                const storageKey = `book_notes_${rank}`;
-                const notes = JSON.parse(localStorage.getItem(storageKey)) || [];
-                return notes.length > 0;
-            } catch (e) {
-                return false;
+            if (!db) {
+                // Fallback to localStorage if DB not initialized
+                try {
+                    const storageKey = `book_notes_${rank}`;
+                    const notes = JSON.parse(localStorage.getItem(storageKey)) || [];
+                    return notes.length > 0;
+                } catch (e) {
+                    return false;
+                }
             }
+            
+            // Check IndexedDB synchronously (returns cached result)
+            // This is a limitation - we'll use a cache instead
+            return notesCache.has(rank) && notesCache.get(rank) > 0;
+        }
+
+        // Cache for note counts to avoid repeated DB queries
+        const notesCache = new Map();
+
+        async function loadNotesCache() {
+            if (!db) return;
+            
+            return new Promise((resolve) => {
+                const transaction = db.transaction([STORE_NAME], 'readonly');
+                const store = transaction.objectStore(STORE_NAME);
+                const request = store.getAll();
+                
+                request.onsuccess = () => {
+                    const results = request.result;
+                    results.forEach(item => {
+                        notesCache.set(item.bookId, item.notes ? item.notes.length : 0);
+                    });
+                    resolve();
+                };
+                
+                request.onerror = () => resolve();
+            });
         }
 
         document.addEventListener('DOMContentLoaded', init);

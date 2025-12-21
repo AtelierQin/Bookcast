@@ -361,6 +361,17 @@
                 return;
             }
 
+            // Validate book data structure
+            const invalidBooks = data.books.filter(book => 
+                !book.rank || !book.title || !book.author
+            );
+            
+            if (invalidBooks.length > 0) {
+                showMessage('error', `Found ${invalidBooks.length} invalid book entries. File may be corrupted.`);
+                document.getElementById('importBtn').disabled = true;
+                return;
+            }
+
             // Display preview information
             const readCount = data.books.filter(book => book.isRead).length;
             const totalNotes = data.books.reduce((sum, book) => sum + (book.notes ? book.notes.length : 0), 0);
@@ -390,41 +401,134 @@
                 return;
             }
 
-            if (!confirm('Are you sure you want to import data? This will overwrite all current reading progress and notes.')) {
+            // Show merge options dialog
+            showMergeDialog();
+        }
+
+        function showMergeDialog() {
+            const messageBox = document.getElementById('messageBox');
+            messageBox.innerHTML = `
+                <div class="warning-box">
+                    <strong>Choose Import Strategy</strong><br>
+                    <div style="margin-top: 1rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+                        <button onclick="performImport('replace')" class="btn btn-primary" style="margin: 0;">
+                            Replace All (Overwrite)
+                        </button>
+                        <button onclick="performImport('merge')" class="btn btn-secondary" style="margin: 0;">
+                            Merge (Keep Existing)
+                        </button>
+                        <button onclick="performImport('merge-overwrite')" class="btn btn-secondary" style="margin: 0;">
+                            Merge (Overwrite Duplicates)
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function performImport(strategy) {
+            if (!fileData) return;
+
+            if (!confirm('This action cannot be undone. Make sure you have a backup!')) {
                 return;
             }
 
             try {
-                // Import reading status
-                const readState = {};
+                const currentReadState = JSON.parse(localStorage.getItem('bookReadState')) || {};
+                const newReadState = {};
+                
+                // Process reading status based on strategy
                 fileData.books.forEach(book => {
                     if (book.isRead) {
-                        readState[book.rank] = true;
+                        newReadState[book.rank] = true;
                     }
                 });
-                localStorage.setItem('bookReadState', JSON.stringify(readState));
+
+                let finalReadState;
+                if (strategy === 'replace') {
+                    finalReadState = newReadState;
+                } else if (strategy === 'merge') {
+                    // Keep existing, only add new
+                    finalReadState = { ...currentReadState, ...newReadState };
+                } else if (strategy === 'merge-overwrite') {
+                    // Merge but imported data takes precedence
+                    finalReadState = { ...newReadState, ...currentReadState };
+                }
+
+                localStorage.setItem('bookReadState', JSON.stringify(finalReadState));
 
                 // Import notes
                 let importedNotes = 0;
+                let skippedNotes = 0;
+                
                 fileData.books.forEach(book => {
                     if (book.notes && book.notes.length > 0) {
-                        const notes = book.notes.map(note => ({
-                            id: note.id || Date.now() + Math.random(),
-                            text: note.text,
-                            timestamp: note.timestamp
-                        }));
-                        localStorage.setItem(`book_notes_${book.rank}`, JSON.stringify(notes));
-                        importedNotes += notes.length;
+                        const storageKey = `book_notes_${book.rank}`;
+                        const existingNotes = JSON.parse(localStorage.getItem(storageKey)) || [];
+                        
+                        let notesToSave;
+                        if (strategy === 'replace') {
+                            notesToSave = book.notes.map(note => ({
+                                id: note.id || Date.now() + Math.random(),
+                                text: note.text,
+                                html: note.html,
+                                timestamp: note.timestamp
+                            }));
+                        } else if (strategy === 'merge') {
+                            // Keep existing notes, add new ones
+                            const existingIds = new Set(existingNotes.map(n => n.id));
+                            const newNotes = book.notes.filter(note => !existingIds.has(note.id));
+                            notesToSave = [...existingNotes, ...newNotes.map(note => ({
+                                id: note.id || Date.now() + Math.random(),
+                                text: note.text,
+                                html: note.html,
+                                timestamp: note.timestamp
+                            }))];
+                            skippedNotes += book.notes.length - newNotes.length;
+                        } else if (strategy === 'merge-overwrite') {
+                            // Merge but imported data overwrites duplicates
+                            const importedMap = new Map(book.notes.map(n => [n.id, n]));
+                            const mergedNotes = existingNotes.map(n => 
+                                importedMap.has(n.id) ? {
+                                    id: importedMap.get(n.id).id,
+                                    text: importedMap.get(n.id).text,
+                                    html: importedMap.get(n.id).html,
+                                    timestamp: importedMap.get(n.id).timestamp
+                                } : n
+                            );
+                            // Add notes that don't exist in current data
+                            book.notes.forEach(note => {
+                                if (!existingNotes.find(n => n.id === note.id)) {
+                                    mergedNotes.push({
+                                        id: note.id || Date.now() + Math.random(),
+                                        text: note.text,
+                                        html: note.html,
+                                        timestamp: note.timestamp
+                                    });
+                                }
+                            });
+                            notesToSave = mergedNotes;
+                        }
+                        
+                        localStorage.setItem(storageKey, JSON.stringify(notesToSave));
+                        importedNotes += notesToSave.length;
                     }
                 });
 
-                const readCount = Object.values(readState).filter(Boolean).length;
-                showMessage('success', `
+                const readCount = Object.values(finalReadState).filter(Boolean).length;
+                let successMsg = `
                     Data import successful!<br>
+                    <strong>Strategy</strong>: ${strategy === 'replace' ? 'Replace All' : strategy === 'merge' ? 'Merge (Keep Existing)' : 'Merge (Overwrite Duplicates)'}<br>
                     <strong>Books Read</strong>: ${readCount}<br>
-                    <strong>Notes Imported</strong>: ${importedNotes}<br><br>
-                    <a href="Bookcast.html" style="color: var(--accent-color); text-decoration: none;">Return to Library →</a>
-                `);
+                    <strong>Notes Imported</strong>: ${importedNotes}
+                `;
+                
+                if (skippedNotes > 0) {
+                    successMsg += `<br><strong>Notes Skipped</strong>: ${skippedNotes} (duplicates)`;
+                }
+                
+                successMsg += `<br><br><a href="Bookcast.html" style="color: var(--accent-color); text-decoration: none;">Return to Library →</a>`;
+                
+                showMessage('success', successMsg);
 
                 // Reset form
                 document.getElementById('fileInput').value = '';

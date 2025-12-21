@@ -208,6 +208,41 @@
             white-space: pre-wrap;
         }
 
+        .loading-spinner {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 3000;
+            text-align: center;
+        }
+
+        .loading-spinner.active {
+            display: block;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--accent-color);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            color: var(--text-secondary);
+            font-family: var(--font-chinese);
+            font-size: 0.9rem;
+        }
+
         @media (max-width: 600px) {
             .export-buttons { flex-direction: column; }
             .btn { justify-content: center; }
@@ -289,6 +324,12 @@
             <div class="preview-content" id="previewContent"></div>
         </div>
     </main>
+
+    <!-- Loading Spinner -->
+    <div class="loading-spinner" id="loadingSpinner">
+        <div class="spinner"></div>
+        <div class="loading-text">Processing data...</div>
+    </div>
 
     <script>
         // 书籍数据 (与其他页面保持一致)
@@ -468,22 +509,27 @@
             const readState = JSON.parse(localStorage.getItem('bookReadState')) || {};
             const readCount = Object.values(readState).filter(Boolean).length;
             
-            // 统计笔记数量
+            // 使用 Promise.all 并行获取所有笔记，提升性能
+            const notesPromises = booksData.map(book => 
+                getNotesFromDB(book.rank).then(notes => {
+                    if (notes.length === 0) {
+                        notes = JSON.parse(localStorage.getItem(`book_notes_${book.rank}`)) || [];
+                    }
+                    return notes;
+                })
+            );
+            
+            const allNotes = await Promise.all(notesPromises);
+            
             let totalNotes = 0;
             let booksWithNotes = 0;
             
-            for (const book of booksData) {
-                // Try IndexedDB first, then fall back to localStorage
-                let notes = await getNotesFromDB(book.rank);
-                if (notes.length === 0) {
-                    notes = JSON.parse(localStorage.getItem(`book_notes_${book.rank}`)) || [];
-                }
-                
+            allNotes.forEach(notes => {
                 if (notes.length > 0) {
                     booksWithNotes++;
                     totalNotes += notes.length;
                 }
-            }
+            });
 
             const statsGrid = document.getElementById('statsGrid');
             statsGrid.innerHTML = `
@@ -515,32 +561,33 @@
                 books: []
             };
 
-            for (const book of booksData) {
-                // Try IndexedDB first, then fall back to localStorage
-                let notes = await getNotesFromDB(book.rank);
-                if (notes.length === 0) {
-                    notes = JSON.parse(localStorage.getItem(`book_notes_${book.rank}`)) || [];
-                }
-                
-                const bookData = {
-                    rank: book.rank,
-                    title: {
-                        en: book.en,
-                        cn: book.cn
-                    },
-                    author: book.author,
-                    isRead: !!readState[book.rank],
-                    notes: notes.map(note => ({
-                        id: note.id,
-                        text: note.text || note.html || '',
-                        html: note.html,
-                        timestamp: note.timestamp,
-                        date: new Date(note.timestamp).toLocaleString('zh-CN')
-                    }))
-                };
-                exportData.books.push(bookData);
-            }
+            // 使用 Promise.all 并行获取所有笔记，提升性能
+            const bookDataPromises = booksData.map(book => {
+                return getNotesFromDB(book.rank).then(notes => {
+                    if (notes.length === 0) {
+                        notes = JSON.parse(localStorage.getItem(`book_notes_${book.rank}`)) || [];
+                    }
+                    
+                    return {
+                        rank: book.rank,
+                        title: {
+                            en: book.en,
+                            cn: book.cn
+                        },
+                        author: book.author,
+                        isRead: !!readState[book.rank],
+                        notes: notes.map(note => ({
+                            id: note.id,
+                            text: note.text || note.html || '',
+                            html: note.html,
+                            timestamp: note.timestamp,
+                            date: new Date(note.timestamp).toLocaleString('zh-CN')
+                        }))
+                    };
+                });
+            });
 
+            exportData.books = await Promise.all(bookDataPromises);
             return exportData;
         }
 
@@ -603,63 +650,88 @@
         }
 
         async function previewData() {
-            const data = await collectAllData();
-            let formattedData = '';
-            
-            switch (selectedFormat) {
-                case 'json':
-                    formattedData = formatAsJSON(data);
-                    break;
-                case 'markdown':
-                    formattedData = formatAsMarkdown(data);
-                    break;
-                case 'csv':
-                    formattedData = formatAsCSV(data);
-                    break;
+            showLoading(true);
+            try {
+                const data = await collectAllData();
+                let formattedData = '';
+                
+                switch (selectedFormat) {
+                    case 'json':
+                        formattedData = formatAsJSON(data);
+                        break;
+                    case 'markdown':
+                        formattedData = formatAsMarkdown(data);
+                        break;
+                    case 'csv':
+                        formattedData = formatAsCSV(data);
+                        break;
+                }
+                
+                document.getElementById('previewContent').textContent = formattedData;
+                document.getElementById('previewSection').style.display = 'block';
+                document.getElementById('previewSection').scrollIntoView({ behavior: 'smooth' });
+            } catch (error) {
+                console.error('Error previewing data:', error);
+                alert('Failed to preview data. Check console for details.');
+            } finally {
+                showLoading(false);
             }
-            
-            document.getElementById('previewContent').textContent = formattedData;
-            document.getElementById('previewSection').style.display = 'block';
-            document.getElementById('previewSection').scrollIntoView({ behavior: 'smooth' });
         }
 
         async function exportData() {
-            const data = await collectAllData();
-            let content = '';
-            let filename = '';
-            let mimeType = '';
-            
-            switch (selectedFormat) {
-                case 'json':
-                    content = formatAsJSON(data);
-                    filename = `futurecast-library-${new Date().toISOString().split('T')[0]}.json`;
-                    mimeType = 'application/json';
-                    break;
-                case 'markdown':
-                    content = formatAsMarkdown(data);
-                    filename = `futurecast-library-${new Date().toISOString().split('T')[0]}.md`;
-                    mimeType = 'text/markdown';
-                    break;
-                case 'csv':
-                    content = formatAsCSV(data);
-                    filename = `futurecast-library-${new Date().toISOString().split('T')[0]}.csv`;
-                    mimeType = 'text/csv';
-                    break;
+            showLoading(true);
+            try {
+                const data = await collectAllData();
+                let content = '';
+                let filename = '';
+                let mimeType = '';
+                
+                switch (selectedFormat) {
+                    case 'json':
+                        content = formatAsJSON(data);
+                        filename = `futurecast-library-${new Date().toISOString().split('T')[0]}.json`;
+                        mimeType = 'application/json';
+                        break;
+                    case 'markdown':
+                        content = formatAsMarkdown(data);
+                        filename = `futurecast-library-${new Date().toISOString().split('T')[0]}.md`;
+                        mimeType = 'text/markdown';
+                        break;
+                    case 'csv':
+                        content = formatAsCSV(data);
+                        filename = `futurecast-library-${new Date().toISOString().split('T')[0]}.csv`;
+                        mimeType = 'text/csv';
+                        break;
+                }
+                
+                // 创建下载链接
+                const blob = new Blob([content], { type: mimeType });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                
+                // 显示成功消息
+                alert(`Data successfully exported as ${filename}`);
+            } catch (error) {
+                console.error('Error exporting data:', error);
+                alert('Failed to export data. Check console for details.');
+            } finally {
+                showLoading(false);
             }
-            
-            // 创建下载链接
-            const blob = new Blob([content], { type: mimeType });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = filename;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-            
-            // 显示成功消息
-            alert(`Data successfully exported as ${filename}`);
+        }
+
+        function showLoading(show) {
+            const spinner = document.getElementById('loadingSpinner');
+            if (show) {
+                spinner.classList.add('active');
+            } else {
+                spinner.classList.remove('active');
+            }
         }
 
         // 初始化

@@ -258,6 +258,63 @@
             transform: translateY(-1px);
         }
 
+        .search-notes-container {
+            max-width: 800px;
+            margin: 2rem auto 0;
+            padding: 0 1.5rem;
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .search-notes-input {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-family: var(--font-chinese);
+            background: var(--bg-card);
+        }
+
+        .search-notes-input:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(140, 47, 57, 0.1);
+            outline: none;
+        }
+
+        .search-clear-btn {
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background: var(--bg-card);
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.2s;
+            font-family: var(--font-sans);
+        }
+
+        .search-clear-btn:hover {
+            background: #f5f5f5;
+            border-color: var(--accent-color);
+        }
+
+        .search-results-info {
+            max-width: 800px;
+            margin: 0 auto 1rem;
+            padding: 0 1.5rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-family: var(--font-chinese);
+        }
+
+        .highlight {
+            background-color: #FFEB3B;
+            padding: 0 2px;
+            border-radius: 2px;
+        }
+
         /* --- Notes Stream --- */
         .notes-stream {
             max-width: 800px;
@@ -333,6 +390,194 @@
 
         .btn-delete:hover { color: var(--accent-color); background: #FFF5F5; }
 
+        .confirm-dialog {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .confirm-dialog.active {
+            display: flex;
+        }
+
+        .confirm-content {
+            background: var(--bg-card);
+            border-radius: 8px;
+            padding: 2rem;
+            max-width: 400px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .confirm-title {
+            font-family: var(--font-serif);
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .confirm-message {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            font-family: var(--font-chinese);
+        }
+
+        .confirm-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+        }
+
+        .confirm-btn {
+            padding: 0.6rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: var(--font-sans);
+        }
+
+        .confirm-btn-cancel {
+            background-color: #f5f5f5;
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .confirm-btn-cancel:hover {
+            background-color: #e5e5e5;
+        }
+
+        .confirm-btn-delete {
+            background-color: #DC3545;
+            color: white;
+        }
+
+        .confirm-btn-delete:hover {
+            background-color: #C82333;
+        }
+
+        .btn-edit {
+            background: none;
+            border: none;
+            color: #ccc;
+            cursor: pointer;
+            font-size: 0.8rem;
+            padding: 4px 8px;
+            border-radius: 4px;
+            transition: color 0.2s;
+            margin-right: 0.5rem;
+        }
+
+        .btn-edit:hover { color: #4CAF50; background: #F0F8F0; }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--bg-card);
+            border-radius: 8px;
+            padding: 2rem;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .modal-header h2 {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            margin: 0;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-tertiary);
+            padding: 0;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close:hover {
+            color: var(--text-primary);
+        }
+
+        .modal-footer {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .btn-modal {
+            padding: 0.6rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: var(--font-sans);
+        }
+
+        .btn-modal-primary {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .btn-modal-primary:hover {
+            background-color: #7A2832;
+        }
+
+        .btn-modal-secondary {
+            background-color: #f5f5f5;
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-modal-secondary:hover {
+            background-color: #e5e5e5;
+        }
+
         .empty-state {
             text-align: center;
             padding: 3rem;
@@ -401,11 +646,78 @@
         <!-- Notes List -->
         <div class="notes-stream">
             <div class="section-label">Previous Notes</div>
+            
+            <!-- Search Notes -->
+            <div class="search-notes-container">
+                <input 
+                    type="text" 
+                    id="searchNotesInput" 
+                    class="search-notes-input" 
+                    placeholder="Search notes..."
+                    onkeyup="filterNotes()"
+                >
+                <button class="search-clear-btn" onclick="clearSearch()">Clear</button>
+            </div>
+            
+            <div id="searchResultsInfo" class="search-results-info" style="display: none;"></div>
             <div id="notesList">
                 <!-- Notes injected here -->
             </div>
         </div>
     </main>
+
+    <!-- Edit Modal -->
+    <div class="modal-overlay" id="editModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Edit Note</h2>
+                <button class="modal-close" onclick="closeEditModal()">×</button>
+            </div>
+            <div class="editor-toolbar">
+                <div class="toolbar-group">
+                    <button class="toolbar-btn" onclick="formatText('bold', document.getElementById('editNoteInput'))" title="Bold (Ctrl+B)">
+                        <strong>B</strong>
+                    </button>
+                    <button class="toolbar-btn" onclick="formatText('italic', document.getElementById('editNoteInput'))" title="Italic (Ctrl+I)">
+                        <em>I</em>
+                    </button>
+                    <button class="toolbar-btn" onclick="formatText('underline', document.getElementById('editNoteInput'))" title="Underline (Ctrl+U)">
+                        <u>U</u>
+                    </button>
+                </div>
+                <div class="toolbar-group">
+                    <div class="color-picker-wrapper">
+                        <input type="color" id="editColorPicker" class="color-picker-input" value="#111111" title="Text Color">
+                    </div>
+                    <button class="toolbar-btn" onclick="formatText('color', document.getElementById('editNoteInput'))" title="Apply Color">
+                        Color
+                    </button>
+                </div>
+                <div class="toolbar-group">
+                    <button class="toolbar-btn" onclick="formatText('clear', document.getElementById('editNoteInput'))" title="Clear Formatting">
+                        Clear
+                    </button>
+                </div>
+            </div>
+            <div id="editNoteInput" class="editor-content" contenteditable="true" style="min-height: 200px; margin-bottom: 1rem;"></div>
+            <div class="modal-footer">
+                <button class="btn-modal btn-modal-secondary" onclick="closeEditModal()">Cancel</button>
+                <button class="btn-modal btn-modal-primary" onclick="saveEditNote()">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Dialog -->
+    <div class="confirm-dialog" id="deleteConfirmDialog">
+        <div class="confirm-content">
+            <div class="confirm-title">Delete Note?</div>
+            <div class="confirm-message">This action cannot be undone. Are you sure you want to delete this note?</div>
+            <div class="confirm-actions">
+                <button class="confirm-btn confirm-btn-cancel" onclick="cancelDelete()">Cancel</button>
+                <button class="confirm-btn confirm-btn-delete" onclick="confirmDelete()">Delete</button>
+            </div>
+        </div>
+    </div>
 
     <script>
         const booksData = [
@@ -671,13 +983,36 @@
                 const store = transaction.objectStore(STORE_NAME);
                 const request = store.put({ bookId: bookId, notes: notes });
                 
-                request.onsuccess = () => resolve();
+                request.onsuccess = () => {
+                    resolve();
+                    // After successful IndexedDB save, clear localStorage to avoid duplication
+                    try {
+                        localStorage.removeItem(storageKey);
+                    } catch (e) {
+                        console.warn('Could not clear localStorage:', e);
+                    }
+                };
                 request.onerror = () => reject(request.error);
             });
         }
 
-        function formatText(command) {
-            const editor = document.getElementById('noteInput');
+        function formatText(command, targetEditor = null) {
+            // Determine which editor to use
+            let editor;
+            if (targetEditor) {
+                editor = targetEditor;
+            } else {
+                // Check if edit modal is active
+                const modal = document.getElementById('editModal');
+                if (modal.classList.contains('active')) {
+                    editor = document.getElementById('editNoteInput');
+                } else {
+                    editor = document.getElementById('noteInput');
+                }
+            }
+            
+            if (!editor) return;
+            
             editor.focus();
 
             if (command === 'bold') {
@@ -687,7 +1022,9 @@
             } else if (command === 'underline') {
                 document.execCommand('underline', false, null);
             } else if (command === 'color') {
-                const color = document.getElementById('colorPicker').value;
+                // Use the appropriate color picker based on which editor is active
+                const colorPickerId = targetEditor ? 'editColorPicker' : 'colorPicker';
+                const color = document.getElementById(colorPickerId).value;
                 document.execCommand('foreColor', false, color);
             } else if (command === 'clear') {
                 document.execCommand('removeFormat', false, null);
@@ -780,18 +1117,173 @@
             }
         }
 
-        async function deleteNote(id) {
-            if(!confirm("Delete this note?")) return;
+        let editingNoteId = null;
+
+        function openEditModal(id) {
+            editingNoteId = id;
+            const modal = document.getElementById('editModal');
+            modal.classList.add('active');
+            
+            // Find the note and populate the editor
+            getNotes().then(notes => {
+                const note = notes.find(n => n.id === id);
+                if (note) {
+                    const editor = document.getElementById('editNoteInput');
+                    editor.innerHTML = note.html || escapeHtml(note.text || '');
+                    editor.focus();
+                }
+            });
+        }
+
+        function closeEditModal() {
+            const modal = document.getElementById('editModal');
+            modal.classList.remove('active');
+            editingNoteId = null;
+            document.getElementById('editNoteInput').innerHTML = '';
+        }
+
+        async function saveEditNote() {
+            if (editingNoteId === null) return;
+            
+            const editor = document.getElementById('editNoteInput');
+            const html = editor.innerHTML.trim();
+            const text = editor.textContent.trim();
+            
+            if (!text) {
+                alert('Please write something before saving.');
+                return;
+            }
+
+            try {
+                const notes = await getNotes();
+                const noteIndex = notes.findIndex(n => n.id === editingNoteId);
+                
+                if (noteIndex !== -1) {
+                    notes[noteIndex].html = html;
+                    notes[noteIndex].timestamp = new Date().toISOString();
+                    await saveNotes(notes);
+                    await renderNotes();
+                    closeEditModal();
+                }
+            } catch (error) {
+                console.error('Error saving note:', error);
+                alert('Failed to save note.');
+            }
+        }
+
+        let pendingDeleteId = null;
+
+        function deleteNote(id) {
+            pendingDeleteId = id;
+            const dialog = document.getElementById('deleteConfirmDialog');
+            dialog.classList.add('active');
+        }
+
+        function cancelDelete() {
+            const dialog = document.getElementById('deleteConfirmDialog');
+            dialog.classList.remove('active');
+            pendingDeleteId = null;
+        }
+
+        async function confirmDelete() {
+            if (pendingDeleteId === null) return;
             
             try {
                 const notes = await getNotes();
-                const filtered = notes.filter(n => n.id !== id);
+                const filtered = notes.filter(n => n.id !== pendingDeleteId);
                 await saveNotes(filtered);
                 await renderNotes();
+                cancelDelete();
             } catch (error) {
                 console.error('Error deleting note:', error);
                 alert('Failed to delete note.');
             }
+        }
+
+        let allNotes = [];
+
+        async function filterNotes() {
+            const searchInput = document.getElementById('searchNotesInput');
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            
+            if (!searchTerm) {
+                clearSearch();
+                return;
+            }
+
+            try {
+                const notes = await getNotes();
+                const filtered = notes.filter(note => {
+                    const text = (note.text || note.html || '').toLowerCase();
+                    return text.includes(searchTerm);
+                });
+
+                const resultInfo = document.getElementById('searchResultsInfo');
+                resultInfo.style.display = 'block';
+                resultInfo.textContent = `Found ${filtered.length} note(s) matching "${searchTerm}"`;
+
+                renderFilteredNotes(filtered, searchTerm);
+            } catch (error) {
+                console.error('Error filtering notes:', error);
+            }
+        }
+
+        function clearSearch() {
+            document.getElementById('searchNotesInput').value = '';
+            document.getElementById('searchResultsInfo').style.display = 'none';
+            renderNotes();
+        }
+
+        function renderFilteredNotes(filteredNotes, searchTerm) {
+            if (filteredNotes.length === 0) {
+                elements.list.innerHTML = `<div class="empty-state">No notes match your search.</div>`;
+                return;
+            }
+
+            // Clear the list first
+            elements.list.innerHTML = '';
+            
+            // Create and append each note as a DOM element (not HTML string)
+            filteredNotes.forEach(note => {
+                const noteDiv = document.createElement('div');
+                noteDiv.className = 'note-card';
+                
+                const contentDiv = document.createElement('div');
+                contentDiv.className = 'note-content';
+                
+                // Highlight search term in content
+                let highlightedContent = sanitizeHtml(note.html || note.text || '');
+                const regex = new RegExp(`(${searchTerm})`, 'gi');
+                highlightedContent = highlightedContent.replace(regex, '<span class="highlight">$1</span>');
+                contentDiv.innerHTML = highlightedContent;
+                
+                const footerDiv = document.createElement('div');
+                footerDiv.className = 'note-footer';
+                
+                const dateSpan = document.createElement('span');
+                dateSpan.className = 'note-date';
+                dateSpan.textContent = formatDate(note.timestamp);
+                
+                const editBtn = document.createElement('button');
+                editBtn.className = 'btn-edit';
+                editBtn.textContent = 'Edit';
+                editBtn.onclick = () => openEditModal(note.id);
+                
+                const deleteBtn = document.createElement('button');
+                deleteBtn.className = 'btn-delete';
+                deleteBtn.textContent = 'Delete';
+                deleteBtn.onclick = () => deleteNote(note.id);
+                
+                footerDiv.appendChild(dateSpan);
+                footerDiv.appendChild(editBtn);
+                footerDiv.appendChild(deleteBtn);
+                
+                noteDiv.appendChild(contentDiv);
+                noteDiv.appendChild(footerDiv);
+                
+                // Append the actual DOM element, not HTML string
+                elements.list.appendChild(noteDiv);
+            });
         }
 
         function formatDate(isoString) {
@@ -814,19 +1306,106 @@
                     return;
                 }
 
-                elements.list.innerHTML = notes.map(note => `
-                    <div class="note-card">
-                        <div class="note-content">${note.html || escapeHtml(note.text)}</div>
-                        <div class="note-footer">
-                            <span class="note-date">${formatDate(note.timestamp)}</span>
-                            <button class="btn-delete" onclick="deleteNote(${note.id})">Delete</button>
-                        </div>
-                    </div>
-                `).join('');
+                // Clear the list first
+                elements.list.innerHTML = '';
+                
+                // Create and append each note as a DOM element (not HTML string)
+                notes.forEach(note => {
+                    const noteDiv = document.createElement('div');
+                    noteDiv.className = 'note-card';
+                    
+                    const contentDiv = document.createElement('div');
+                    contentDiv.className = 'note-content';
+                    // Sanitize HTML content to prevent XSS
+                    contentDiv.innerHTML = sanitizeHtml(note.html || note.text || '');
+                    
+                    const footerDiv = document.createElement('div');
+                    footerDiv.className = 'note-footer';
+                    
+                    const dateSpan = document.createElement('span');
+                    dateSpan.className = 'note-date';
+                    dateSpan.textContent = formatDate(note.timestamp);
+                    
+                    const editBtn = document.createElement('button');
+                    editBtn.className = 'btn-edit';
+                    editBtn.textContent = 'Edit';
+                    editBtn.onclick = () => openEditModal(note.id);
+                    
+                    const deleteBtn = document.createElement('button');
+                    deleteBtn.className = 'btn-delete';
+                    deleteBtn.textContent = 'Delete';
+                    deleteBtn.onclick = () => deleteNote(note.id);
+                    
+                    footerDiv.appendChild(dateSpan);
+                    footerDiv.appendChild(editBtn);
+                    footerDiv.appendChild(deleteBtn);
+                    
+                    noteDiv.appendChild(contentDiv);
+                    noteDiv.appendChild(footerDiv);
+                    
+                    // Append the actual DOM element, not HTML string
+                    elements.list.appendChild(noteDiv);
+                });
             } catch (error) {
                 console.error('Error rendering notes:', error);
                 elements.list.innerHTML = `<div class="empty-state">Error loading notes.</div>`;
             }
+        }
+
+        function sanitizeHtml(html) {
+            // Create a temporary element to parse HTML
+            const temp = document.createElement('div');
+            temp.textContent = html;
+            
+            // Whitelist of allowed tags
+            const allowedTags = ['strong', 'em', 'u', 'br', 'div', 'span', 'p'];
+            const allowedClasses = ['md-h1', 'md-h2', 'md-h3', 'md-code', 'md-blockquote', 'md-list'];
+            
+            // Parse and sanitize
+            const parser = new DOMParser();
+            try {
+                const doc = parser.parseFromString(html, 'text/html');
+                const sanitized = sanitizeNode(doc.body, allowedTags, allowedClasses);
+                return sanitized.innerHTML;
+            } catch (e) {
+                // If parsing fails, return escaped text
+                return escapeHtml(html);
+            }
+        }
+
+        function sanitizeNode(node, allowedTags, allowedClasses) {
+            const result = document.createElement('div');
+            
+            for (let child of node.childNodes) {
+                if (child.nodeType === Node.TEXT_NODE) {
+                    result.appendChild(document.createTextNode(child.textContent));
+                } else if (child.nodeType === Node.ELEMENT_NODE) {
+                    const tagName = child.tagName.toLowerCase();
+                    
+                    if (allowedTags.includes(tagName)) {
+                        const newElement = document.createElement(tagName);
+                        
+                        // Only allow specific classes
+                        if (child.className) {
+                            const classes = child.className.split(' ').filter(c => allowedClasses.includes(c));
+                            if (classes.length > 0) {
+                                newElement.className = classes.join(' ');
+                            }
+                        }
+                        
+                        // Recursively sanitize children
+                        const sanitizedChild = sanitizeNode(child, allowedTags, allowedClasses);
+                        newElement.innerHTML = sanitizedChild.innerHTML;
+                        result.appendChild(newElement);
+                    } else {
+                        // For disallowed tags, just keep the text content
+                        const sanitizedChild = sanitizeNode(child, allowedTags, allowedClasses);
+                        result.innerHTML += sanitizedChild.innerHTML;
+                    }
+                }
+            }
+            
+            return result;
         }
 
         function escapeHtml(text) {
