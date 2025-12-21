@@ -1,5 +1,5 @@
 {
-  "exportDate": "2025-12-18T08:33:49.819Z",
+  "exportDate": "2025-12-21T02:44:30.990Z",
   "totalBooks": 100,
   "readCount": 0,
   "books": [
@@ -11,39 +11,7 @@
       },
       "author": "Yuval Noah Harari",
       "isRead": false,
-      "notes": [
-        {
-          "id": 1766029774772,
-          "text": "<strong>实操价值：行动刺刀</strong><br><div class=\"md-list\">•   <strong>策略1</strong>：识别身边的“虚构实体”。当你意识到公司、职位、头衔都是故事时，你就能跳出游戏规则，成为规则的制定者而非盲从者。</div><div class=\"md-list\">•   <strong>策略2</strong>：在商业中，最高级的营销不是卖产品，而是卖“共同的想象”（如耐克的Just Do It，苹果的Think Different）。</div><strong>💀 思想毒刺</strong><br><div class=\"md-list\">•   <strong>金钱是有史以来最普遍、最有效的互信系统。就连基地组织恐怖分子也接受美元，虽然他们痛恨美国的宗教和政治。</strong></div><strong>🔗 知识格栅</strong><br><div class=\"md-list\">•   <strong>关联书籍</strong>：《枪炮、病菌与钢铁》（解释了物质层面的征服，本书解释了认知层面的征服）。</div>",
-          "html": "<strong>实操价值：行动刺刀</strong><br><div class=\"md-list\">•   <strong>策略1</strong>：识别身边的“虚构实体”。当你意识到公司、职位、头衔都是故事时，你就能跳出游戏规则，成为规则的制定者而非盲从者。</div><div class=\"md-list\">•   <strong>策略2</strong>：在商业中，最高级的营销不是卖产品，而是卖“共同的想象”（如耐克的Just Do It，苹果的Think Different）。</div><strong>💀 思想毒刺</strong><br><div class=\"md-list\">•   <strong>金钱是有史以来最普遍、最有效的互信系统。就连基地组织恐怖分子也接受美元，虽然他们痛恨美国的宗教和政治。</strong></div><strong>🔗 知识格栅</strong><br><div class=\"md-list\">•   <strong>关联书籍</strong>：《枪炮、病菌与钢铁》（解释了物质层面的征服，本书解释了认知层面的征服）。</div>",
-          "timestamp": "2025-12-18T03:49:34.772Z",
-          "date": "2025/12/18 11:49:34"
-        },
-        {
-          "id": 1765977559730,
-          "text": "远见与实用性：如何重构你的世界\n\n实用策略： 理解“虚构”不是为了否定它，而是为了利用它。作为管理者或创业者，你的核心工作其实是“构建虚构”——这就是所谓的企业愿景和品牌价值。谁能讲出最动听、最让人信服的故事，谁就能调动最多的资源。\n\n远见： 书的结尾预言了“智人的终结”。通过生物工程、仿生工程和AI，我们正在通过智能设计（Intelligent Design）取代自然选择。未来可能出现长生不老的“神人”阶级，人类社会将面临前所未有的物种级分化。",
-          "timestamp": "2025-12-17T13:19:19.730Z",
-          "date": "2025/12/17 21:19:19"
-        },
-        {
-          "id": 1765977522134,
-          "text": "赫拉利提供了一个极具解释力的上帝视角，但我们需要警惕以下两点：\n\n1.快乐的虚无主义： 赫拉利在书末探讨“快乐”时，倾向于佛教和生物化学的解释——快乐只是血清素和多巴胺的波动，或者是“主观预期与客观现实的匹配”。这种观点可能导致一种道德相对主义，甚至虚无主义：如果一切意义都是虚构的，快乐只是生化反应，那么人类奋斗的终极价值何在？\n\n2.对农业革命的过度鞭挞： 他认为农业社会比采集社会更悲惨，这带有卢梭式的“高贵的野蛮人”情结。他忽略了农业社会虽然增加了个体劳役，但也催生了文字、艺术和复杂制度，这些是人类文明积累的必要载体。",
-          "timestamp": "2025-12-17T13:18:42.134Z",
-          "date": "2025/12/17 21:18:42"
-        },
-        {
-          "id": 1765977428190,
-          "text": "本书最振聋发聩的概念是“互为主体的现实”。\n世界上存在三种现实：\n客观现实： 无论你信不信都存在的（如重力、河流）。\n主观现实： 只存在于你个人脑中的（如你的牙痛）。\n互为主体的现实： 依靠众人的共同信念而存在的（如金钱、法律、国家、公司、人权）。\n赫拉利指出，现代文明的基石全部建立在第三种现实之上。标致汽车公司（Peugeot）不仅仅是工厂和工人，它是一个法律拟制体；美元不仅仅是绿纸，它是美联储与全球持有者的契约。人类统治地球，是因为我们是唯一能生活在双重现实（物理世界+虚构故事）中的动物。",
-          "timestamp": "2025-12-17T13:17:08.190Z",
-          "date": "2025/12/17 21:17:08"
-        },
-        {
-          "id": 1765976802089,
-          "text": "赫拉利并不是在写历史，而是在写“历史哲学”。全书贯穿了一个核心问题：为何一种在东非并不起眼的灵长类动物（智人），最终能登上生物链顶端，甚至试图扮演上帝？\n\n全书通过三大革命来回答这个问题：\n1.认知革命 (The Cognitive Revolution, 距今约7万年前)： 這是智人脱颖而出的关键。智人进化出了独特的语言能力，不仅能描述现实（“有狮子”），还能描述虚构（“狮子是我们的图腾”）。这种“讲故事”的能力让智人突破了150人的社交上限，实现了大规模陌生人协作。\n\n2.农业革命 (The Agricultural Revolution, 距今约1.2万年前)： 赫拉利称其为“史上最大的骗局”。虽然养活了更多人口，但个体生活质量下降，人类被小麦驯化，陷入了永久的劳作和阶级压迫中。\n\n3.科学革命 (The Scientific Revolution, 距今约500年前)： 人类承认自己的无知，开始通过观察和数学投资未来。这一革命与资本主义、帝国主义联姻，带来了爆发式的增长。",
-          "timestamp": "2025-12-17T13:06:42.089Z",
-          "date": "2025/12/17 21:06:42"
-        }
-      ]
+      "notes": []
     },
     {
       "rank": 2,
@@ -53,15 +21,7 @@
       },
       "author": "Viktor E. Frankl",
       "isRead": false,
-      "notes": [
-        {
-          "id": 1766033642157,
-          "text": "<strong>核心逻辑：底层代码</strong><br><div class=\"md-list\">•   <strong>意义疗法（Logotherapy）</strong>：人类主要的驱动力不是弗洛伊德说的“快乐意志”，也不是阿德勒说的“权力意志”，而是“意义意志”。</div><div class=\"md-list\">•   <strong>精神自由的最后堡垒</strong>：你可以被剥夺一切（财富、亲人、身体自由），但无法被剥夺“选择以何种态度面对既定环境”的自由。</div><div class=\"md-list\">•   <strong>痛苦的转化机制</strong>：痛苦本身没有意义，但当你赋予它意义（例如为了某人、为了某项使命而受苦）时，痛苦就不再是纯粹的折磨。</div><br><strong>哲学批判与远见：上帝视角</strong><br><div class=\"md-list\">•   <strong>哲学引申</strong>：这是对虚无主义的宣战。现代人的普遍神经官能症不在于压力太大，而在于“存在之虚空”（Existential Vacuum）。即使在丰裕社会，没有意义的生活也是一种慢性自杀。</div><div class=\"md-list\">•   <strong>批判性思考</strong>：幸福无法追求，它只是投身于某种比自我更伟大的事业后的副产品。</div><br><strong>实操价值：行动刺刀</strong><br><div class=\"md-list\">•   <strong>策略1</strong>：不要问“生活的意义是什么”，要明白“你是被生活拷问的人”。你需要通过行动（工作、爱、受苦）来回答生活的问题。</div><div class=\"md-list\">•   <strong>策略2</strong>：在极度高压或低谷期，运用“自我抽离”技术，像观察者一样审视当下的痛苦，并将其视为未来胜利叙事的一部分。</div><br><strong>💀 思想毒刺</strong><br><div class=\"md-list\">•   <strong>知道自己“为什么”而活的人，几乎能承受任何“怎样”活。</strong></div><br><strong>🔗 知识格栅</strong><br><div class=\"md-list\">•   <strong>关联书籍</strong>：《反脆弱》（塔勒布的理论是系统层面的反脆弱，本书是个体精神层面的反脆弱）。</div>",
-          "html": "<strong>核心逻辑：底层代码</strong><br><div class=\"md-list\">•   <strong>意义疗法（Logotherapy）</strong>：人类主要的驱动力不是弗洛伊德说的“快乐意志”，也不是阿德勒说的“权力意志”，而是“意义意志”。</div><div class=\"md-list\">•   <strong>精神自由的最后堡垒</strong>：你可以被剥夺一切（财富、亲人、身体自由），但无法被剥夺“选择以何种态度面对既定环境”的自由。</div><div class=\"md-list\">•   <strong>痛苦的转化机制</strong>：痛苦本身没有意义，但当你赋予它意义（例如为了某人、为了某项使命而受苦）时，痛苦就不再是纯粹的折磨。</div><br><strong>哲学批判与远见：上帝视角</strong><br><div class=\"md-list\">•   <strong>哲学引申</strong>：这是对虚无主义的宣战。现代人的普遍神经官能症不在于压力太大，而在于“存在之虚空”（Existential Vacuum）。即使在丰裕社会，没有意义的生活也是一种慢性自杀。</div><div class=\"md-list\">•   <strong>批判性思考</strong>：幸福无法追求，它只是投身于某种比自我更伟大的事业后的副产品。</div><br><strong>实操价值：行动刺刀</strong><br><div class=\"md-list\">•   <strong>策略1</strong>：不要问“生活的意义是什么”，要明白“你是被生活拷问的人”。你需要通过行动（工作、爱、受苦）来回答生活的问题。</div><div class=\"md-list\">•   <strong>策略2</strong>：在极度高压或低谷期，运用“自我抽离”技术，像观察者一样审视当下的痛苦，并将其视为未来胜利叙事的一部分。</div><br><strong>💀 思想毒刺</strong><br><div class=\"md-list\">•   <strong>知道自己“为什么”而活的人，几乎能承受任何“怎样”活。</strong></div><br><strong>🔗 知识格栅</strong><br><div class=\"md-list\">•   <strong>关联书籍</strong>：《反脆弱》（塔勒布的理论是系统层面的反脆弱，本书是个体精神层面的反脆弱）。</div>",
-          "timestamp": "2025-12-18T04:54:02.158Z",
-          "date": "2025/12/18 12:54:02"
-        }
-      ]
+      "notes": []
     },
     {
       "rank": 3,
@@ -71,15 +31,7 @@
       },
       "author": "Ray Dalio",
       "isRead": false,
-      "notes": [
-        {
-          "id": 1766033762571,
-          "text": "<strong>一句话定义</strong>：将人生和商业决策“算法化”的工程学手册，试图用机器思维消除人性的不确定性。<br><br><strong>核心逻辑：底层代码</strong><br><div class=\"md-list\">•   <strong>现实 + 梦想 + 决心 = 成功生活</strong>：首先必须极度求真（Radical Truth），承认现实的残酷，而非希望现实符合你的愿望。</div><div class=\"md-list\">•   <strong>五步流程</strong>：目标 -&gt; 问题 -&gt; 诊断 -&gt; 设计 -&gt; 执行。大多数人死在“诊断”环节，因为无法面对自己的缺点。</div><div class=\"md-list\">•   <strong>创意择优（Idea Meritocracy）</strong>：最佳决策来自于“极度透明”和“可信度加权的投票”，而非独裁或平庸的民主。</div><br><strong>哲学批判与远见：上帝视角</strong><br><div class=\"md-list\">•   <strong>哲学引申</strong>：达利欧将进化论视为宇宙最强大的法则。个人和公司要么进化，要么消亡。痛苦是进化的信号（Pain + Reflection = Progress）。</div><div class=\"md-list\">•   <strong>批判性思考</strong>：这种“像机器一样运行”的哲学在某些人文领域可能显得冰冷，但它解决了组织熵增和官僚主义的核心问题。</div><br><strong>实操价值：行动刺刀</strong><br><div class=\"md-list\">•   <strong>策略1</strong>：建立你的“错误日志”。每次犯错后，必须提取出一个原则，确保未来同类情况下由“算法”自动处理，不再消耗决策力。</div><div class=\"md-list\">•   <strong>策略2</strong>：区分“目标”和“渴望”。目标是你真正想实现的，渴望是阻碍你实现目标的诱惑（如想健康是目标，想吃披萨是渴望）。</div><br><strong>💀 思想毒刺</strong><br><div class=\"md-list\">•   <strong>如果你现在不觉得一年前的自己是个蠢货，那说明你这一年没学到什么东西。</strong></div><br><strong>🔗 知识格栅</strong><br><div class=\"md-list\">•   <strong>关联书籍</strong>：《穷查理宝典》（同样强调多元思维模型和理性决策，但达利欧更侧重系统化执行）。</div>",
-          "html": "<strong>一句话定义</strong>：将人生和商业决策“算法化”的工程学手册，试图用机器思维消除人性的不确定性。<br><br><strong>核心逻辑：底层代码</strong><br><div class=\"md-list\">•   <strong>现实 + 梦想 + 决心 = 成功生活</strong>：首先必须极度求真（Radical Truth），承认现实的残酷，而非希望现实符合你的愿望。</div><div class=\"md-list\">•   <strong>五步流程</strong>：目标 -&gt; 问题 -&gt; 诊断 -&gt; 设计 -&gt; 执行。大多数人死在“诊断”环节，因为无法面对自己的缺点。</div><div class=\"md-list\">•   <strong>创意择优（Idea Meritocracy）</strong>：最佳决策来自于“极度透明”和“可信度加权的投票”，而非独裁或平庸的民主。</div><br><strong>哲学批判与远见：上帝视角</strong><br><div class=\"md-list\">•   <strong>哲学引申</strong>：达利欧将进化论视为宇宙最强大的法则。个人和公司要么进化，要么消亡。痛苦是进化的信号（Pain + Reflection = Progress）。</div><div class=\"md-list\">•   <strong>批判性思考</strong>：这种“像机器一样运行”的哲学在某些人文领域可能显得冰冷，但它解决了组织熵增和官僚主义的核心问题。</div><br><strong>实操价值：行动刺刀</strong><br><div class=\"md-list\">•   <strong>策略1</strong>：建立你的“错误日志”。每次犯错后，必须提取出一个原则，确保未来同类情况下由“算法”自动处理，不再消耗决策力。</div><div class=\"md-list\">•   <strong>策略2</strong>：区分“目标”和“渴望”。目标是你真正想实现的，渴望是阻碍你实现目标的诱惑（如想健康是目标，想吃披萨是渴望）。</div><br><strong>💀 思想毒刺</strong><br><div class=\"md-list\">•   <strong>如果你现在不觉得一年前的自己是个蠢货，那说明你这一年没学到什么东西。</strong></div><br><strong>🔗 知识格栅</strong><br><div class=\"md-list\">•   <strong>关联书籍</strong>：《穷查理宝典》（同样强调多元思维模型和理性决策，但达利欧更侧重系统化执行）。</div>",
-          "timestamp": "2025-12-18T04:56:02.571Z",
-          "date": "2025/12/18 12:56:02"
-        }
-      ]
+      "notes": []
     },
     {
       "rank": 4,
@@ -89,15 +41,7 @@
       },
       "author": "Peter Thiel",
       "isRead": false,
-      "notes": [
-        {
-          "id": 1766033791962,
-          "text": "<strong>一句话定义</strong>：硅谷的反竞争圣经，揭示了“垄断”才是商业价值的唯一来源。<br><br><strong>核心逻辑：底层代码</strong><br><div class=\"md-list\">•   <strong>垂直进步 vs 水平进步</strong>：水平进步（1到N）是复制和全球化；垂直进步（0到1）是科技创新。只有0到1能创造巨额价值。</div><div class=\"md-list\">•   <strong>竞争是输家的游戏</strong>：完全竞争意味着利润趋近于零。伟大的企业通过垄断（专利、网络效应、规模经济、品牌）来逃避竞争，从而获取超额利润。</div><div class=\"md-list\">•   <strong>反直觉的秘密</strong>：所有成功的企业都建立在一个基于“秘密”的假设之上——你知道但大多数人不同意的事实。</div><br><strong>哲学批判与远见：上帝视角</strong><br><div class=\"md-list\">•   <strong>哲学引申</strong>：这是对“不确定性乐观主义”（侥幸心理）的批判。蒂尔主张“确定性乐观主义”——未来是可以被规划和建造的。</div><div class=\"md-list\">•   <strong>批判性思考</strong>：当今社会过度迷恋“精益创业”和“迭代”，却丧失了宏大的长线规划能力。我们想要会飞的汽车，得到的却是140个字符（推特）。</div><br><strong>实操价值：行动刺刀</strong><br><div class=\"md-list\">•   <strong>策略1</strong>：不要做“大家都看好的热门赛道”。寻找一个极小的、被忽视的利基市场，先垄断它，然后再扩张。</div><div class=\"md-list\">•   <strong>策略2</strong>：在路演或思考战略时，必须回答：你的护城河在哪里？如果你的计划可以被轻易复制，你的价值就是零。</div><br><strong>💀 思想毒刺</strong><br><div class=\"md-list\">•   <strong>“竞争”是一种意识形态，它扭曲了我们的思维。我们在竞争中如此忙碌，以至于忽略了真正重要的事情。垄断者以此通过谎言来保护自己（假装有竞争），而竞争者则通过谎言来安慰自己。</strong></div><br><strong>🔗 知识格栅</strong><br><div class=\"md-list\">•   <strong>关联书籍</strong>：《创新者的窘境》（克里斯坦森解释了为何大公司被颠覆，蒂尔解释了初创公司如何通过垄断确立地位）。</div>",
-          "html": "<strong>一句话定义</strong>：硅谷的反竞争圣经，揭示了“垄断”才是商业价值的唯一来源。<br><br><strong>核心逻辑：底层代码</strong><br><div class=\"md-list\">•   <strong>垂直进步 vs 水平进步</strong>：水平进步（1到N）是复制和全球化；垂直进步（0到1）是科技创新。只有0到1能创造巨额价值。</div><div class=\"md-list\">•   <strong>竞争是输家的游戏</strong>：完全竞争意味着利润趋近于零。伟大的企业通过垄断（专利、网络效应、规模经济、品牌）来逃避竞争，从而获取超额利润。</div><div class=\"md-list\">•   <strong>反直觉的秘密</strong>：所有成功的企业都建立在一个基于“秘密”的假设之上——你知道但大多数人不同意的事实。</div><br><strong>哲学批判与远见：上帝视角</strong><br><div class=\"md-list\">•   <strong>哲学引申</strong>：这是对“不确定性乐观主义”（侥幸心理）的批判。蒂尔主张“确定性乐观主义”——未来是可以被规划和建造的。</div><div class=\"md-list\">•   <strong>批判性思考</strong>：当今社会过度迷恋“精益创业”和“迭代”，却丧失了宏大的长线规划能力。我们想要会飞的汽车，得到的却是140个字符（推特）。</div><br><strong>实操价值：行动刺刀</strong><br><div class=\"md-list\">•   <strong>策略1</strong>：不要做“大家都看好的热门赛道”。寻找一个极小的、被忽视的利基市场，先垄断它，然后再扩张。</div><div class=\"md-list\">•   <strong>策略2</strong>：在路演或思考战略时，必须回答：你的护城河在哪里？如果你的计划可以被轻易复制，你的价值就是零。</div><br><strong>💀 思想毒刺</strong><br><div class=\"md-list\">•   <strong>“竞争”是一种意识形态，它扭曲了我们的思维。我们在竞争中如此忙碌，以至于忽略了真正重要的事情。垄断者以此通过谎言来保护自己（假装有竞争），而竞争者则通过谎言来安慰自己。</strong></div><br><strong>🔗 知识格栅</strong><br><div class=\"md-list\">•   <strong>关联书籍</strong>：《创新者的窘境》（克里斯坦森解释了为何大公司被颠覆，蒂尔解释了初创公司如何通过垄断确立地位）。</div>",
-          "timestamp": "2025-12-18T04:56:31.962Z",
-          "date": "2025/12/18 12:56:31"
-        }
-      ]
+      "notes": []
     },
     {
       "rank": 5,
@@ -107,15 +51,7 @@
       },
       "author": "Daniel Kahneman",
       "isRead": false,
-      "notes": [
-        {
-          "id": 1766034245467,
-          "text": "<strong>一句话定义</strong>：人类非理性行为的解剖图，粉碎了经济学中“理性人”的虚假假设。<br><br><strong>核心逻辑：底层代码</strong><br><div class=\"md-list\">•   <strong>双系统理论</strong>：</div>    *   <strong>系统1（快）</strong>：直觉、情绪化、自动、省力，但容易出错（绝大多数时间我们在用这个）。<br>    *   <strong>系统2（慢）</strong>：逻辑、计算、费力、懒惰，负责监控系统1（但经常缺席）。<br><div class=\"md-list\">•   <strong>WYSIATI（所见即所得）</strong>：大脑倾向于根据手头有限的信息构建连贯的故事，而忽略缺失的信息。</div><div class=\"md-list\">•   <strong>前景理论</strong>：失去100元的痛苦远大于获得100元的快乐（损失厌恶）。</div><br><strong>哲学批判与远见：上帝视角</strong><br><div class=\"md-list\">•   <strong>哲学引申</strong>：人类不是理性的追求者，而是合理化的制造者。我们的自信往往源于认知的盲目，而非能力的卓越。</div><div class=\"md-list\">•   <strong>批判性思考</strong>：这是一本让人“谦卑”的书。专家直觉在缺乏规律的环境下（如股市预测、政治局势）通常一文不值。</div><br><strong>实操价值：行动刺刀</strong><br><div class=\"md-list\">•   <strong>策略1</strong>：在重大决策前（投资、招聘、战略），强制启动系统2。使用“事前验尸”（Pre-mortem）：假设计划已经失败，倒推原因。</div><div class=\"md-list\">•   <strong>策略2</strong>：警惕“回归均值”。不要因为某人一次表现好就过度奖励，也不要因为一次表现差就过度惩罚，极端情况总会回归平均。</div><br><strong>💀 思想毒刺</strong><br><div class=\"md-list\">•   <strong>在这个世界上，运气对成功的影响远比你愿意承认的要大。很多时候，所谓“英明的决策”只是结果偏误（Outcome Bias）赋予的幻觉。</strong></div><br><strong>🔗 知识格栅</strong><br><div class=\"md-list\">•   <strong>关联书籍</strong>：《误判心理学》（查理·芒格的演讲稿，从实战角度补充了卡尼曼的理论）。</div><br>",
-          "html": "<strong>一句话定义</strong>：人类非理性行为的解剖图，粉碎了经济学中“理性人”的虚假假设。<br><br><strong>核心逻辑：底层代码</strong><br><div class=\"md-list\">•   <strong>双系统理论</strong>：</div>    *   <strong>系统1（快）</strong>：直觉、情绪化、自动、省力，但容易出错（绝大多数时间我们在用这个）。<br>    *   <strong>系统2（慢）</strong>：逻辑、计算、费力、懒惰，负责监控系统1（但经常缺席）。<br><div class=\"md-list\">•   <strong>WYSIATI（所见即所得）</strong>：大脑倾向于根据手头有限的信息构建连贯的故事，而忽略缺失的信息。</div><div class=\"md-list\">•   <strong>前景理论</strong>：失去100元的痛苦远大于获得100元的快乐（损失厌恶）。</div><br><strong>哲学批判与远见：上帝视角</strong><br><div class=\"md-list\">•   <strong>哲学引申</strong>：人类不是理性的追求者，而是合理化的制造者。我们的自信往往源于认知的盲目，而非能力的卓越。</div><div class=\"md-list\">•   <strong>批判性思考</strong>：这是一本让人“谦卑”的书。专家直觉在缺乏规律的环境下（如股市预测、政治局势）通常一文不值。</div><br><strong>实操价值：行动刺刀</strong><br><div class=\"md-list\">•   <strong>策略1</strong>：在重大决策前（投资、招聘、战略），强制启动系统2。使用“事前验尸”（Pre-mortem）：假设计划已经失败，倒推原因。</div><div class=\"md-list\">•   <strong>策略2</strong>：警惕“回归均值”。不要因为某人一次表现好就过度奖励，也不要因为一次表现差就过度惩罚，极端情况总会回归平均。</div><br><strong>💀 思想毒刺</strong><br><div class=\"md-list\">•   <strong>在这个世界上，运气对成功的影响远比你愿意承认的要大。很多时候，所谓“英明的决策”只是结果偏误（Outcome Bias）赋予的幻觉。</strong></div><br><strong>🔗 知识格栅</strong><br><div class=\"md-list\">•   <strong>关联书籍</strong>：《误判心理学》（查理·芒格的演讲稿，从实战角度补充了卡尼曼的理论）。</div><br>",
-          "timestamp": "2025-12-18T05:04:05.467Z",
-          "date": "2025/12/18 13:04:05"
-        }
-      ]
+      "notes": []
     },
     {
       "rank": 6,
@@ -125,15 +61,7 @@
       },
       "author": "Robert B. Cialdini",
       "isRead": false,
-      "notes": [
-        {
-          "id": 1766034986677,
-          "text": "<strong>一句话定义</strong>：社会心理学的黑客代码，揭示了操控人类行为的六个“按键”。<br><br><strong>核心逻辑：底层代码</strong><br><em>   <strong>固定行为模式（Click, Whirr）</strong>：人类为了节省认知能量，进化出了一套对特定触发器的自动反应机制。<br></em>   <strong>六大武器</strong>：<br>    1.  <strong>互惠</strong>：给予微小恩惠，换取巨大回报。<br>    2.  <strong>承诺和一致</strong>：人一旦做出决定，就会强迫自己言行一致。<br>    3.  <strong>社会认同</strong>：我们在不确定时会盲从大众。<br>    4.  <strong>喜好</strong>：我们很难拒绝我们喜欢或长得好看的人。<br>    5.  <strong>权威</strong>：对制服和头衔的盲目服从。<br>    6.  <strong>稀缺</strong>：越少见的东西价值越高。<br><br><strong>哲学批判与远见：上帝视角</strong><br><em>   <strong>哲学引申</strong>：文明的进步就是人们不假思索就能做的事情越来越多，但这也让人类变成了容易被利用的“机器”。营销人员、政客和骗子都在利用这些认知漏洞。<br></em>   <strong>批判性思考</strong>：这不是教你诈，而是教你防身。在这个信息过载的时代，如果你不懂这些原理，你就是任人宰割的韭菜。<br><br><strong>实操价值：行动刺刀</strong><br><em>   <strong>策略1</strong>：防御——当你感觉到胃部不适或突然的紧迫感（如限时优惠），立即暂停交易。问自己：我到底需要这个商品，还是仅仅想占便宜？<br></em>   <strong>策略2</strong>：进攻——如果你想让人答应请求，先给对方一个小恩惠（互惠），或者先让他承认一个小的立场（承诺一致）。<br><br><strong>💀 思想毒刺</strong><br><em>   <strong>我们在不需要讲理的时候，最喜欢用“因为”这个词。只要给出一个理由，哪怕这个理由毫无意义，人们答应请求的概率也会显著增加。</strong><br><br><strong>🔗 知识格栅</strong><br></em>   <strong>关联书籍</strong>：《助推》（Nudge）（如何利用这些心理学原理设计更好的政策和社会架构）。",
-          "html": "<strong>一句话定义</strong>：社会心理学的黑客代码，揭示了操控人类行为的六个“按键”。<br><br><strong>核心逻辑：底层代码</strong><br><em>   <strong>固定行为模式（Click, Whirr）</strong>：人类为了节省认知能量，进化出了一套对特定触发器的自动反应机制。<br></em>   <strong>六大武器</strong>：<br>    1.  <strong>互惠</strong>：给予微小恩惠，换取巨大回报。<br>    2.  <strong>承诺和一致</strong>：人一旦做出决定，就会强迫自己言行一致。<br>    3.  <strong>社会认同</strong>：我们在不确定时会盲从大众。<br>    4.  <strong>喜好</strong>：我们很难拒绝我们喜欢或长得好看的人。<br>    5.  <strong>权威</strong>：对制服和头衔的盲目服从。<br>    6.  <strong>稀缺</strong>：越少见的东西价值越高。<br><br><strong>哲学批判与远见：上帝视角</strong><br><em>   <strong>哲学引申</strong>：文明的进步就是人们不假思索就能做的事情越来越多，但这也让人类变成了容易被利用的“机器”。营销人员、政客和骗子都在利用这些认知漏洞。<br></em>   <strong>批判性思考</strong>：这不是教你诈，而是教你防身。在这个信息过载的时代，如果你不懂这些原理，你就是任人宰割的韭菜。<br><br><strong>实操价值：行动刺刀</strong><br><em>   <strong>策略1</strong>：防御——当你感觉到胃部不适或突然的紧迫感（如限时优惠），立即暂停交易。问自己：我到底需要这个商品，还是仅仅想占便宜？<br></em>   <strong>策略2</strong>：进攻——如果你想让人答应请求，先给对方一个小恩惠（互惠），或者先让他承认一个小的立场（承诺一致）。<br><br><strong>💀 思想毒刺</strong><br><em>   <strong>我们在不需要讲理的时候，最喜欢用“因为”这个词。只要给出一个理由，哪怕这个理由毫无意义，人们答应请求的概率也会显著增加。</strong><br><br><strong>🔗 知识格栅</strong><br></em>   <strong>关联书籍</strong>：《助推》（Nudge）（如何利用这些心理学原理设计更好的政策和社会架构）。",
-          "timestamp": "2025-12-18T05:16:26.677Z",
-          "date": "2025/12/18 13:16:26"
-        }
-      ]
+      "notes": []
     },
     {
       "rank": 7,
