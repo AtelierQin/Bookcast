@@ -224,6 +224,420 @@
             box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
         }
 
+        /* --- Graph View - Midnight Library Theme --- */
+        .graph-view {
+            position: relative;
+            background: radial-gradient(ellipse at 50% 50%, #161616 0%, #0a0a0a 100%);
+            border: none;
+            border-radius: 12px;
+            overflow: hidden;
+            height: 75vh;
+            min-height: 550px;
+            box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.8);
+        }
+
+        /* Starfield effect overlay */
+        .graph-view::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                radial-gradient(1px 1px at 20px 30px, rgba(255, 255, 255, 0.15), transparent),
+                radial-gradient(1px 1px at 40px 70px, rgba(255, 255, 255, 0.1), transparent),
+                radial-gradient(1px 1px at 50px 160px, rgba(255, 255, 255, 0.15), transparent),
+                radial-gradient(1px 1px at 90px 40px, rgba(255, 255, 255, 0.1), transparent),
+                radial-gradient(1px 1px at 130px 80px, rgba(255, 255, 255, 0.12), transparent),
+                radial-gradient(1.5px 1.5px at 160px 120px, rgba(255, 255, 255, 0.2), transparent);
+            background-size: 200px 200px;
+            opacity: 0.6;
+            pointer-events: none;
+            z-index: 1;
+            animation: drift 120s linear infinite;
+        }
+
+        @keyframes drift {
+            from {
+                background-position: 0% 0%;
+            }
+
+            to {
+                background-position: 100% 100%;
+            }
+        }
+
+        .graph-view svg {
+            width: 100%;
+            height: 100%;
+            cursor: grab;
+            position: relative;
+            z-index: 2;
+        }
+
+        .graph-view svg:active {
+            cursor: grabbing;
+        }
+
+        /* Node styling with glow effects */
+        .graph-node {
+            cursor: pointer;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s;
+        }
+
+        .graph-node:hover {
+            /* Transform removed to prevent jitter with SVG positioning */
+            z-index: 10;
+        }
+
+        .graph-node:hover circle.main {
+            transform: scale(1.3);
+        }
+
+        .graph-node.dimmed {
+            opacity: 0.1;
+        }
+
+        .graph-node.focused {
+            opacity: 1;
+        }
+
+        .graph-node.semi-focused {
+            opacity: 0.9;
+        }
+
+        .graph-node circle {
+            /* stroke removed */
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            transform-box: fill-box;
+            transform-origin: center;
+        }
+
+        .graph-node circle.glow {
+            fill: none;
+            stroke: none;
+            filter: blur(8px);
+            opacity: 0.6;
+            animation: pulse 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulse {
+            from {
+                opacity: 0.4;
+                transform: scale(0.95);
+            }
+
+            to {
+                opacity: 0.7;
+                transform: scale(1.05);
+            }
+        }
+
+        .graph-node.is-read circle.main {
+            stroke-dasharray: 3 2;
+            stroke-opacity: 0.7;
+        }
+
+        .graph-node text {
+            font-family: var(--font-sans);
+            font-size: 10px;
+            font-weight: 500;
+            fill: rgba(255, 255, 255, 0.95);
+            pointer-events: none;
+            text-anchor: middle;
+            dominant-baseline: middle;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8), 0 0 10px rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        /* Always show on hover/focus regardless of zoom */
+        .graph-node:hover text,
+        .graph-node.focused text,
+        .graph-node.semi-focused text {
+            opacity: 1 !important;
+        }
+
+        /* Link styling with differentiation */
+        .graph-link {
+            stroke-linecap: round;
+            transition: stroke 0.3s, opacity 0.3s, stroke-width 0.3s;
+        }
+
+        .graph-link.author {
+            stroke: linear-gradient(90deg, #D4AF37, #F4CF67);
+            stroke: #D4AF37;
+            stroke-width: 2;
+            opacity: 0.7;
+        }
+
+        .graph-link.related {
+            stroke: url(#linkGradient);
+            stroke-width: 1;
+            stroke-dasharray: 6 4;
+            opacity: 0.5;
+            mix-blend-mode: screen;
+            animation: dash-flow 20s linear infinite;
+        }
+
+        .graph-link.dimmed {
+            opacity: 0.08;
+        }
+
+        .graph-link.focused {
+            opacity: 1;
+            stroke-width: 3;
+        }
+
+        @keyframes dash-flow {
+            to {
+                stroke-dashoffset: -100;
+            }
+        }
+
+        /* Glassmorphism tooltip */
+        .graph-tooltip {
+            position: absolute;
+            background: rgba(20, 20, 35, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            color: #fff;
+            padding: 16px 20px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.85rem;
+            pointer-events: none;
+            z-index: 100;
+            max-width: 280px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            opacity: 0;
+            transform: translateY(8px);
+            transition: opacity 0.25s, transform 0.25s;
+        }
+
+        .graph-tooltip.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .graph-tooltip-title {
+            font-family: var(--font-serif);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+            background: linear-gradient(135deg, #fff 0%, #c9d1d9 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .graph-tooltip-author {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 10px;
+            font-style: italic;
+        }
+
+        .graph-tooltip-tag {
+            display: inline-block;
+            font-size: 0.65rem;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .tooltip-badge {
+            display: block;
+            font-size: 0.7rem;
+            padding: 3px 0;
+            color: rgba(255, 255, 255, 0.75);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .tooltip-badge:last-child {
+            border-bottom: none;
+        }
+
+        /* Glassmorphism controls */
+        .graph-controls {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            z-index: 50;
+            padding: 4px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .graph-control-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+            cursor: pointer;
+            transition: all 0.25s;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .graph-control-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: #fff;
+            transform: scale(1.08);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Glassmorphism legend */
+        .graph-legend {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 16px 20px;
+            font-size: 0.75rem;
+            z-index: 50;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            min-width: 140px;
+        }
+
+        .graph-legend-title {
+            font-family: var(--font-serif);
+            font-weight: 500;
+            margin-bottom: 12px;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+        }
+
+        .graph-legend-section {
+            margin-bottom: 14px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .graph-legend-section:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .graph-legend-subtitle {
+            font-size: 0.65rem;
+            color: rgba(255, 255, 255, 0.5);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .graph-legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 6px;
+            color: rgba(255, 255, 255, 0.8);
+            cursor: pointer;
+            padding: 4px 6px;
+            margin-left: -6px;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+
+        .graph-legend-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .graph-legend-item.active {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .graph-legend-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .graph-legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            box-shadow: 0 0 8px currentColor;
+            flex-shrink: 0;
+        }
+
+        .graph-legend-line {
+            width: 20px;
+            height: 3px;
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
+
+        .graph-legend-line.author-line {
+            background: #D4AF37;
+        }
+
+        .graph-legend-line.related-line {
+            background: linear-gradient(90deg, #6366f1, #ec4899);
+            height: 2px;
+        }
+
+        /* Search box in graph */
+        .graph-search {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 50;
+        }
+
+        .graph-search-input {
+            background: rgba(20, 20, 35, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 10px 16px 10px 40px;
+            color: #fff;
+            font-size: 0.85rem;
+            width: 200px;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .graph-search-input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .graph-search-input:focus {
+            border-color: rgba(255, 255, 255, 0.25);
+            background: rgba(20, 20, 35, 0.85);
+            width: 240px;
+        }
+
+        .graph-search-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.85rem;
+            pointer-events: none;
+        }
+
         /* --- Main & Utility --- */
         main {
             max-width: 1200px;
@@ -656,6 +1070,7 @@
                 <div class="view-toggle">
                     <button class="view-btn active" data-view="grid">Grid</button>
                     <button class="view-btn" data-view="list">List</button>
+                    <button class="view-btn" data-view="graph">Graph</button>
                 </div>
             </div>
         </div>
@@ -675,6 +1090,74 @@
                 </thead>
                 <tbody id="tableBody"></tbody>
             </table>
+        </div>
+
+        <div id="graphView" class="graph-view hidden">
+            <!-- Search box -->
+            <div class="graph-search">
+                <span class="graph-search-icon">🔍</span>
+                <input type="text" class="graph-search-input" id="graphSearchInput" placeholder="Search books...">
+            </div>
+
+            <!-- Enhanced Legend with sections -->
+            <div class="graph-legend">
+                <div class="graph-legend-title">Knowledge Constellation</div>
+
+                <div class="graph-legend-section">
+                    <div class="graph-legend-subtitle">Categories</div>
+                    <div class="graph-legend-item" data-category="business">
+                        <span class="graph-legend-dot" style="background:#D4AF37; color:#D4AF37"></span>Business
+                    </div>
+                    <div class="graph-legend-item" data-category="philosophy">
+                        <span class="graph-legend-dot" style="background:#A8A29E; color:#A8A29E"></span>Philosophy
+                    </div>
+                    <div class="graph-legend-item" data-category="fiction">
+                        <span class="graph-legend-dot" style="background:#BCAAA4; color:#BCAAA4"></span>Fiction
+                    </div>
+                    <div class="graph-legend-item" data-category="biography">
+                        <span class="graph-legend-dot" style="background:#D7B29D; color:#D7B29D"></span>Biography
+                    </div>
+                    <div class="graph-legend-item" data-category="science">
+                        <span class="graph-legend-dot" style="background:#94B49F; color:#94B49F"></span>Science
+                    </div>
+                    <div class="graph-legend-item" data-category="selfhelp">
+                        <span class="graph-legend-dot" style="background:#A7B0CA; color:#A7B0CA"></span>Self-Help
+                    </div>
+                </div>
+
+                <div class="graph-legend-section">
+                    <div class="graph-legend-subtitle">Connections</div>
+                    <div class="graph-legend-item">
+                        <span class="graph-legend-line author-line"></span>Same Author
+                    </div>
+                    <div class="graph-legend-item">
+                        <span class="graph-legend-line related-line"></span>Thematic Link
+                    </div>
+                </div>
+            </div>
+
+            <div class="graph-tooltip" id="graphTooltip"></div>
+            <div class="graph-controls">
+                <button class="graph-control-btn" onclick="zoomGraph(1.3)" title="Zoom In">+</button>
+                <button class="graph-control-btn" onclick="zoomGraph(0.7)" title="Zoom Out">−</button>
+                <button class="graph-control-btn" onclick="centerGraph()" title="Center">◎</button>
+                <button class="graph-control-btn" onclick="resetGraph()" title="Reset">⟲</button>
+            </div>
+            <svg id="graphSvg">
+                <defs>
+                    <linearGradient id="linkGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#6366f1;stop-opacity:0.8" />
+                        <stop offset="100%" style="stop-color:#ec4899;stop-opacity:0.8" />
+                    </linearGradient>
+                    <filter id="glow">
+                        <feGaussianBlur stdDeviation="3" result="coloredBlur" />
+                        <feMerge>
+                            <feMergeNode in="coloredBlur" />
+                            <feMergeNode in="SourceGraphic" />
+                        </feMerge>
+                    </filter>
+                </defs>
+            </svg>
         </div>
 
         <div id="pagination" class="pagination"></div>
@@ -887,7 +1370,20 @@
             elements.viewButtons.forEach(btn => {
                 btn.classList.toggle('active', btn.dataset.view === view);
             });
-            renderCurrentView();
+
+            // Handle graph view specially
+            const graphView = document.getElementById('graphView');
+            if (view === 'graph') {
+                elements.gridView.classList.add('hidden');
+                elements.listView.classList.add('hidden');
+                graphView.classList.remove('hidden');
+                elements.pagination.classList.add('hidden');
+                initGraph();
+            } else {
+                graphView.classList.add('hidden');
+                elements.pagination.classList.remove('hidden');
+                renderCurrentView();
+            }
         }
 
         function getFilteredAndSortedBooks() {
@@ -1078,6 +1574,692 @@
                 request.onerror = () => resolve();
             });
         }
+
+        // ========== GRAPH VIEW ==========
+
+        // Complete Book Categories Mapping
+        const bookCategories = {
+            business: [3, 4, 7, 8, 9, 11, 16, 21, 28, 33, 38, 41, 43, 56, 67, 69, 72, 80, 82, 85, 96],
+            philosophy: [2, 10, 14, 32, 34, 44, 47, 48, 62, 65, 90],
+            fiction: [13, 20, 23, 26, 30, 40, 45, 49, 51, 54, 63, 70, 75, 77, 84],
+            biography: [9, 18, 33, 41, 50, 66, 76, 92, 95, 97, 98],
+            science: [1, 5, 25, 37, 42, 52, 64, 74, 93, 94, 99, 100],
+            selfhelp: [6, 12, 15, 19, 22, 27, 31, 36, 39, 46, 53, 55, 57, 58, 61, 68, 71, 73, 78, 79, 81, 83, 86, 87, 88, 89, 91]
+        };
+
+        // Muted "Ethereal Knowledge" Palette
+        const categoryColors = {
+            business: '#D4AF37',    // Classic Gold
+            philosophy: '#A8A29E',  // Warm Stone
+            fiction: '#BCAAA4',     // Muted Rose/Taupe
+            biography: '#D7B29D',   // Clay
+            science: '#94B49F',     // Sage Green
+            selfhelp: '#A7B0CA'     // Slate Blue
+        };
+
+        // Extracted Connections (Researched from Book Notes)
+        const relatedBooksData = [
+            { "source": 1, "target": 64, "type": "related", "label": "Sequel: Homo Deus" },
+            { "source": 3, "target": 100, "type": "related", "label": "Foundational Theory: Systems Thinking" },
+            { "source": 7, "target": 78, "type": "related", "label": "Evolution of Leverage" },
+            { "source": 8, "target": 16, "type": "related", "label": "Mentorship: Grove to Horowitz" },
+            { "source": 9, "target": 41, "type": "related", "label": "Great CEOs: Knight & Iger" },
+            { "source": 10, "target": 44, "type": "related", "label": "Objectivism: Rand's Philosophy" },
+            { "source": 11, "target": 82, "type": "related", "label": "Strategic Inflection Points" },
+            { "source": 12, "target": 53, "type": "related", "label": "Habit Formation Mechanisms" },
+            { "source": 13, "target": 34, "type": "related", "label": "Spiritual Journey & Self-Discovery" },
+            { "source": 15, "target": 58, "type": "related", "label": "Overcoming Resistance to Deep Work" },
+            { "source": 17, "target": 24, "type": "related", "label": "Uncertainty & Black Swans" },
+            { "source": 18, "target": 4, "type": "related", "label": "Zero to One Innovation" },
+            { "source": 19, "target": 6, "type": "related", "label": "Social Engineering & Influence" },
+            { "source": 24, "target": 5, "type": "related", "label": "Cognitive Biases & Risk" },
+            { "source": 25, "target": 29, "type": "related", "label": "Multidisciplinary Thinking" },
+            { "source": 26, "target": 63, "type": "related", "label": "Dystopian Futures" },
+            { "source": 28, "target": 4, "type": "related", "label": "Startup Methodology" },
+            { "source": 29, "target": 6, "type": "related", "label": "Psychology of Misjudgment" },
+            { "source": 31, "target": 27, "type": "related", "label": "Talent: Generalist vs Specialist" },
+            { "source": 33, "target": 4, "type": "related", "label": "Paypal Mafia: Musk & Thiel" },
+            { "source": 35, "target": 17, "type": "related", "label": "Skin in the Game Concept" },
+            { "source": 36, "target": 29, "type": "related", "label": "Wisdom of Sages" },
+            { "source": 37, "target": 1, "type": "related", "label": "Evolutionary Biology Roots" },
+            { "source": 39, "target": 82, "type": "related", "label": "Focus & Inflection" },
+            { "source": 42, "target": 1, "type": "related", "label": "Big History Perspective" },
+            { "source": 43, "target": 11, "type": "related", "label": "Innovation Structures" },
+            { "source": 45, "target": 52, "type": "related", "label": "Civilization & Survival" },
+            { "source": 47, "target": 17, "type": "related", "label": "Taoism & Antifragility" },
+            { "source": 48, "target": 2, "type": "related", "label": "Meaning & Responsibility" },
+            { "source": 49, "target": 5, "type": "related", "label": "Psychology of Crime" },
+            { "source": 56, "target": 41, "type": "related", "label": "Creative Leadership" },
+            { "source": 57, "target": 3, "type": "related", "label": "Life Principles" },
+            { "source": 60, "target": 5, "type": "related", "label": "Probability & Intuition" },
+            { "source": 68, "target": 83, "type": "related", "label": "Mental Toughness (Navy SEALs)" },
+            { "source": 69, "target": 8, "type": "related", "label": "Scaling Challenges" },
+            { "source": 72, "target": 16, "type": "related", "label": "Management Philosophy" },
+            { "source": 73, "target": 5, "type": "related", "label": "Kahneman & Tversky Story" },
+            { "source": 74, "target": 50, "type": "related", "label": "Biology of Life & Death" },
+            { "source": 76, "target": 29, "type": "related", "label": "Polymaths & Wisdom" },
+            { "source": 78, "target": 35, "type": "related", "label": "Rationality & Risk" },
+            { "source": 83, "target": 2, "type": "related", "label": "Finding Meaning in Suffering" },
+            { "source": 84, "target": 3, "type": "related", "label": "History & Cycles" },
+            { "source": 85, "target": 4, "type": "related", "label": "Scaling Speed" },
+            { "source": 86, "target": 29, "type": "related", "label": "Mental Models" },
+            { "source": 89, "target": 22, "type": "related", "label": "Possibility & Growth Mindset" },
+            { "source": 90, "target": 5, "type": "related", "label": "Moral Psychology" },
+            { "source": 91, "target": 59, "type": "related", "label": "Eastern Strategy" },
+            { "source": 93, "target": 50, "type": "related", "label": "Medical Humanities" },
+            { "source": 94, "target": 37, "type": "related", "label": "Genetics & Evolution" },
+            { "source": 95, "target": 18, "type": "related", "label": "Tech Pioneers" },
+            { "source": 97, "target": 43, "type": "related", "label": "Innovation History" }
+        ];
+
+        function getBookCategory(rank) {
+            for (const [category, ranks] of Object.entries(bookCategories)) {
+                if (ranks.includes(rank)) return category;
+            }
+            return 'business'; // default
+        }
+
+        function getBookColor(rank) {
+            return categoryColors[getBookCategory(rank)];
+        }
+
+        // Build graph links (Author + Related)
+        function buildGraphLinks() {
+            const links = [];
+            const authorBooks = {};
+
+            // 1. Author Connections
+            books.forEach(book => {
+                const authorKey = book.author.toLowerCase();
+                if (!authorBooks[authorKey]) authorBooks[authorKey] = [];
+                authorBooks[authorKey].push(book.rank);
+            });
+
+            Object.values(authorBooks).forEach(bookRanks => {
+                if (bookRanks.length > 1) {
+                    for (let i = 0; i < bookRanks.length; i++) {
+                        for (let j = i + 1; j < bookRanks.length; j++) {
+                            links.push({
+                                source: bookRanks[i],
+                                target: bookRanks[j],
+                                type: 'author',
+                                label: 'Same Author'
+                            });
+                        }
+                    }
+                }
+            });
+
+            // 2. Extracted Researched Connections
+            relatedBooksData.forEach(link => {
+                // Avoid duplicates if undirected link exists
+                const exists = links.find(l =>
+                    (l.source === link.source && l.target === link.target) ||
+                    (l.source === link.target && l.target === link.source)
+                );
+
+                if (!exists) {
+                    links.push({
+                        source: link.source,
+                        target: link.target,
+                        type: 'related',
+                        label: link.label
+                    });
+                }
+            });
+
+            return links;
+        }
+
+        // Graph state
+        let graphSimulation = null;
+        let graphNodes = [];
+        let graphLinks = [];
+        let graphTransform = { x: 0, y: 0, k: 1 };
+        let graphInitialized = false;
+
+        function initGraph() {
+            if (graphInitialized) return;
+
+            const svg = document.getElementById('graphSvg');
+            const container = document.getElementById('graphView');
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+
+            // Prepare links first to calculate degrees
+            const rawLinks = buildGraphLinks();
+
+            // Calculate degrees for node sizing
+            const degreeMap = {};
+            books.forEach(b => degreeMap[b.rank] = 0);
+
+            rawLinks.forEach(l => {
+                degreeMap[l.source] = (degreeMap[l.source] || 0) + 1;
+                degreeMap[l.target] = (degreeMap[l.target] || 0) + 1;
+            });
+
+            // Prepare nodes with better initial positioning (circular layout)
+            const angleStep = (2 * Math.PI) / books.length;
+            const spreadRadius = Math.min(width, height) * 0.35;
+
+            graphNodes = books.map((b, i) => ({
+                id: b.rank,
+                book: b,
+                degree: degreeMap[b.rank] || 0,
+                x: width / 2 + Math.cos(angleStep * i) * spreadRadius + (Math.random() - 0.5) * 60,
+                y: height / 2 + Math.sin(angleStep * i) * spreadRadius + (Math.random() - 0.5) * 60,
+                vx: 0,
+                vy: 0
+            }));
+
+            graphLinks = rawLinks;
+
+            // Get existing defs to preserve them
+            const existingDefs = svg.querySelector('defs');
+            const defsHTML = existingDefs ? existingDefs.outerHTML : '';
+
+            // Create SVG content structure, preserving defs
+            svg.innerHTML = `
+                ${defsHTML}
+                <g id="graphContainer">
+                    <g id="linksGroup"></g>
+                    <g id="nodesGroup"></g>
+                </g>
+            `;
+
+            renderGraph();
+            startSimulation(width, height);
+            setupGraphInteraction(svg);
+            setupGraphSearch();
+            setupLegendInteraction();
+
+            graphInitialized = true;
+        }
+
+        // Category Filtering
+        let activeCategory = null;
+
+        function setupLegendInteraction() {
+            document.querySelectorAll('.graph-legend-item[data-category]').forEach(item => {
+                item.addEventListener('click', (e) => {
+                    const category = item.dataset.category;
+                    if (activeCategory === category) {
+                        // Toggle off
+                        activeCategory = null;
+                        item.classList.remove('active');
+                        resetNodeFocus(); // Reset visual state
+                    } else {
+                        // Toggle on
+                        activeCategory = category;
+                        // Update UI
+                        document.querySelectorAll('.graph-legend-item').forEach(el => el.classList.remove('active'));
+                        item.classList.add('active');
+                        // Apply filter
+                        filterGraphByCategory(category);
+                    }
+                });
+            });
+        }
+
+        function filterGraphByCategory(category) {
+            // 1. Reset focus first to clear any individual selections
+            focusedNodeId = null;
+
+            // 2. Dim/Highlight based on category
+            document.querySelectorAll('.graph-node').forEach(el => {
+                const id = parseInt(el.dataset.id);
+                const bookCat = getBookCategory(id);
+
+                if (bookCat === category) {
+                    el.classList.remove('dimmed');
+                    el.classList.remove('semi-focused'); // Ensure clean state
+                    el.classList.add('focused');
+                } else {
+                    el.classList.add('dimmed');
+                    el.classList.remove('focused', 'focused');
+                }
+            });
+
+            // 3. Dim all links (focus is on nodes)
+            document.querySelectorAll('.graph-link').forEach(el => {
+                el.classList.add('dimmed');
+                el.classList.remove('focused');
+            });
+        }
+
+        // Graph search functionality
+        function setupGraphSearch() {
+            const searchInput = document.getElementById('graphSearchInput');
+            if (!searchInput) return;
+
+            searchInput.addEventListener('input', debounce((e) => {
+                const query = e.target.value.toLowerCase().trim();
+
+                document.querySelectorAll('.graph-node').forEach(nodeEl => {
+                    const id = parseInt(nodeEl.dataset.id);
+                    const book = books.find(b => b.rank === id);
+
+                    if (!query) {
+                        nodeEl.classList.remove('dimmed', 'focused');
+                        return;
+                    }
+
+                    const matches = book && (
+                        book.en.toLowerCase().includes(query) ||
+                        book.cn.toLowerCase().includes(query) ||
+                        book.author.toLowerCase().includes(query)
+                    );
+
+                    if (matches) {
+                        nodeEl.classList.remove('dimmed');
+                        nodeEl.classList.add('focused');
+                    } else {
+                        nodeEl.classList.add('dimmed');
+                        nodeEl.classList.remove('focused');
+                    }
+                });
+
+                // Dim all links when searching
+                document.querySelectorAll('.graph-link').forEach(link => {
+                    link.classList.toggle('dimmed', !!query);
+                });
+            }, 200));
+        }
+
+        // Center graph in viewport
+        function centerGraph() {
+            const container = document.getElementById('graphView');
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+
+            graphTransform = { x: 0, y: 0, k: 1 };
+            updateGraphPositions();
+        }
+
+        function renderGraph() {
+            const linksGroup = document.getElementById('linksGroup');
+            const nodesGroup = document.getElementById('nodesGroup');
+
+            // Render links with proper styling
+            linksGroup.innerHTML = graphLinks.map(link => {
+                const source = graphNodes.find(n => n.id === link.source);
+                const target = graphNodes.find(n => n.id === link.target);
+                if (!source || !target) return '';
+
+                const strokeStyle = link.type === 'author'
+                    ? 'stroke="#C5A028"'
+                    : 'stroke="rgba(255, 255, 255, 0.15)"';
+
+                return `<line class="graph-link ${link.type}" 
+                    data-source="${link.source}" 
+                    data-target="${link.target}"
+                    data-label="${link.label || ''}"
+                    ${strokeStyle}
+                    x1="${source.x}" y1="${source.y}" 
+                    x2="${target.x}" y2="${target.y}">
+                </line>`;
+            }).join('');
+
+            // Render nodes with glow effect
+            nodesGroup.innerHTML = graphNodes.map(node => {
+                // Size formula: Emphasize connections (degree)
+                const size = 4 + (node.degree * 3.5);
+                const radius = Math.min(Math.max(size, 6), 40); // Cap max size
+                const color = getBookColor(node.id);
+                const isRead = readState[node.id];
+
+                // Truncate long titles
+                const title = node.book.en.length > 20
+                    ? node.book.en.substring(0, 18) + '...'
+                    : node.book.en;
+
+                return `
+                    <g class="graph-node ${isRead ? 'is-read' : ''}" data-id="${node.id}" transform="translate(${node.x}, ${node.y})">
+                        <!-- Outer glow -->
+                        <circle class="glow" r="${radius + 6}" fill="${color}" opacity="0.35"></circle>
+                        <!-- Main circle (No stroke) -->
+                        <circle class="main" r="${radius}" fill="${color}"></circle>
+                        <!-- Read indicator badge -->
+                        ${isRead ? `<circle r="6" fill="#22c55e" cx="${radius - 4}" cy="${-radius + 4}"></circle>` : ''}
+                        <!-- Label -->
+                        <text dy="${radius + 16}">${title}</text>
+                    </g>
+                `;
+            }).join('');
+
+            // Re-attach listeners clearly
+            document.querySelectorAll('.graph-node').forEach(node => {
+                // Click to toggle focus/dim and navigate on double click or simple click?
+                // Let's make click toggle focus, holding or double click navigate? 
+                // Original requirement was "click a node... dim others". 
+                // We'll keep ONE click for focus, and maybe a button in tooltip to navigate?
+                // Or click focused node to navigate.
+
+                node.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const id = parseInt(node.dataset.id);
+                    if (focusedNodeId === id) {
+                        // Already focused, go to book
+                        window.location.href = `BookNotes.html?id=${id}`;
+                    } else {
+                        toggleNodeFocus(id);
+                    }
+                });
+
+                node.addEventListener('mouseenter', showGraphTooltip);
+                node.addEventListener('mouseleave', hideGraphTooltip);
+            });
+
+            // Background click resets focus
+            document.getElementById('graphSvg').addEventListener('click', (e) => {
+                if (e.target.id === 'graphSvg') {
+                    resetNodeFocus();
+                }
+            });
+        }
+
+        // Focus Mode Logic
+        let focusedNodeId = null;
+
+        function toggleNodeFocus(nodeId) {
+            focusedNodeId = nodeId;
+
+            // Find connected neighbors
+            const connectedIds = new Set([nodeId]);
+            graphLinks.forEach(line => {
+                if (line.source === nodeId) connectedIds.add(line.target);
+                if (line.target === nodeId) connectedIds.add(line.source);
+            });
+
+            // Dim everyone else
+            document.querySelectorAll('.graph-node').forEach(el => {
+                const id = parseInt(el.dataset.id);
+                if (connectedIds.has(id)) {
+                    el.classList.remove('dimmed');
+                    // Reset classes first
+                    el.classList.remove('focused', 'semi-focused');
+                    el.classList.add(id === nodeId ? 'focused' : 'semi-focused');
+                } else {
+                    el.classList.add('dimmed');
+                    el.classList.remove('focused', 'semi-focused');
+                }
+            });
+
+            // Highlight links
+            document.querySelectorAll('.graph-link').forEach(el => {
+                const s = parseInt(el.dataset.source);
+                const t = parseInt(el.dataset.target);
+                if (s === nodeId || t === nodeId) {
+                    el.classList.add('focused');
+                    el.classList.remove('dimmed');
+                } else {
+                    el.classList.add('dimmed');
+                    el.classList.remove('focused');
+                }
+            });
+
+            // Fly to node (Smooth pan)
+            const node = graphNodes.find(n => n.id === nodeId);
+            if (node) {
+                flyToNode(node);
+            }
+        }
+
+        function flyToNode(node) {
+            const container = document.getElementById('graphView');
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+
+            // Target position: Center the node
+            // center = (node.x * k) + t.x  =>  t.x = center - node.x * k
+            const targetX = (width / 2) - (node.x * graphTransform.k);
+            const targetY = (height / 2) - (node.y * graphTransform.k);
+
+            // Simple animation loop for smooth transition
+            const startX = graphTransform.x;
+            const startY = graphTransform.y;
+            const startTime = performance.now();
+            const duration = 600; // ms
+
+            function animate(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+
+                // Ease out cubic
+                const ease = 1 - Math.pow(1 - progress, 3);
+
+                graphTransform.x = startX + (targetX - startX) * ease;
+                graphTransform.y = startY + (targetY - startY) * ease;
+
+                updateGraphPositions();
+
+                if (progress < 1) {
+                    requestAnimationFrame(animate);
+                }
+            }
+            requestAnimationFrame(animate);
+        }
+
+        function resetNodeFocus() {
+            focusedNodeId = null;
+            document.querySelectorAll('.graph-node').forEach(el => {
+                el.classList.remove('dimmed', 'focused', 'semi-focused');
+            });
+            document.querySelectorAll('.graph-link').forEach(el => {
+                el.classList.remove('dimmed', 'focused');
+            });
+        }
+
+        function startSimulation(width, height) {
+            const centerX = width / 2;
+            const centerY = height / 2;
+
+            const k = Math.sqrt(width * height / books.length) + 10;
+
+            function tick() {
+                // Apply forces
+                graphNodes.forEach(node => {
+                    // Center gravity
+                    node.vx += (centerX - node.x) * 0.02;
+                    node.vy += (centerY - node.y) * 0.02;
+
+                    // Repulsion
+                    graphNodes.forEach(other => {
+                        if (node.id === other.id) return;
+                        const dx = node.x - other.x;
+                        const dy = node.y - other.y;
+                        const distSq = dx * dx + dy * dy || 1;
+                        const dist = Math.sqrt(distSq);
+
+                        if (dist < 150) {
+                            const force = 2000 / distSq;
+                            node.vx += (dx / dist) * force;
+                            node.vy += (dy / dist) * force;
+                        }
+                    });
+                });
+
+                // Link attraction
+                graphLinks.forEach(link => {
+                    const source = graphNodes.find(n => n.id === link.source);
+                    const target = graphNodes.find(n => n.id === link.target);
+                    if (!source || !target) return;
+
+                    const dx = target.x - source.x;
+                    const dy = target.y - source.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+
+                    const desiredDist = link.type === 'author' ? k * 1.2 : k * 2.0; // Increased spacing
+                    const force = (dist - desiredDist) * 0.04; // Slightly softer spring
+
+                    source.vx += (dx / dist) * force;
+                    source.vy += (dy / dist) * force;
+                    target.vx -= (dx / dist) * force;
+                    target.vy -= (dy / dist) * force;
+                });
+
+                // Apply velocity with heavier damping for "cosmic" feel
+                graphNodes.forEach(node => {
+                    node.vx *= 0.80; // Increased drag (was 0.85)
+                    node.vy *= 0.80;
+
+                    const maxV = 8;
+                    if (Math.abs(node.vx) > maxV) node.vx = maxV * Math.sign(node.vx);
+                    if (Math.abs(node.vy) > maxV) node.vy = maxV * Math.sign(node.vy);
+
+                    node.x += node.vx;
+                    node.y += node.vy;
+
+                    // Bounds
+                    const margin = 20;
+                    if (node.x < margin) node.vx += 2;
+                    if (node.x > width - margin) node.vx -= 2;
+                    if (node.y < margin) node.vy += 2;
+                    if (node.y > height - margin) node.vy -= 2;
+                });
+
+                updateGraphPositions();
+            }
+
+            if (graphSimulation) clearInterval(graphSimulation);
+            let iterations = 0;
+            graphSimulation = setInterval(() => {
+                tick();
+                iterations++;
+                if (iterations > 300) clearInterval(graphSimulation);
+            }, 16);
+        }
+
+        function updateGraphPositions() {
+            const container = document.getElementById('graphContainer');
+            if (container) container.setAttribute('transform', `translate(${graphTransform.x}, ${graphTransform.y}) scale(${graphTransform.k})`);
+
+            document.querySelectorAll('.graph-node').forEach(nodeEl => {
+                const id = parseInt(nodeEl.dataset.id);
+                const node = graphNodes.find(n => n.id === id);
+                if (node) nodeEl.setAttribute('transform', `translate(${node.x}, ${node.y})`);
+            });
+
+            document.querySelectorAll('.graph-link').forEach(linkEl => {
+                const sourceId = parseInt(linkEl.dataset.source);
+                const targetId = parseInt(linkEl.dataset.target);
+                const source = graphNodes.find(n => n.id === sourceId);
+                const target = graphNodes.find(n => n.id === targetId);
+                if (source && target) {
+                    linkEl.setAttribute('x1', source.x);
+                    linkEl.setAttribute('y1', source.y);
+                    linkEl.setAttribute('x2', target.x);
+                    linkEl.setAttribute('y2', target.y);
+                }
+            });
+        }
+
+        function setupGraphInteraction(svg) {
+            let isDragging = false;
+            let dragStart = { x: 0, y: 0 };
+            let dragNode = null;
+
+            svg.addEventListener('mousedown', (e) => {
+                const nodeEl = e.target.closest('.graph-node');
+                if (nodeEl) return; // handled by click
+
+                isDragging = true;
+                dragStart = { x: e.clientX - graphTransform.x, y: e.clientY - graphTransform.y };
+                svg.style.cursor = 'grabbing';
+            });
+
+            svg.addEventListener('mousemove', (e) => {
+                if (isDragging) {
+                    graphTransform.x = e.clientX - dragStart.x;
+                    graphTransform.y = e.clientY - dragStart.y;
+                    updateGraphPositions();
+                }
+            });
+
+            window.addEventListener('mouseup', () => {
+                isDragging = false;
+                svg.style.cursor = 'grab';
+            });
+
+            svg.addEventListener('wheel', (e) => {
+                e.preventDefault();
+                const delta = e.deltaY > 0 ? 0.9 : 1.1;
+                zoomGraph(delta);
+            });
+        }
+
+        function showGraphTooltip(e) {
+            const nodeEl = e.target.closest('.graph-node');
+            if (!nodeEl) return;
+
+            const id = parseInt(nodeEl.dataset.id);
+            const book = books.find(b => b.rank === id);
+            if (!book) return;
+
+            const myLinks = graphLinks.filter(l => l.source === id || l.target === id);
+
+            let badgesHtml = '';
+            if (myLinks.length > 0) {
+                badgesHtml = '<div style="margin-top:8px">';
+                const topLinks = myLinks.slice(0, 3);
+                topLinks.forEach(l => {
+                    const otherId = l.source === id ? l.target : l.source;
+                    const otherBook = books.find(b => b.rank === otherId);
+                    if (otherBook) {
+                        const label = l.type === 'author' ? 'Author' : 'Related';
+                        badgesHtml += `<span class="tooltip-badge">${label}: ${otherBook.en}</span><br>`;
+                    }
+                });
+                if (myLinks.length > 3) badgesHtml += `<span class="tooltip-badge" style="opacity:0.6">+${myLinks.length - 3} more</span>`;
+                badgesHtml += '</div>';
+            }
+
+            const tooltip = document.getElementById('graphTooltip');
+            tooltip.innerHTML = `
+                <div class="graph-tooltip-title">${book.en}</div>
+                <div class="graph-tooltip-author">${book.author}</div>
+                <div class="graph-tooltip-tag" style="background:${categoryColors[getBookCategory(id)]}40; border:1px solid ${categoryColors[getBookCategory(id)]}">
+                    ${getBookCategory(id).toUpperCase()}
+                </div>
+                ${badgesHtml}
+            `;
+
+            tooltip.classList.add('active');
+
+            const rect = nodeEl.getBoundingClientRect();
+            const containerRect = document.getElementById('graphView').getBoundingClientRect();
+
+            let top = rect.top - containerRect.top - tooltip.offsetHeight - 10;
+            let left = rect.left - containerRect.left + (rect.width / 2) - (tooltip.offsetWidth / 2);
+
+            if (top < 10) top = rect.bottom - containerRect.top + 10;
+            if (left < 10) left = 10;
+            if (left + tooltip.offsetWidth > containerRect.width) left = containerRect.width - tooltip.offsetWidth - 10;
+
+            tooltip.style.top = `${top}px`;
+            tooltip.style.left = `${left}px`;
+        }
+
+        function hideGraphTooltip() {
+            document.getElementById('graphTooltip').classList.remove('active');
+        }
+
+        function zoomGraph(factor) {
+            graphTransform.k *= factor;
+            graphTransform.k = Math.max(0.2, Math.min(5, graphTransform.k));
+            updateGraphPositions();
+        }
+
+        function resetGraph() {
+            graphTransform = { x: 0, y: 0, k: 1 };
+            updateGraphPositions();
+            resetNodeFocus();
+        }
+
+        // Expose graph functions globally
+        window.zoomGraph = zoomGraph;
+        window.resetGraph = resetGraph;
+        window.centerGraph = centerGraph;
 
         document.addEventListener('DOMContentLoaded', init);
         window.changePage = changePage;
