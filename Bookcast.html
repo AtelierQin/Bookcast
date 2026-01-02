@@ -268,7 +268,7 @@
         .card-rank {
             position: absolute;
             top: -0.5rem;
-            left: 0.5rem;
+            right: 0.5rem;
             font-family: var(--font-serif);
             font-size: 3.5rem;
             color: #000;
@@ -461,99 +461,51 @@
             color: var(--accent-color);
         }
 
-        /* --- Note Badge (Red Dot) --- */
-        .note-badge {
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            width: 10px;
-            height: 10px;
-            background-color: #FF4444;
-            border-radius: 50%;
-            box-shadow: 0 2px 4px rgba(255, 68, 68, 0.4);
-            z-index: 5;
-        }
-
-        .table-note-badge {
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            background-color: #FF4444;
-            border-radius: 50%;
-            margin-left: 0.5rem;
-            box-shadow: 0 1px 2px rgba(255, 68, 68, 0.3);
-            vertical-align: middle;
-        }
-
-        /* --- Note Count Badge --- */
-        .note-count-subtle {
-            position: absolute;
-            top: 12px;
-            right: 12px;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(4px);
-            color: var(--text-secondary);
-            font-size: 0.65rem;
-            font-weight: 500;
-            padding: 3px 6px;
-            border-radius: 12px;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-            z-index: 5;
-            font-family: var(--font-sans);
-            border: 1px solid rgba(0, 0, 0, 0.08);
-            letter-spacing: 0.01em;
-            transition: all 0.2s ease;
-            opacity: 0;
-            transform: translateY(4px);
-            animation: fadeInUp 0.3s ease 0.1s forwards;
-        }
-
-        @keyframes fadeInUp {
-            to {
-                opacity: 0.8;
-                transform: translateY(0);
-            }
-        }
-
-        .note-count-subtle:hover {
-            opacity: 1;
-            background: rgba(255, 255, 255, 0.98);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
-        }
-
-        .table-note-count-subtle {
+        /* --- Note Indicator (Elegant inline style) --- */
+        .note-indicator {
             display: inline-flex;
             align-items: center;
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(2px);
-            color: var(--text-secondary);
-            font-size: 0.6rem;
+            gap: 4px;
+            color: var(--text-tertiary);
+            font-size: 0.7rem;
             font-weight: 500;
-            padding: 2px 6px;
-            border-radius: 10px;
-            margin-left: 0.75rem;
-            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08);
-            vertical-align: middle;
             font-family: var(--font-sans);
-            border: 1px solid rgba(0, 0, 0, 0.06);
-            letter-spacing: 0.01em;
-            transition: all 0.2s ease;
-            opacity: 0.8;
+            transition: color 0.2s;
         }
 
-        .table-note-count-subtle:hover {
-            opacity: 1;
-            background: rgba(255, 255, 255, 0.95);
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        .note-indicator svg {
+            width: 12px;
+            height: 12px;
+            stroke: currentColor;
+            stroke-width: 1.5;
+            fill: none;
         }
 
-        .note-count-dot {
-            width: 4px;
-            height: 4px;
-            background: var(--accent-color);
-            border-radius: 50%;
-            margin-right: 4px;
-            opacity: 0.7;
+        .book-card:hover .note-indicator {
+            color: var(--accent-color);
+        }
+
+        .table-note-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            color: var(--text-tertiary);
+            font-size: 0.7rem;
+            font-weight: 500;
+            margin-left: 0.75rem;
+            font-family: var(--font-sans);
+        }
+
+        .table-note-indicator svg {
+            width: 11px;
+            height: 11px;
+            stroke: currentColor;
+            stroke-width: 1.5;
+            fill: none;
+        }
+
+        tr:hover .table-note-indicator {
+            color: var(--accent-color);
         }
 
         /* --- Pagination --- */
@@ -625,29 +577,7 @@
 
             .card-rank {
                 font-size: 2.5rem;
-                left: 0.25rem;
-            }
-
-            /* Note Count Badge Mobile */
-            .note-count-subtle {
-                font-size: 0.6rem;
-                padding: 2px 4px;
-                bottom: 8px;
-                right: 8px;
-                border-radius: 10px;
-            }
-
-            .table-note-count-subtle {
-                font-size: 0.55rem;
-                padding: 1px 4px;
-                margin-left: 0.5rem;
-                border-radius: 8px;
-            }
-
-            .note-count-dot {
-                width: 3px;
-                height: 3px;
-                margin-right: 3px;
+                right: 0.25rem;
             }
 
             /* List View Mobile Fixes */
@@ -1004,15 +934,19 @@
 
                 elements.gridView.innerHTML = pagedBooks.map(b => {
                     const noteCount = getNoteCount(b.rank);
+                    const noteIndicator = noteCount > 0 ? `
+                        <span class="note-indicator" title="${noteCount} note${noteCount > 1 ? 's' : ''}">
+                            <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                            ${noteCount}
+                        </span>
+                    ` : '';
                     return `
                     <div class="book-card ${readState[b.rank] ? 'is-read' : ''}" onclick="window.location.href='BookNotes.html?id=${b.rank}'">
-                        ${hasNotes(b.rank) ? '<div class="note-badge" title="Has notes"></div>' : ''}
-                        ${noteCount > 0 ? `<div class="note-count-subtle" title="${noteCount} note${noteCount > 1 ? 's' : ''}"><span class="note-count-dot"></span>${noteCount}</div>` : ''}
                         <div class="card-rank">${b.rank}</div>
                         <div class="card-content">
                             <div class="title-en">${b.en}</div>
                             <div class="title-cn">${b.cn}</div>
-                            <div class="author">${b.author}</div>
+                            <div class="author">${b.author}${noteIndicator}</div>
                         </div>
                         <div class="card-actions">
                             <span class="status-label">${readState[b.rank] ? 'Completed' : 'To Read'}</span>
@@ -1028,12 +962,18 @@
 
                 elements.tableBody.innerHTML = pagedBooks.map(b => {
                     const noteCount = getNoteCount(b.rank);
+                    const noteIndicator = noteCount > 0 ? `
+                        <span class="table-note-indicator" title="${noteCount} note${noteCount > 1 ? 's' : ''}">
+                            <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                            ${noteCount}
+                        </span>
+                    ` : '';
                     return `
                     <tr class="${readState[b.rank] ? 'is-read' : ''}" onclick="window.location.href='BookNotes.html?id=${b.rank}'">
                         <td class="table-rank">#${b.rank}</td>
                         <td>
-                            <div class="table-title">${b.en}${hasNotes(b.rank) ? '<span class="table-note-badge" title="Has notes"></span>' : ''}</div>
-                            <div class="table-meta">${b.cn}${noteCount > 0 ? `<span class="table-note-count-subtle" title="${noteCount} note${noteCount > 1 ? 's' : ''}"><span class="note-count-dot"></span>${noteCount}</span>` : ''}</div>
+                            <div class="table-title">${b.en}</div>
+                            <div class="table-meta">${b.cn}${noteIndicator}</div>
                         </td>
                         <td style="color:var(--text-secondary); font-size:0.85rem">${b.author}</td>
                         <td class="table-check-cell" style="text-align:right">
@@ -1098,9 +1038,7 @@
             };
         }
 
-        function hasNotes(rank) {
-            return getNoteCount(rank) > 0;
-        }
+
 
         function getNoteCount(rank) {
             if (!db) {
