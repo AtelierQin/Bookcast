@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,8 +8,10 @@
     <!-- 字体: EB Garamond (经典) + Inter (现代) + Noto Sans SC (中文) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=Noto+Sans+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=Noto+Sans+SC:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+
     <style>
         :root {
             --bg-body: #F5F5F2;
@@ -18,14 +21,19 @@
             --text-tertiary: #888888;
             --accent-color: #8C2F39;
             --border-color: #E0E0E0;
-            --shadow-card: 0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.1);
+            --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.1);
             --font-serif: 'EB Garamond', serif;
             --font-sans: 'Inter', sans-serif;
             --font-chinese: 'Noto Sans SC', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; outline: none; }
-        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            outline: none;
+        }
+
         body {
             background-color: var(--bg-body);
             color: var(--text-primary);
@@ -53,8 +61,15 @@
             transition: color 0.2s;
         }
 
-        .nav-back:hover { color: var(--accent-color); }
-        .nav-back svg { margin-right: 6px; width: 16px; height: 16px; }
+        .nav-back:hover {
+            color: var(--accent-color);
+        }
+
+        .nav-back svg {
+            margin-right: 6px;
+            width: 16px;
+            height: 16px;
+        }
 
         /* --- Book Header Info --- */
         .book-header {
@@ -144,7 +159,7 @@
         }
 
         .input-card:focus-within {
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
             border-color: #ccc;
         }
 
@@ -223,14 +238,48 @@
             outline: none;
         }
 
-        .editor-content::placeholder { color: #CCC; font-style: italic; }
+        .editor-content::placeholder {
+            color: #CCC;
+            font-style: italic;
+        }
 
-        .md-h1 { font-size: 1.8rem; font-weight: 700; margin: 0.5rem 0; }
-        .md-h2 { font-size: 1.5rem; font-weight: 700; margin: 0.4rem 0; }
-        .md-h3 { font-size: 1.2rem; font-weight: 700; margin: 0.3rem 0; }
-        .md-code { background: #f0f0f0; padding: 2px 6px; border-radius: 3px; font-family: 'Courier New', monospace; font-size: 0.9em; }
-        .md-blockquote { border-left: 3px solid var(--accent-color); padding-left: 1rem; margin-left: 0; color: var(--text-secondary); font-style: italic; }
-        .md-list { margin-left: 1.5rem; }
+        .md-h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 0.5rem 0;
+        }
+
+        .md-h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0.4rem 0;
+        }
+
+        .md-h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin: 0.3rem 0;
+        }
+
+        .md-code {
+            background: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        .md-blockquote {
+            border-left: 3px solid var(--accent-color);
+            padding-left: 1rem;
+            margin-left: 0;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        .md-list {
+            margin-left: 1.5rem;
+        }
 
         .editor-footer {
             display: flex;
@@ -343,8 +392,15 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .note-content {
@@ -388,7 +444,10 @@
             transition: color 0.2s;
         }
 
-        .btn-delete:hover { color: var(--accent-color); background: #FFF5F5; }
+        .btn-delete:hover {
+            color: var(--accent-color);
+            background: #FFF5F5;
+        }
 
         .confirm-dialog {
             display: none;
@@ -476,7 +535,10 @@
             margin-right: 0.5rem;
         }
 
-        .btn-edit:hover { color: #4CAF50; background: #F0F8F0; }
+        .btn-edit:hover {
+            color: #4CAF50;
+            background: #F0F8F0;
+        }
 
         .modal-overlay {
             display: none;
@@ -588,19 +650,29 @@
         }
 
         @media (max-width: 600px) {
-            h1.book-title { font-size: 2rem; }
-            .note-card { padding: 1.25rem; }
+            h1.book-title {
+                font-size: 2rem;
+            }
+
+            .note-card {
+                padding: 1.25rem;
+            }
         }
     </style>
 </head>
+
 <body>
 
     <header>
         <a href="Bookcast.html" class="nav-back">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
             Back to Library
         </a>
-        
+
         <div class="book-header" id="bookHeader">
             <!-- Content injected via JS -->
         </div>
@@ -624,7 +696,8 @@
                     </div>
                     <div class="toolbar-group">
                         <div class="color-picker-wrapper">
-                            <input type="color" id="colorPicker" class="color-picker-input" value="#111111" title="Text Color">
+                            <input type="color" id="colorPicker" class="color-picker-input" value="#111111"
+                                title="Text Color">
                         </div>
                         <button class="toolbar-btn" onclick="formatText('color')" title="Apply Color">
                             Color
@@ -636,7 +709,8 @@
                         </button>
                     </div>
                 </div>
-                <div id="noteInput" class="editor-content" contenteditable="true" placeholder="Write your thoughts, quotes, or key takeaways here..."></div>
+                <div id="noteInput" class="editor-content" contenteditable="true"
+                    placeholder="Write your thoughts, quotes, or key takeaways here..."></div>
                 <div class="editor-footer">
                     <button class="btn-save" onclick="addNote()">Save Note</button>
                 </div>
@@ -646,19 +720,13 @@
         <!-- Notes List -->
         <div class="notes-stream">
             <div class="section-label">Previous Notes</div>
-            
+
             <!-- Search Notes -->
             <div class="search-notes-container">
-                <input 
-                    type="text" 
-                    id="searchNotesInput" 
-                    class="search-notes-input" 
-                    placeholder="Search notes..."
-                    onkeyup="filterNotes()"
-                >
+                <input type="text" id="searchNotesInput" class="search-notes-input" placeholder="Search notes...">
                 <button class="search-clear-btn" onclick="clearSearch()">Clear</button>
             </div>
-            
+
             <div id="searchResultsInfo" class="search-results-info" style="display: none;"></div>
             <div id="notesList">
                 <!-- Notes injected here -->
@@ -675,31 +743,39 @@
             </div>
             <div class="editor-toolbar">
                 <div class="toolbar-group">
-                    <button class="toolbar-btn" onclick="formatText('bold', document.getElementById('editNoteInput'))" title="Bold (Ctrl+B)">
+                    <button class="toolbar-btn" onclick="formatText('bold', document.getElementById('editNoteInput'))"
+                        title="Bold (Ctrl+B)">
                         <strong>B</strong>
                     </button>
-                    <button class="toolbar-btn" onclick="formatText('italic', document.getElementById('editNoteInput'))" title="Italic (Ctrl+I)">
+                    <button class="toolbar-btn" onclick="formatText('italic', document.getElementById('editNoteInput'))"
+                        title="Italic (Ctrl+I)">
                         <em>I</em>
                     </button>
-                    <button class="toolbar-btn" onclick="formatText('underline', document.getElementById('editNoteInput'))" title="Underline (Ctrl+U)">
+                    <button class="toolbar-btn"
+                        onclick="formatText('underline', document.getElementById('editNoteInput'))"
+                        title="Underline (Ctrl+U)">
                         <u>U</u>
                     </button>
                 </div>
                 <div class="toolbar-group">
                     <div class="color-picker-wrapper">
-                        <input type="color" id="editColorPicker" class="color-picker-input" value="#111111" title="Text Color">
+                        <input type="color" id="editColorPicker" class="color-picker-input" value="#111111"
+                            title="Text Color">
                     </div>
-                    <button class="toolbar-btn" onclick="formatText('color', document.getElementById('editNoteInput'))" title="Apply Color">
+                    <button class="toolbar-btn" onclick="formatText('color', document.getElementById('editNoteInput'))"
+                        title="Apply Color">
                         Color
                     </button>
                 </div>
                 <div class="toolbar-group">
-                    <button class="toolbar-btn" onclick="formatText('clear', document.getElementById('editNoteInput'))" title="Clear Formatting">
+                    <button class="toolbar-btn" onclick="formatText('clear', document.getElementById('editNoteInput'))"
+                        title="Clear Formatting">
                         Clear
                     </button>
                 </div>
             </div>
-            <div id="editNoteInput" class="editor-content" contenteditable="true" style="min-height: 200px; margin-bottom: 1rem;"></div>
+            <div id="editNoteInput" class="editor-content" contenteditable="true"
+                style="min-height: 200px; margin-bottom: 1rem;"></div>
             <div class="modal-footer">
                 <button class="btn-modal btn-modal-secondary" onclick="closeEditModal()">Cancel</button>
                 <button class="btn-modal btn-modal-primary" onclick="saveEditNote()">Save Changes</button>
@@ -825,18 +901,18 @@
 
         const urlParams = new URLSearchParams(window.location.search);
         let bookId = parseInt(urlParams.get('id'));
-        
+
         // Fallback: if bookId is invalid, try to get it from referrer or default to 1
         if (isNaN(bookId) || bookId < 1 || bookId > 100) {
             console.warn('Invalid bookId:', bookId, 'Defaulting to 1');
             bookId = 1;
         }
-        
+
         const currentBook = booksData.find(b => b.rank === bookId);
-        
+
         // Load global read state
         let readState = JSON.parse(localStorage.getItem('bookReadState')) || {};
-        
+
         const elements = {
             header: document.getElementById('bookHeader'),
             input: document.getElementById('noteInput'),
@@ -877,21 +953,63 @@
             `;
 
             setupPasteHandler();
+            setupKeyboardShortcuts();
             await renderNotes();
+        }
+
+        // Debounce utility function
+        function debounce(func, wait) {
+            let timeout;
+            return (...args) => {
+                clearTimeout(timeout);
+                timeout = setTimeout(() => func(...args), wait);
+            };
+        }
+
+        // Setup keyboard shortcuts
+        function setupKeyboardShortcuts() {
+            // Search debounce
+            const searchInput = document.getElementById('searchNotesInput');
+            searchInput.addEventListener('input', debounce(() => filterNotes(), 300));
+
+            // Global keyboard shortcuts
+            document.addEventListener('keydown', (e) => {
+                // Ctrl/Cmd + S to save note
+                if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+                    e.preventDefault();
+                    const editModal = document.getElementById('editModal');
+                    if (editModal.classList.contains('active')) {
+                        saveEditNote();
+                    } else {
+                        addNote();
+                    }
+                }
+
+                // Escape to close modals
+                if (e.key === 'Escape') {
+                    const editModal = document.getElementById('editModal');
+                    const deleteDialog = document.getElementById('deleteConfirmDialog');
+                    if (editModal.classList.contains('active')) {
+                        closeEditModal();
+                    } else if (deleteDialog.classList.contains('active')) {
+                        cancelDelete();
+                    }
+                }
+            });
         }
 
         function toggleCurrentStatus() {
             const isRead = !!readState[currentBook.rank];
             const newState = !isRead;
-            
+
             // Update state
             readState[currentBook.rank] = newState;
             localStorage.setItem('bookReadState', JSON.stringify(readState));
-            
+
             // Update UI
             const btn = document.querySelector('.status-badge');
             const text = document.getElementById('statusText');
-            
+
             if (newState) {
                 btn.classList.add('is-active');
                 text.innerText = 'Completed';
@@ -909,13 +1027,13 @@
         function initDB() {
             return new Promise((resolve, reject) => {
                 const request = indexedDB.open(DB_NAME, 1);
-                
+
                 request.onerror = () => reject(request.error);
                 request.onsuccess = () => {
                     db = request.result;
                     resolve(db);
                 };
-                
+
                 request.onupgradeneeded = (event) => {
                     const database = event.target.result;
                     if (!database.objectStoreNames.contains(STORE_NAME)) {
@@ -929,7 +1047,7 @@
             // Check if there are old notes in localStorage
             const oldNotes = localStorage.getItem(storageKey);
             if (!oldNotes) return;
-            
+
             try {
                 const notes = JSON.parse(oldNotes);
                 if (notes.length > 0) {
@@ -948,17 +1066,17 @@
                 console.warn('DB not initialized, falling back to localStorage');
                 return JSON.parse(localStorage.getItem(storageKey)) || [];
             }
-            
+
             return new Promise((resolve) => {
                 const transaction = db.transaction([STORE_NAME], 'readonly');
                 const store = transaction.objectStore(STORE_NAME);
                 const request = store.get(bookId);
-                
+
                 request.onsuccess = () => {
                     const result = request.result;
                     resolve(result ? result.notes : []);
                 };
-                
+
                 request.onerror = () => {
                     console.error('Error reading from DB');
                     resolve([]);
@@ -977,12 +1095,12 @@
                 }
                 return Promise.resolve();
             }
-            
+
             return new Promise((resolve, reject) => {
                 const transaction = db.transaction([STORE_NAME], 'readwrite');
                 const store = transaction.objectStore(STORE_NAME);
                 const request = store.put({ bookId: bookId, notes: notes });
-                
+
                 request.onsuccess = () => {
                     resolve();
                     // After successful IndexedDB save, clear localStorage to avoid duplication
@@ -1010,9 +1128,9 @@
                     editor = document.getElementById('noteInput');
                 }
             }
-            
+
             if (!editor) return;
-            
+
             editor.focus();
 
             if (command === 'bold') {
@@ -1064,15 +1182,15 @@
 
         function setupPasteHandler() {
             const editor = document.getElementById('noteInput');
-            
-            editor.addEventListener('paste', function(e) {
+
+            editor.addEventListener('paste', function (e) {
                 e.preventDefault();
-                
+
                 const text = e.clipboardData.getData('text/plain');
-                
+
                 // Check if it looks like markdown
                 const isMd = /^[#*_`>-]|[\*_`].*[\*_`]|\*\*.*\*\*|__.*__/.test(text);
-                
+
                 if (isMd) {
                     const html = markdownToHtml(text);
                     document.execCommand('insertHTML', false, html);
@@ -1087,9 +1205,9 @@
             const editor = document.getElementById('noteInput');
             const html = editor.innerHTML.trim();
             const text = editor.textContent.trim();
-            
+
             console.log('addNote called - text length:', text.length, 'html length:', html.length);
-            
+
             // Check if there's actual text content
             if (!text) {
                 alert('Please write something before saving.');
@@ -1106,9 +1224,9 @@
 
                 notes.unshift(newNote);
                 await saveNotes(notes);
-                
+
                 console.log('Note saved successfully. Total notes:', notes.length);
-                
+
                 editor.innerHTML = '';
                 await renderNotes();
             } catch (error) {
@@ -1123,7 +1241,7 @@
             editingNoteId = id;
             const modal = document.getElementById('editModal');
             modal.classList.add('active');
-            
+
             // Find the note and populate the editor
             getNotes().then(notes => {
                 const note = notes.find(n => n.id === id);
@@ -1144,11 +1262,11 @@
 
         async function saveEditNote() {
             if (editingNoteId === null) return;
-            
+
             const editor = document.getElementById('editNoteInput');
             const html = editor.innerHTML.trim();
             const text = editor.textContent.trim();
-            
+
             if (!text) {
                 alert('Please write something before saving.');
                 return;
@@ -1157,7 +1275,7 @@
             try {
                 const notes = await getNotes();
                 const noteIndex = notes.findIndex(n => n.id === editingNoteId);
-                
+
                 if (noteIndex !== -1) {
                     notes[noteIndex].html = html;
                     notes[noteIndex].timestamp = new Date().toISOString();
@@ -1187,7 +1305,7 @@
 
         async function confirmDelete() {
             if (pendingDeleteId === null) return;
-            
+
             try {
                 const notes = await getNotes();
                 const filtered = notes.filter(n => n.id !== pendingDeleteId);
@@ -1205,7 +1323,7 @@
         async function filterNotes() {
             const searchInput = document.getElementById('searchNotesInput');
             const searchTerm = searchInput.value.toLowerCase().trim();
-            
+
             if (!searchTerm) {
                 clearSearch();
                 return;
@@ -1242,45 +1360,45 @@
 
             // Clear the list first
             elements.list.innerHTML = '';
-            
+
             // Create and append each note as a DOM element (not HTML string)
             filteredNotes.forEach(note => {
                 const noteDiv = document.createElement('div');
                 noteDiv.className = 'note-card';
-                
+
                 const contentDiv = document.createElement('div');
                 contentDiv.className = 'note-content';
-                
+
                 // Highlight search term in content
                 let highlightedContent = sanitizeHtml(note.html || note.text || '');
                 const regex = new RegExp(`(${searchTerm})`, 'gi');
                 highlightedContent = highlightedContent.replace(regex, '<span class="highlight">$1</span>');
                 contentDiv.innerHTML = highlightedContent;
-                
+
                 const footerDiv = document.createElement('div');
                 footerDiv.className = 'note-footer';
-                
+
                 const dateSpan = document.createElement('span');
                 dateSpan.className = 'note-date';
                 dateSpan.textContent = formatDate(note.timestamp);
-                
+
                 const editBtn = document.createElement('button');
                 editBtn.className = 'btn-edit';
                 editBtn.textContent = 'Edit';
                 editBtn.onclick = () => openEditModal(note.id);
-                
+
                 const deleteBtn = document.createElement('button');
                 deleteBtn.className = 'btn-delete';
                 deleteBtn.textContent = 'Delete';
                 deleteBtn.onclick = () => deleteNote(note.id);
-                
+
                 footerDiv.appendChild(dateSpan);
                 footerDiv.appendChild(editBtn);
                 footerDiv.appendChild(deleteBtn);
-                
+
                 noteDiv.appendChild(contentDiv);
                 noteDiv.appendChild(footerDiv);
-                
+
                 // Append the actual DOM element, not HTML string
                 elements.list.appendChild(noteDiv);
             });
@@ -1300,7 +1418,7 @@
         async function renderNotes() {
             try {
                 const notes = await getNotes();
-                
+
                 if (notes.length === 0) {
                     elements.list.innerHTML = `<div class="empty-state">No notes yet. Start writing above.</div>`;
                     return;
@@ -1308,41 +1426,41 @@
 
                 // Clear the list first
                 elements.list.innerHTML = '';
-                
+
                 // Create and append each note as a DOM element (not HTML string)
                 notes.forEach(note => {
                     const noteDiv = document.createElement('div');
                     noteDiv.className = 'note-card';
-                    
+
                     const contentDiv = document.createElement('div');
                     contentDiv.className = 'note-content';
                     // Sanitize HTML content to prevent XSS
                     contentDiv.innerHTML = sanitizeHtml(note.html || note.text || '');
-                    
+
                     const footerDiv = document.createElement('div');
                     footerDiv.className = 'note-footer';
-                    
+
                     const dateSpan = document.createElement('span');
                     dateSpan.className = 'note-date';
                     dateSpan.textContent = formatDate(note.timestamp);
-                    
+
                     const editBtn = document.createElement('button');
                     editBtn.className = 'btn-edit';
                     editBtn.textContent = 'Edit';
                     editBtn.onclick = () => openEditModal(note.id);
-                    
+
                     const deleteBtn = document.createElement('button');
                     deleteBtn.className = 'btn-delete';
                     deleteBtn.textContent = 'Delete';
                     deleteBtn.onclick = () => deleteNote(note.id);
-                    
+
                     footerDiv.appendChild(dateSpan);
                     footerDiv.appendChild(editBtn);
                     footerDiv.appendChild(deleteBtn);
-                    
+
                     noteDiv.appendChild(contentDiv);
                     noteDiv.appendChild(footerDiv);
-                    
+
                     // Append the actual DOM element, not HTML string
                     elements.list.appendChild(noteDiv);
                 });
@@ -1356,11 +1474,11 @@
             // Create a temporary element to parse HTML
             const temp = document.createElement('div');
             temp.textContent = html;
-            
+
             // Whitelist of allowed tags
             const allowedTags = ['strong', 'em', 'u', 'br', 'div', 'span', 'p'];
             const allowedClasses = ['md-h1', 'md-h2', 'md-h3', 'md-code', 'md-blockquote', 'md-list'];
-            
+
             // Parse and sanitize
             const parser = new DOMParser();
             try {
@@ -1375,16 +1493,16 @@
 
         function sanitizeNode(node, allowedTags, allowedClasses) {
             const result = document.createElement('div');
-            
+
             for (let child of node.childNodes) {
                 if (child.nodeType === Node.TEXT_NODE) {
                     result.appendChild(document.createTextNode(child.textContent));
                 } else if (child.nodeType === Node.ELEMENT_NODE) {
                     const tagName = child.tagName.toLowerCase();
-                    
+
                     if (allowedTags.includes(tagName)) {
                         const newElement = document.createElement(tagName);
-                        
+
                         // Only allow specific classes
                         if (child.className) {
                             const classes = child.className.split(' ').filter(c => allowedClasses.includes(c));
@@ -1392,7 +1510,7 @@
                                 newElement.className = classes.join(' ');
                             }
                         }
-                        
+
                         // Recursively sanitize children
                         const sanitizedChild = sanitizeNode(child, allowedTags, allowedClasses);
                         newElement.innerHTML = sanitizedChild.innerHTML;
@@ -1404,7 +1522,7 @@
                     }
                 }
             }
-            
+
             return result;
         }
 
@@ -1420,4 +1538,5 @@
         init();
     </script>
 </body>
+
 </html>

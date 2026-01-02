@@ -1,13 +1,18 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FutureCast Library | Curated Collection</title>
+    <meta name="description"
+        content="FutureCast Library - A curated collection of 100 essential books to shape your worldview. Track your reading progress, take notes, and export your insights.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+
     <style>
         :root {
             --bg-body: #F5F5F2;
@@ -17,14 +22,19 @@
             --text-tertiary: #888888;
             --accent-color: #8C2F39;
             --border-color: #E0E0E0;
-            --shadow-card: 0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.1);
-            --shadow-hover: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -2px rgba(0,0,0,0.04);
+            --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
             --font-serif: 'EB Garamond', serif;
             --font-sans: 'Inter', sans-serif;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; outline: none; }
-        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            outline: none;
+        }
+
         body {
             background-color: var(--bg-body);
             color: var(--text-primary);
@@ -33,7 +43,12 @@
             font-size: 14px;
         }
 
-        button { font-family: inherit; border: none; background: none; cursor: pointer; }
+        button {
+            font-family: inherit;
+            border: none;
+            background: none;
+            cursor: pointer;
+        }
 
         /* --- Header --- */
         header {
@@ -206,7 +221,7 @@
         .view-btn.active {
             background: #fff;
             color: #000;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
         }
 
         /* --- Main & Utility --- */
@@ -217,7 +232,9 @@
             min-height: 60vh;
         }
 
-        .hidden { display: none !important; }
+        .hidden {
+            display: none !important;
+        }
 
         /* --- Grid View --- */
         .grid-view {
@@ -238,7 +255,8 @@
             min-height: 180px;
             box-shadow: var(--shadow-card);
             overflow: hidden;
-            cursor: pointer; /* Indicates Clickable */
+            cursor: pointer;
+            /* Indicates Clickable */
         }
 
         .book-card:hover {
@@ -336,8 +354,10 @@
             background: #FAFAFA;
             cursor: pointer;
         }
-        
-        th:hover { color: var(--text-primary); }
+
+        th:hover {
+            color: var(--text-primary);
+        }
 
         td {
             padding: 0.6rem 1.5rem;
@@ -345,9 +365,17 @@
             vertical-align: middle;
         }
 
-        tr { cursor: pointer; }
-        tr:last-child td { border-bottom: none; }
-        tr:hover { background-color: #FAFAF8; }
+        tr {
+            cursor: pointer;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover {
+            background-color: #FAFAF8;
+        }
 
         .table-rank {
             font-family: var(--font-serif);
@@ -362,7 +390,7 @@
             font-weight: 500;
             color: var(--text-primary);
         }
-        
+
         .table-meta {
             font-size: 0.8rem;
             color: var(--text-tertiary);
@@ -381,7 +409,8 @@
             background: transparent;
             transition: all 0.2s;
             position: relative;
-            z-index: 10; /* Ensure button sits above card link */
+            z-index: 10;
+            /* Ensure button sits above card link */
         }
 
         .check-btn:hover {
@@ -399,10 +428,15 @@
         }
 
         /* Read State Styling */
-        .is-read { background-color: #FAFAF8; }
-        .grid-view .book-card.is-read { background-color: #FAFAF8; }
+        .is-read {
+            background-color: #FAFAF8;
+        }
 
-        .is-read .title-en, 
+        .grid-view .book-card.is-read {
+            background-color: #FAFAF8;
+        }
+
+        .is-read .title-en,
         .is-read .table-title {
             text-decoration: line-through;
             text-decoration-color: var(--accent-color);
@@ -413,7 +447,7 @@
             background: var(--accent-color);
             border-color: var(--accent-color);
         }
-        
+
         .is-read .check-btn:hover {
             opacity: 0.9;
         }
@@ -422,8 +456,10 @@
             opacity: 1;
             stroke: #fff;
         }
-        
-        .is-read .status-label { color: var(--accent-color); }
+
+        .is-read .status-label {
+            color: var(--accent-color);
+        }
 
         /* --- Note Badge (Red Dot) --- */
         .note-badge {
@@ -552,23 +588,46 @@
             color: #fff;
         }
 
-        .page-btn:disabled { opacity: 0.3; }
+        .page-btn:disabled {
+            opacity: 0.3;
+        }
 
         /* --- Responsive --- */
         @media (max-width: 768px) {
-            .controls-inner { flex-direction: column; padding: 0 1rem; align-items: stretch; }
-            .search-box { max-width: none; }
-            .filters { justify-content: space-between; }
-            
+            .controls-inner {
+                flex-direction: column;
+                padding: 0 1rem;
+                align-items: stretch;
+            }
+
+            .search-box {
+                max-width: none;
+            }
+
+            .filters {
+                justify-content: space-between;
+            }
+
             /* Grid Mobile */
-            .grid-view { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 0.75rem; }
-            .book-card { min-height: 160px; padding: 1rem 0.75rem; }
-            .title-en { font-size: 1.1rem; }
-            .card-rank { 
-                font-size: 2.5rem; 
+            .grid-view {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+                gap: 0.75rem;
+            }
+
+            .book-card {
+                min-height: 160px;
+                padding: 1rem 0.75rem;
+            }
+
+            .title-en {
+                font-size: 1.1rem;
+            }
+
+            .card-rank {
+                font-size: 2.5rem;
                 left: 0.25rem;
             }
-            
+
             /* Note Count Badge Mobile */
             .note-count-subtle {
                 font-size: 0.6rem;
@@ -577,47 +636,49 @@
                 right: 8px;
                 border-radius: 10px;
             }
-            
+
             .table-note-count-subtle {
                 font-size: 0.55rem;
                 padding: 1px 4px;
                 margin-left: 0.5rem;
                 border-radius: 8px;
             }
-            
+
             .note-count-dot {
                 width: 3px;
                 height: 3px;
                 margin-right: 3px;
             }
-            
+
             /* List View Mobile Fixes */
-            thead { display: none; } 
-            
-            .table-view tr { 
-                display: block; 
-                padding: 1rem; 
-                border-bottom: 1px solid var(--border-color); 
-                position: relative;
-            }
-            
-            .table-view td { 
-                display: block; 
-                padding: 0.15rem 0; 
-                border: none; 
+            thead {
+                display: none;
             }
 
-            .table-rank { 
-                font-size: 0.9rem; 
+            .table-view tr {
+                display: block;
+                padding: 1rem;
+                border-bottom: 1px solid var(--border-color);
+                position: relative;
+            }
+
+            .table-view td {
+                display: block;
+                padding: 0.15rem 0;
+                border: none;
+            }
+
+            .table-rank {
+                font-size: 0.9rem;
                 color: var(--accent-color);
                 opacity: 0.8;
                 margin-bottom: 0.25rem;
             }
 
-            .table-check-cell { 
-                position: absolute; 
-                right: 1rem; 
-                top: 50%; 
+            .table-check-cell {
+                position: absolute;
+                right: 1rem;
+                top: 50%;
                 transform: translateY(-50%);
                 padding: 0 !important;
                 width: auto;
@@ -625,12 +686,13 @@
         }
     </style>
 </head>
+
 <body>
 
     <header>
         <h1>FutureCast Library</h1>
         <div class="subtitle">100 Books to shape your worldview.</div>
-        
+
         <div class="progress-container">
             <div class="progress-text" id="progress-text">0 / 100</div>
             <div class="progress-bar-bg">
@@ -645,7 +707,7 @@
                 <span class="search-icon">🔍</span>
                 <input type="text" class="search-input" id="searchInput" placeholder="Search by title or author...">
             </div>
-            
+
             <div class="filters">
                 <select id="filterSelect">
                     <option value="all">All Books</option>
@@ -684,7 +746,7 @@
                 <tbody id="tableBody"></tbody>
             </table>
         </div>
-        
+
         <div id="pagination" class="pagination"></div>
 
         <div id="emptyState" class="hidden" style="text-align:center; padding: 3rem; color: #999;">
@@ -825,17 +887,17 @@
         function initDB() {
             return new Promise((resolve) => {
                 const request = indexedDB.open(DB_NAME, 1);
-                
+
                 request.onerror = () => {
                     console.warn('Failed to open IndexedDB');
                     resolve(null);
                 };
-                
+
                 request.onsuccess = () => {
                     db = request.result;
                     resolve(db);
                 };
-                
+
                 request.onupgradeneeded = (event) => {
                     const database = event.target.result;
                     if (!database.objectStoreNames.contains(STORE_NAME)) {
@@ -851,15 +913,13 @@
             setupEventListeners();
             updateProgress();
             renderCurrentView();
-            // Preload note counts for better performance
-            preloadNoteCounts();
         }
 
         function setupEventListeners() {
             elements.viewButtons.forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     const targetBtn = e.target.closest('.view-btn');
-                    if(targetBtn) {
+                    if (targetBtn) {
                         const view = targetBtn.dataset.view;
                         switchView(view);
                     }
@@ -902,15 +962,15 @@
 
         function getFilteredAndSortedBooks() {
             let filtered = [...books];
-            
+
             if (searchTerm) {
-                filtered = filtered.filter(b => 
-                    b.en.toLowerCase().includes(searchTerm) || 
-                    b.cn.toLowerCase().includes(searchTerm) || 
+                filtered = filtered.filter(b =>
+                    b.en.toLowerCase().includes(searchTerm) ||
+                    b.cn.toLowerCase().includes(searchTerm) ||
                     b.author.toLowerCase().includes(searchTerm)
                 );
             }
-            
+
             if (filterType === 'read') filtered = filtered.filter(b => readState[b.rank]);
             if (filterType === 'unread') filtered = filtered.filter(b => !readState[b.rank]);
 
@@ -919,7 +979,7 @@
                 let valB = sortField === 'rank' ? b.rank : (sortField === 'title' ? b.en : b.author).toLowerCase();
                 return sortDirection === 'asc' ? (valA < valB ? -1 : 1) : (valA > valB ? -1 : 1);
             });
-            
+
             return filtered;
         }
 
@@ -927,7 +987,7 @@
             const allBooks = getFilteredAndSortedBooks();
             const start = pageSize === Infinity ? 0 : (currentPage - 1) * pageSize;
             const pagedBooks = pageSize === Infinity ? allBooks : allBooks.slice(start, start + pageSize);
-            
+
             if (allBooks.length === 0) {
                 elements.emptyState.classList.remove('hidden');
                 elements.gridView.classList.add('hidden');
@@ -935,13 +995,13 @@
                 elements.pagination.innerHTML = '';
                 return;
             }
-            
+
             elements.emptyState.classList.add('hidden');
-            
+
             if (currentView === 'grid') {
                 elements.gridView.classList.remove('hidden');
                 elements.listView.classList.add('hidden');
-                
+
                 elements.gridView.innerHTML = pagedBooks.map(b => {
                     const noteCount = getNoteCount(b.rank);
                     return `
@@ -965,7 +1025,7 @@
             } else {
                 elements.gridView.classList.add('hidden');
                 elements.listView.classList.remove('hidden');
-                
+
                 elements.tableBody.innerHTML = pagedBooks.map(b => {
                     const noteCount = getNoteCount(b.rank);
                     return `
@@ -984,7 +1044,7 @@
                     </tr>
                 `}).join('');
             }
-            
+
             renderPagination(allBooks.length);
         }
 
@@ -993,12 +1053,12 @@
                 elements.pagination.innerHTML = '';
                 return;
             }
-            
+
             const pages = Math.ceil(total / pageSize);
             let html = '';
-            
+
             html += `<button class="page-btn" ${currentPage === 1 ? 'disabled' : ''} onclick="changePage(${currentPage - 1})">‹</button>`;
-            
+
             let min = Math.max(1, currentPage - 2);
             let max = Math.min(pages, min + 4);
             if (max - min < 4) min = Math.max(1, max - 4);
@@ -1006,7 +1066,7 @@
             for (let i = min; i <= max; i++) {
                 html += `<button class="page-btn ${i === currentPage ? 'active' : ''}" onclick="changePage(${i})">${i}</button>`;
             }
-            
+
             html += `<button class="page-btn" ${currentPage === pages ? 'disabled' : ''} onclick="changePage(${currentPage + 1})">›</button>`;
             elements.pagination.innerHTML = html;
         }
@@ -1053,7 +1113,7 @@
                     return 0;
                 }
             }
-            
+
             // Return cached result from IndexedDB
             return notesCache.get(rank) || 0;
         }
@@ -1063,33 +1123,12 @@
 
         async function loadNotesCache() {
             if (!db) return;
-            
-            return new Promise((resolve) => {
-                const transaction = db.transaction([STORE_NAME], 'readonly');
-                const store = transaction.objectStore(STORE_NAME);
-                const request = store.getAll();
-                
-                request.onsuccess = () => {
-                    const results = request.result;
-                    results.forEach(item => {
-                        notesCache.set(item.bookId, item.notes ? item.notes.length : 0);
-                    });
-                    resolve();
-                };
-                
-                request.onerror = () => resolve();
-            });
-        }
 
-        async function preloadNoteCounts() {
-            // Preload note counts for all books to ensure smooth rendering
-            if (!db) return;
-            
             return new Promise((resolve) => {
                 const transaction = db.transaction([STORE_NAME], 'readonly');
                 const store = transaction.objectStore(STORE_NAME);
                 const request = store.getAll();
-                
+
                 request.onsuccess = () => {
                     const results = request.result;
                     results.forEach(item => {
@@ -1097,7 +1136,7 @@
                     });
                     resolve();
                 };
-                
+
                 request.onerror = () => resolve();
             });
         }
@@ -1107,4 +1146,5 @@
         window.toggleBookStatus = toggleBookStatus;
     </script>
 </body>
+
 </html>

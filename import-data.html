@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Import Data | FutureCast Library</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=Noto+Sans+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=Noto+Sans+SC:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+
     <style>
         :root {
             --bg-body: #F5F5F2;
@@ -17,14 +20,19 @@
             --text-tertiary: #888888;
             --accent-color: #8C2F39;
             --border-color: #E0E0E0;
-            --shadow-card: 0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.1);
+            --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.1);
             --font-serif: 'EB Garamond', serif;
             --font-sans: 'Inter', sans-serif;
             --font-chinese: 'Noto Sans SC', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; outline: none; }
-        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            outline: none;
+        }
+
         body {
             background-color: var(--bg-body);
             color: var(--text-primary);
@@ -51,8 +59,15 @@
             transition: color 0.2s;
         }
 
-        .nav-back:hover { color: var(--accent-color); }
-        .nav-back svg { margin-right: 6px; width: 16px; height: 16px; }
+        .nav-back:hover {
+            color: var(--accent-color);
+        }
+
+        .nav-back svg {
+            margin-right: 6px;
+            width: 16px;
+            height: 16px;
+        }
 
         h1 {
             font-family: var(--font-serif);
@@ -94,7 +109,8 @@
             margin-bottom: 2rem;
         }
 
-        .upload-area:hover, .upload-area.dragover {
+        .upload-area:hover,
+        .upload-area.dragover {
             border-color: var(--accent-color);
             background: rgba(140, 47, 57, 0.02);
         }
@@ -216,18 +232,28 @@
         }
 
         @media (max-width: 600px) {
-            .import-actions { flex-direction: column; }
-            .btn { justify-content: center; }
+            .import-actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                justify-content: center;
+            }
         }
     </style>
 </head>
+
 <body>
     <header>
         <a href="export-data.html" class="nav-back">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
             Back to Export
         </a>
-        
+
         <h1>Import Data</h1>
         <div class="subtitle">Restore your reading progress and notes</div>
     </header>
@@ -235,7 +261,8 @@
     <main class="import-container">
         <div class="import-card">
             <div class="warning-box">
-                ⚠️ <strong>Important Notice</strong>: Importing data will overwrite all current reading progress and notes. We recommend exporting your current data as a backup first.
+                ⚠️ <strong>Important Notice</strong>: Importing data will overwrite all current reading progress and
+                notes. We recommend exporting your current data as a backup first.
             </div>
 
             <div class="upload-area" onclick="document.getElementById('fileInput').click()">
@@ -258,7 +285,7 @@
                     </svg>
                     Import Data
                 </button>
-                
+
                 <a href="export-data.html" class="btn btn-secondary">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
@@ -274,8 +301,54 @@
     <script>
         let selectedFile = null;
         let fileData = null;
+        let db = null;
+        const DB_NAME = 'BookcastDB';
+        const STORE_NAME = 'notes';
 
-        function init() {
+        function initDB() {
+            return new Promise((resolve, reject) => {
+                const request = indexedDB.open(DB_NAME, 1);
+
+                request.onerror = () => {
+                    console.warn('Failed to open IndexedDB');
+                    resolve(null);
+                };
+
+                request.onsuccess = () => {
+                    db = request.result;
+                    resolve(db);
+                };
+
+                request.onupgradeneeded = (event) => {
+                    const database = event.target.result;
+                    if (!database.objectStoreNames.contains(STORE_NAME)) {
+                        database.createObjectStore(STORE_NAME, { keyPath: 'bookId' });
+                    }
+                };
+            });
+        }
+
+        function saveNotesToDB(bookId, notes) {
+            if (!db) {
+                console.warn('DB not available, notes only saved to localStorage');
+                return Promise.resolve();
+            }
+
+            return new Promise((resolve, reject) => {
+                const transaction = db.transaction([STORE_NAME], 'readwrite');
+                const store = transaction.objectStore(STORE_NAME);
+                const request = store.put({ bookId: bookId, notes: notes });
+
+                request.onsuccess = () => resolve();
+                request.onerror = () => {
+                    console.error('Failed to save to IndexedDB');
+                    resolve(); // Don't reject, localStorage fallback exists
+                };
+            });
+        }
+
+        async function init() {
+            await initDB();
             setupEventListeners();
         }
 
@@ -299,7 +372,7 @@
             uploadArea.addEventListener('drop', (e) => {
                 e.preventDefault();
                 uploadArea.classList.remove('dragover');
-                
+
                 const files = e.dataTransfer.files;
                 if (files.length > 0) {
                     handleFile(files[0]);
@@ -316,7 +389,7 @@
 
         function handleFile(file) {
             selectedFile = file;
-            
+
             // Check file type
             if (!file.name.toLowerCase().endsWith('.json')) {
                 showMessage('error', 'Please select a JSON format file');
@@ -362,10 +435,10 @@
             }
 
             // Validate book data structure
-            const invalidBooks = data.books.filter(book => 
+            const invalidBooks = data.books.filter(book =>
                 !book.rank || !book.title || !book.author
             );
-            
+
             if (invalidBooks.length > 0) {
                 showMessage('error', `Found ${invalidBooks.length} invalid book entries. File may be corrupted.`);
                 document.getElementById('importBtn').disabled = true;
@@ -375,7 +448,7 @@
             // Display preview information
             const readCount = data.books.filter(book => book.isRead).length;
             const totalNotes = data.books.reduce((sum, book) => sum + (book.notes ? book.notes.length : 0), 0);
-            
+
             showMessage('success', `
                 File validation successful!<br>
                 <strong>Export Date</strong>: ${new Date(data.exportDate).toLocaleString('en-US')}<br>
@@ -389,9 +462,9 @@
 
         function showMessage(type, message) {
             const messageBox = document.getElementById('messageBox');
-            const className = type === 'error' ? 'error-box' : 
-                             type === 'success' ? 'success-box' : 'warning-box';
-            
+            const className = type === 'error' ? 'error-box' :
+                type === 'success' ? 'success-box' : 'warning-box';
+
             messageBox.innerHTML = `<div class="${className}">${message}</div>`;
         }
 
@@ -425,7 +498,7 @@
             `;
         }
 
-        function performImport(strategy) {
+        async function performImport(strategy) {
             if (!fileData) return;
 
             if (!confirm('This action cannot be undone. Make sure you have a backup!')) {
@@ -435,7 +508,7 @@
             try {
                 const currentReadState = JSON.parse(localStorage.getItem('bookReadState')) || {};
                 const newReadState = {};
-                
+
                 // Process reading status based on strategy
                 fileData.books.forEach(book => {
                     if (book.isRead) {
@@ -459,12 +532,15 @@
                 // Import notes
                 let importedNotes = 0;
                 let skippedNotes = 0;
-                
-                fileData.books.forEach(book => {
+
+                // Process all books and save notes
+                const savePromises = [];
+
+                for (const book of fileData.books) {
                     if (book.notes && book.notes.length > 0) {
                         const storageKey = `book_notes_${book.rank}`;
                         const existingNotes = JSON.parse(localStorage.getItem(storageKey)) || [];
-                        
+
                         let notesToSave;
                         if (strategy === 'replace') {
                             notesToSave = book.notes.map(note => ({
@@ -487,7 +563,7 @@
                         } else if (strategy === 'merge-overwrite') {
                             // Merge but imported data overwrites duplicates
                             const importedMap = new Map(book.notes.map(n => [n.id, n]));
-                            const mergedNotes = existingNotes.map(n => 
+                            const mergedNotes = existingNotes.map(n =>
                                 importedMap.has(n.id) ? {
                                     id: importedMap.get(n.id).id,
                                     text: importedMap.get(n.id).text,
@@ -508,11 +584,19 @@
                             });
                             notesToSave = mergedNotes;
                         }
-                        
+
+                        // Save to localStorage as backup
                         localStorage.setItem(storageKey, JSON.stringify(notesToSave));
+
+                        // Save to IndexedDB (primary storage for main app)
+                        savePromises.push(saveNotesToDB(book.rank, notesToSave));
+
                         importedNotes += notesToSave.length;
                     }
-                });
+                }
+
+                // Wait for all IndexedDB saves to complete
+                await Promise.all(savePromises);
 
                 const readCount = Object.values(finalReadState).filter(Boolean).length;
                 let successMsg = `
@@ -521,13 +605,13 @@
                     <strong>Books Read</strong>: ${readCount}<br>
                     <strong>Notes Imported</strong>: ${importedNotes}
                 `;
-                
+
                 if (skippedNotes > 0) {
                     successMsg += `<br><strong>Notes Skipped</strong>: ${skippedNotes} (duplicates)`;
                 }
-                
+
                 successMsg += `<br><br><a href="Bookcast.html" style="color: var(--accent-color); text-decoration: none;">Return to Library →</a>`;
-                
+
                 showMessage('success', successMsg);
 
                 // Reset form
@@ -547,4 +631,5 @@
         document.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
+
 </html>
